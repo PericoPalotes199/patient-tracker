@@ -9,7 +9,7 @@
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {ajax: false}) do |f| %>
     <div>
       <%= f.label :email %>
-      <%= f.email_field :email, value: ENV['DEMO_USER'], data: { clear_btn: true }, autofocus: true %>
+      <%= f.email_field :email, data: { clear_btn: true }, autofocus: true %>
     </div>
     <br />
 
