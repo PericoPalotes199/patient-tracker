@@ -28,48 +28,15 @@
     </div>
 
     <div class="wrap_section_narrow">
-      <div class="lineitem_end">
-        <div class="linelabel blockFloat"><strong>Adult:</strong> Inpatient & ED</div>
-        <%= link_to '#', {onclick: "incrementEncounterType('adult_inpatient_and_ed')"} do %>
-          <div id="adult_inpatient_and_ed" class="linenumber gradient_light blockFloatRight">0</div>
-        <% end %>
-      </div>
-      <div class="lineitem">
-        <div class="linelabel blockFloat"><strong>Adult:</strong> ICU</div>
-        <%= link_to '#', {onclick: "incrementEncounterType('adult_icu')"} do %>
-          <div id="adult_icu" class="linenumber gradient_light blockFloatRight">0</div>
-        <% end %>
-      </div>
-      <div class="lineitem">
-        <div class="linelabel blockFloat"><strong>Pediatric:</strong> Inpatient</div>
-        <%= link_to '#', {onclick: "incrementEncounterType('pediatric_inpatient')"} do %>
-          <div id="pediatric_inpatient" class="linenumber gradient_light blockFloatRight">0</div>
-        <% end %>
-      </div>
-      <div class="lineitem">
-        <div class="linelabel blockFloat"><strong>Pediatric:</strong> Newborn</div>
-        <%= link_to '#', {onclick: "incrementEncounterType('pediatric_newborn')"} do %>
-          <div id="pediatric_newborn" class="linenumber gradient_light blockFloatRight">0</div>
-        <% end %>
-      </div>
-      <div class="lineitem">
-        <div class="linelabel blockFloat"><strong>Pediatric:</strong> ED</div>
-        <%= link_to '#', {onclick: "incrementEncounterType('pediatric_ed')"} do %>
-          <div id="pediatric_ed" class="linenumber gradient_light blockFloatRight">0</div>
-        <% end %>
-      </div>
-      <div class="lineitem">
-        <div class="linelabel blockFloat"><strong>Continuity:</strong> Inpatient</div>
-        <%= link_to '#', {onclick: "incrementEncounterType('continuity_inpatient')"} do %>
-          <div id="continuity_inpatient" class="linenumber gradient_light blockFloatRight">0</div>
-        <% end %>
-      </div>
-      <div class="lineitem">
-        <div class="linelabel blockFloat"><strong>Continuity:</strong> External</div>
-        <%= link_to '#', {onclick: "incrementEncounterType('continuity_external')"} do %>
-          <div id="continuity_external" class="linenumber gradient_light blockFloatRight">0</div>
-        <% end %>
-      </div>
+
+      <% parent_types = %w(Adult Adult Pediatric Pediatric Pediatric Continuity Continuity) %>
+      <% encounter_types = ["Inpatient & ED", "ICU", "Inpatient", "Newborn", "ED", "Inpatient", "External"] %>
+      <% form_input_labels = [
+        "adult_inpatient_and_ed", "adult_icu", "pediatric_inpatient", "pediatric_newborn",
+        "pediatric_ed", "continuity_inpatient", "continuity_external"] %>
+      <%= render partial: 'encounter_types',
+        locals: {parent_types: parent_types, encounter_types: encounter_types, form_input_labels: form_input_labels} %>
+
       <div class="form-block">
         <%= render 'form' %>
       </div>

@@ -1,0 +1,8 @@
+<% encounter_types.each_with_index do |encounter_type, i| %>
+    <%= content_tag :div, class: "#{i == 0 ? 'lineitem_end' : 'lineitem'}" do %>
+      <div class="linelabel blockFloat"><strong><%= "#{parent_types[i]}:" %></strong> <%= encounter_types[i] %></div>
+      <%= link_to '#', {onclick: "incrementEncounterType('#{form_input_labels[i]}')"} do %>
+        <div id=<%= "#{form_input_labels[i]}" %> class="linenumber gradient_light blockFloatRight">0</div>
+      <% end %>
+    <% end %>
+<% end %>
