@@ -18,7 +18,3 @@
 # Ignore application configuration
 /config/application.yml
 /figaro.sh
-
-# Ignore original UI template files
-/template_10kft
-
