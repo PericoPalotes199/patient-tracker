@@ -12,7 +12,6 @@
   <% end %>
 
   <div class="field">
-    <input type="hidden" name="hidden[raven]" value="true">
     <%= hidden_field_tag(:encountered_on, Time.zone.today) %>
 
     <% encounter_types = ['adult_inpatient_and_ed', 'adult_icu', 'pediatric_inpatient',
