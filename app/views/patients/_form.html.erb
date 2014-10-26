@@ -1,15 +1,6 @@
 <%= form_tag("/patients", method: "post", class: 'new_patient form-horizontal', role: 'form', data: {ajax: false}) do %>
-  <% if @patient.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
 
-      <ul>
-        <% @patient.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'errors' %>
 
   <div class="field">
     <%= hidden_field_tag(:encountered_on, Time.zone.today) %>
@@ -20,7 +11,9 @@
       <%= hidden_field(:encounter_types, encounter_type.to_sym, value: "0") %>
     <% end %>
   </div>
+
   <div class="actions">
     <%= submit_tag('Submit', class: 'signUpBtnMid blockFloatRight') %>
   </div>
+
 <% end %>
