@@ -1,8 +1,14 @@
-<% encounter_types.each_with_index do |encounter_type, i| %>
-    <%= content_tag :div, class: "#{i == 0 ? 'lineitem_end' : 'lineitem'}" do %>
-      <div class="linelabel blockFloat"><strong><%= "#{parent_types[i]}:" %></strong> <%= encounter_types[i] %></div>
-      <%= link_to '#', {onclick: "incrementEncounterType('#{form_input_labels[i]}')"} do %>
-        <div id=<%= "#{form_input_labels[i]}" %> class="linenumber gradient_light blockFloatRight">0</div>
-      <% end %>
+<% display_labels = ["Adult Inpatient & ED", "Adult ICU", "Pediatric Inpatient", "Pediatric Newborn",
+    "Pediatric ED", "Continuity Inpatient", "Continuity External"] %>
+
+<% display_labels.each_with_index do |display_label, i| %>
+  <%= content_tag :div, class: "#{i == 0 ? 'lineitem_end' : 'lineitem'}" do %>
+    <div class="linelabel blockFloat">
+      <strong><%= "#{display_label.split.first}:" %></strong>
+      <%= display_label.split.slice(1..-1).join(' ') %>
+    </div>
+    <%= link_to '#', {onclick: "incrementEncounterType('#{encounter_types[i]}')"} do %>
+      <div id=<%= "#{encounter_types[i]}" %> class="linenumber gradient_light blockFloatRight">0</div>
     <% end %>
+  <% end %>
 <% end %>

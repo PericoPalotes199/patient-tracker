@@ -23,16 +23,13 @@
 
     <div class="wrap_section_narrow">
 
-      <% parent_types = %w(Adult Adult Pediatric Pediatric Pediatric Continuity Continuity) %>
-      <% encounter_types = ["Inpatient & ED", "ICU", "Inpatient", "Newborn", "ED", "Inpatient", "External"] %>
-      <% form_input_labels = [
-        "adult_inpatient_and_ed", "adult_icu", "pediatric_inpatient", "pediatric_newborn",
-        "pediatric_ed", "continuity_inpatient", "continuity_external"] %>
-      <%= render partial: 'encounter_types',
-        locals: {parent_types: parent_types, encounter_types: encounter_types, form_input_labels: form_input_labels} %>
+      <% encounter_types = ['adult_inpatient_and_ed', 'adult_icu', 'pediatric_inpatient',
+      'pediatric_newborn', 'pediatric_ed', 'continuity_inpatient', 'continuity_external'] %>
+
+      <%= render partial: 'encounter_types', locals: {encounter_types: encounter_types} %>
 
       <div class="form-block">
-        <%= render 'form' %>
+        <%= render partial: 'form', locals: {encounter_types: encounter_types} %>
       </div>
     </div>
     <div class="wrap_section_narrow" style="background-color: none">
