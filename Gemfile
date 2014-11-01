@@ -14,6 +14,8 @@ gem 'jbuilder', '~> 2.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 3.1.0'
 gem 'newrelic_rpm', '~> 3.9.0.229'
+# Use PostgreSQL database in all environments
+gem 'pg', '~> 0.17.1'
 # Use pundit for minimal authorization through OO design and pure Ruby classes
 gem 'pundit', '~> 0.2.3'
 # Use SCSS for stylesheets
@@ -40,14 +42,8 @@ group :development, :test do
   # Use debugger
   # gem 'debugger', group: [:development, :test]
   gem 'binding_of_caller', '~> 0.7.2'
-  # Use sqlite3 as the database for Active Record
-  gem 'sqlite3', '~> 1.3.9'
 end
 
 group :production do
-  gem 'pg', '~> 0.17.1'
   gem 'rails_12factor', '~> 0.0.2'
 end
-
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0',          group: :doc
