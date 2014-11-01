@@ -101,6 +101,10 @@ class PatientsController < ApplicationController
     end
 
     def encounter_types
-      params.require(:encounter_types).permit(:adult_inpatient_and_ed, :adult_icu, :pediatric_inpatient, :pediatric_newborn, :pediatric_ed, :continuity_inpatient, :continuity_external)
+      params.require(:encounter_types).permit(
+        :adult_inpatient, :adult_ed, :adult_icu, :adult_inpatient_surgery,
+        :pediatric_inpatient, :pediatric_newborn, :pediatric_ed,
+        :continuity_inpatient, :continuity_external
+      )
     end
 end

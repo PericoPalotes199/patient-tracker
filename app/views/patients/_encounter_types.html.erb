@@ -1,5 +1,6 @@
-<% display_labels = ["Adult Inpatient & ED", "Adult ICU", "Pediatric Inpatient", "Pediatric Newborn",
-    "Pediatric ED", "Continuity Inpatient", "Continuity External"] %>
+<% display_labels = ["Adult Inpatient", "Adult ED", "Adult ICU", "Adult Inpatient Surgery",
+                    "Pediatric Inpatient", "Pediatric Newborn", "Pediatric ED",
+                    "Continuity Inpatient", "Continuity External"] %>
 
 <% display_labels.each_with_index do |display_label, i| %>
   <%= content_tag :div, class: "#{i == 0 ? 'lineitem_end' : 'lineitem'}" do %>
