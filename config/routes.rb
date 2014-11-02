@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
-  get 'patients/summary' => 'patients#summary', as: :summary
+  get 'encounters/summary' => 'encounters#summary', as: :summary
   resources :users
-  resources :patients
-  root 'patients#new'
+  resources :encounters
+  root 'encounters#new'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

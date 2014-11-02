@@ -1,7 +1,7 @@
 <!-- Begin Page 1 -->
 <div data-role="page" id="index" data-url="index" tabindex="0">
 
-  <% content_for :header_title, 'Summary of Patient Encounters' %>
+  <% content_for :header_title, 'Summary of Encounter Encounters' %>
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
 
@@ -13,7 +13,7 @@
 
   <div class="wrap_section_narrow">
     <% if current_user %>
-      <table data-role="table" id="patient_encounters_table" class="ui-responsive">
+      <table data-role="table" id="encounter_encounters_table" class="ui-responsive">
         <thead>
           <tr class="fullwidth">
             <th>Resident</th>
@@ -23,7 +23,7 @@
         </thead>
 
         <tbody>
-          <% @patients_count.each do |group, count| %>
+          <% @encounters_count.each do |group, count| %>
             <% user = User.find(group[0]) %>
             <% if user == current_user || policy(current_user).admin? %>
               <tr class="lineitem fullwidth">

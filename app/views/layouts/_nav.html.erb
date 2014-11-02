@@ -1,10 +1,10 @@
 <% if current_user %>
-  <% if controller_name == 'patients' && action_name == 'index' && policy(@patients).create? %>
-    <%= link_to 'Add Encounters', new_patient_path %> |
+  <% if controller_name == 'encounters' && action_name == 'index' && policy(@encounters).create? %>
+    <%= link_to 'Add Encounters', new_encounter_path %> |
   <% else %>
-    <%= link_to 'All Encounters', patients_path %> |
+    <%= link_to 'All Encounters', encounters_path %> |
   <% end %>
-  <% if controller_name == 'patients' && action_name == 'summary' %>
+  <% if controller_name == 'encounters' && action_name == 'summary' %>
     <%= link_to 'Download as Excel', summary_path(format: 'xls'), data: {ajax: false} %> <br />
   <% else %>
     <%= link_to 'Summary', summary_path %> <br />

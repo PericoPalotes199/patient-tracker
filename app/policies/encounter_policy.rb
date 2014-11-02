@@ -1,13 +1,13 @@
-class PatientPolicy < ApplicationPolicy
-  attr_reader :user, :patient
+class EncounterPolicy < ApplicationPolicy
+  attr_reader :user, :encounter
 
-  def initialize(user, patient)
+  def initialize(user, encounter)
     @user = user
-    @patient = patient
+    @encounter = encounter
   end
 
   def index?
-    user.id == patient.user.id || user.role == 'Admin'
+    user.id == encounter.user.id || user.role == 'Admin'
   end
 
   def show?
@@ -27,11 +27,11 @@ class PatientPolicy < ApplicationPolicy
   end
 
   def update?
-    user.role == 'Resident' && user.id == patient.user.id
+    user.role == 'Resident' && user.id == encounter.user.id
   end
 
   def destroy?
-    user.id == patient.user.id
+    user.id == encounter.user.id
   end
 
   class Scope < Struct.new(:user, :scope)
