@@ -1,7 +1,7 @@
 <!-- Begin Page 1 -->
-<div data-role="page" id="patients_index" data-url="patients" tabindex="0">
+<div data-role="page" id="encounters_index" data-url="encounters" tabindex="0">
 
-  <% content_for :header_title, 'Patient Encounters' %>
+  <% content_for :header_title, 'Encounter Encounters' %>
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
 
@@ -17,7 +17,7 @@
       </div>
 
       <div class="wrap_section_narrow">
-      <table data-role="table" id="patient_encounters_table" class="ui-responsive">
+      <table data-role="table" id="encounter_encounters_table" class="ui-responsive">
         <thead>
           <tr class="fullwidth">
             <th>Resident</th>
@@ -28,13 +28,13 @@
         </thead>
 
         <tbody>
-          <% @patients.each do |patient| %>
-            <% if policy(patient).index? %>
+          <% @encounters.each do |encounter| %>
+            <% if policy(encounter).index? %>
               <tr class="lineitem_index fullwidth">
-                <td><%= patient.user.present? ? patient.user.name : "Unknown" %></th>
-                <td><%= link_to patient.encounter_type, patient %></td>
-                <td><%= patient.encountered_on %></td>
-                <td><%= patient.created_at.to_date %></td>
+                <td><%= encounter.user.present? ? encounter.user.name : "Unknown" %></th>
+                <td><%= link_to encounter.encounter_type, encounter %></td>
+                <td><%= encounter.encountered_on %></td>
+                <td><%= encounter.created_at.to_date %></td>
               </tr>
             <% end %>
           <% end %>

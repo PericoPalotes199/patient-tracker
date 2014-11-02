@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
-  has_many :patients, dependent: :destroy
+  has_many :encounters, dependent: :destroy
 
   before_save :set_default_name, :set_default_role
 

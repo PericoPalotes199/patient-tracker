@@ -543,7 +543,7 @@ a {
   margin: 0px;
 }
 
-#totalPatientsBlock {
+#totalEncountersBlock {
   margin: auto;
   margin-top: 0;
   float: none;
@@ -551,7 +551,7 @@ a {
   padding-left: 2.1em;
 }
 
-#totalPatientsLabel {
+#totalEncountersLabel {
   margin-bottom: 0;
   margin-top: 0em;
   margin-left: 0.75em;

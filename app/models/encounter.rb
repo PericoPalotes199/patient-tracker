@@ -1,4 +1,4 @@
-class Patient < ActiveRecord::Base
+class Encounter < ActiveRecord::Base
 
   scope :adult_medicine, ->{ where encounter_type: 'adult_medicine' }
   scope :icu, ->{ where encounter_type: 'icu' }
@@ -15,10 +15,10 @@ class Patient < ActiveRecord::Base
   private
     #TODO: improve transaction error logging!
     def transaction_success
-      STDOUT.puts "Transaction success for Patient #{self.inspect}"
+      STDOUT.puts "Transaction success for Encounter #{self.inspect}"
     end
 
     def transaction_failure
-      STDOUT.puts "Transaction failure for Patient #{self.inspect}"
+      STDOUT.puts "Transaction failure for Encounter #{self.inspect}"
     end
 end

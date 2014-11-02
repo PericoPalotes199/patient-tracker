@@ -23,11 +23,11 @@ developer = User.create!({ first_name: 'Developer', last_name: 'Developer', role
 
 puts "Created #{User.count} users!"
 
-Patient.destroy_all
+Encounter.destroy_all
 
 ENCOUNTER_TYPES.each do |type|
-  Patient.create!(encounter_type: type, encountered_on: Time.zone.today, user: developer)
-  Patient.create!(encounter_type: type, encountered_on: 7.days.ago, user: developer)
+  Encounter.create!(encounter_type: type, encountered_on: Time.zone.today, user: developer)
+  Encounter.create!(encounter_type: type, encountered_on: 7.days.ago, user: developer)
 end
 
-puts "Created #{Patient.count} patients!"
+puts "Created #{Encounter.count} encounters!"

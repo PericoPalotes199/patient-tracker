@@ -9,7 +9,7 @@
 
     <%= render 'layouts/sign_in_message' %>
 
-  <% elsif !policy(@patient).show? %>
+  <% elsif !policy(@encounter).show? %>
     <div class="wrap_section_narrow_top">
       <div class="row">
         <p>You are not authorized to view this encounter.</p>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="wrap_section_narrow">
-      <table data-role="table" id="patient_encounters_table" class="ui-responsive">
+      <table data-role="table" id="encounter_encounters_table" class="ui-responsive">
         <thead>
           <tr class="fullwidth">
             <th>Resident</th>
@@ -34,12 +34,12 @@
         </thead>
 
         <tbody>
-          <% if policy(@patient).index? %>
+          <% if policy(@encounter).index? %>
             <tr class="lineitem fullwidth">
-              <td><%= @patient.user.present? ? @patient.user.name : "Unknown" %></th>
-              <td><%= @patient.encounter_type %></td>
-              <td><%= @patient.encountered_on %></td>
-              <td><%= @patient.created_at.to_date %></td>
+              <td><%= @encounter.user.present? ? @encounter.user.name : "Unknown" %></th>
+              <td><%= @encounter.encounter_type %></td>
+              <td><%= @encounter.encountered_on %></td>
+              <td><%= @encounter.created_at.to_date %></td>
             </tr>
           <% end %>
         </tbody>
@@ -49,10 +49,10 @@
 
   <div class="wrap_section_narrow">
     <div class="spacer">
-      <% if policy(@patient).destroy? %>
-        <%= link_to 'Delete Encounter', patient_path(@patient), method: :delete, data: { confirm: "Are you sure you want to delete this encounter?" } %> |
+      <% if policy(@encounter).destroy? %>
+        <%= link_to 'Delete Encounter', encounter_path(@encounter), method: :delete, data: { confirm: "Are you sure you want to delete this encounter?" } %> |
       <% end %>
-      <%= link_to 'Back', patients_path %>
+      <%= link_to 'Back', encounters_path %>
     </div>
   </div>
 
