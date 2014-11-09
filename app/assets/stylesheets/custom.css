@@ -1623,6 +1623,33 @@ section {
   display: none;
 }
 
+/* jQuery custom media query for table reflow */
+/* reference: http://api.jquerymobile.com/table-reflow */
+
+/* This query is taken from the file jqm_mobile.css.scss (1.4.0) */
+@media ( min-width: 19em ) {
+  /* Fixes table rendering when switching between breakpoints in Safari <= 5.
+  /* See https://github.com/jquery/jquery-mobile/issues/5380 */
+  .ui-table-reflow.encounters_index {
+    display: table-row-group;
+  }
+  /* Show the table header rows */
+  .ui-table-reflow.encounters_index td,
+  .ui-table-reflow.encounters_index th,
+  .ui-table-reflow.encounters_index tbody th,
+  .ui-table-reflow.encounters_index tbody td,
+  .ui-table-reflow.encounters_index thead td,
+  .ui-table-reflow.encounters_index thead th {
+    display: table-cell;
+    margin: 0;
+  }
+  /* Hide the labels in each cell */
+  .ui-table-reflow.encounters_index td .ui-table-cell-label,
+  .ui-table-reflow.encounters_index th .ui-table-cell-label {
+    display: none;
+  }
+}
+
 @media (max-width: 580px) {
   .wrap_section_narrow_top2, .wrap_section_narrow2{
     width: 282px;
