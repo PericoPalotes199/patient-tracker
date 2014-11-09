@@ -8,6 +8,14 @@ class User < ActiveRecord::Base
 
   before_save :set_default_name, :set_default_role
 
+  def admin?
+    role == 'Admin'
+  end
+
+  def resident?
+    role == 'Resident'
+  end
+
   private
     def set_default_name
       self.name = first_name + ' ' + last_name
