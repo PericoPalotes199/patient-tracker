@@ -1,7 +1,16 @@
 <!-- Begin Page 1 -->
 <div data-role="page" id="index" data-url="index" tabindex="0">
 
-  <% content_for :header_title, 'Summary of Encounter Encounters' %>
+  <% if current_user.present? %>
+    <% if current_user.role != 'Admin' %>
+      <% content_for :user_first_name_header, "#{current_user.first_name}" %>
+      <% content_for :user_last_name_header, "#{current_user.last_name}'s" %>
+    <% else %>
+      <% content_for :user_first_name_header, "All" %>
+      <% content_for :user_last_name_header, "Residents" %>
+    <% end %>
+  <% end %>
+  <% content_for :header_title, "Summary" %>
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
 
@@ -13,7 +22,7 @@
 
   <div class="wrap_section_narrow">
     <% if current_user %>
-      <table data-role="table" id="encounter_encounters_table" class="ui-responsive">
+      <table data-role="table" id="encounter_encounters_table" class="encounters_summary">
         <thead>
           <tr class="fullwidth">
             <th>Resident</th>

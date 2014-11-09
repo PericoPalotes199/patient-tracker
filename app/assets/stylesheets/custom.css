@@ -1626,7 +1626,9 @@ section {
 /* jQuery custom media query for table reflow */
 /* reference: http://api.jquerymobile.com/table-reflow */
 
-/* This query is taken from the file jqm_mobile.css.scss (1.4.0) */
+/* These styles for the queries are taken from the file jqm_mobile.css.scss (1.4.0) */
+
+/*This query is for the main encounter index */
 @media ( min-width: 19em ) {
   /* Fixes table rendering when switching between breakpoints in Safari <= 5.
   /* See https://github.com/jquery/jquery-mobile/issues/5380 */
@@ -1646,6 +1648,30 @@ section {
   /* Hide the labels in each cell */
   .ui-table-reflow.encounters_index td .ui-table-cell-label,
   .ui-table-reflow.encounters_index th .ui-table-cell-label {
+    display: none;
+  }
+}
+
+/*This query is for the summary of encounters table */
+@media ( min-width: 19em ) {
+  /* Fixes table rendering when switching between breakpoints in Safari <= 5.
+  /* See https://github.com/jquery/jquery-mobile/issues/5380 */
+  .ui-table-reflow.encounters_summary {
+    display: table-row-group;
+  }
+  /* Show the table header rows */
+  .ui-table-reflow.encounters_summary td,
+  .ui-table-reflow.encounters_summary th,
+  .ui-table-reflow.encounters_summary tbody th,
+  .ui-table-reflow.encounters_summary tbody td,
+  .ui-table-reflow.encounters_summary thead td,
+  .ui-table-reflow.encounters_summary thead th {
+    display: table-cell;
+    margin: 0;
+  }
+  /* Hide the labels in each cell */
+  .ui-table-reflow.encounters_summary td .ui-table-cell-label,
+  .ui-table-reflow.encounters_summary th .ui-table-cell-label {
     display: none;
   }
 }
