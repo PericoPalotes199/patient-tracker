@@ -2,12 +2,12 @@
 <div data-role="page" id="index" data-url="index" tabindex="0">
 
   <% if current_user.present? %>
-    <% if current_user.role != 'Admin' %>
-      <% content_for :user_first_name_header, "#{current_user.first_name}" %>
-      <% content_for :user_last_name_header, "#{current_user.last_name}'s" %>
-    <% else %>
+    <% if policy(Encounter).summary? %>
       <% content_for :user_first_name_header, "All" %>
       <% content_for :user_last_name_header, "Residents" %>
+    <% else %>
+      <% content_for :user_first_name_header, "#{current_user.first_name}" %>
+      <% content_for :user_last_name_header, "#{current_user.last_name}'s" %>
     <% end %>
   <% end %>
   <% content_for :header_title, "Summary" %>
