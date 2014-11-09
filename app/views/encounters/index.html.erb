@@ -1,8 +1,14 @@
 <!-- Begin Page 1 -->
 <div data-role="page" id="encounters_index" data-url="encounters" tabindex="0">
 
-  <% content_for :user_first_name_header, "#{current_user.first_name}" %>
-  <% content_for :user_last_name_header, "#{current_user.last_name}'s" %>
+  <% if current_user.present? %>
+    <% if current_user.role != 'Admin' %>
+      <% content_for :user_first_name_header, "#{current_user.first_name}" %>
+      <% content_for :user_last_name_header, "#{current_user.last_name}'s" %>
+    <% else %>
+      <% content_for :residency_name, "All Resident" %>
+    <% end %>
+  <% end %>
   <% content_for :header_title, 'Encounters' %>
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
