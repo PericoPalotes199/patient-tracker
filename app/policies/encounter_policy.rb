@@ -6,6 +6,10 @@ class EncounterPolicy < ApplicationPolicy
     @encounter = encounter
   end
 
+  def summary?
+    user.role == 'Admin'
+  end
+
   def index?
     user.id == encounter.user.id || user.role == 'Admin'
   end

@@ -25,7 +25,7 @@
         <tbody>
           <% @encounters_count.each do |group, count| %>
             <% user = User.find(group[0]) %>
-            <% if user == current_user || policy(current_user).admin? %>
+            <% if user == current_user || policy(Encounter).summary? %>
               <tr class="lineitem fullwidth">
                 <td><%= user.name %></td>
                 <td><%= group[1] %></td>

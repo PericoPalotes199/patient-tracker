@@ -91,7 +91,7 @@
       </Row>
       <% @encounters_count.each do |group, count| %>
         <% user = User.find(group[0]) %>
-        <% if user == current_user || policy(current_user).admin? %>
+        <% if user == current_user || policy(Encounter).summary? %>
           <Row>
             <Cell ss:StyleID="s65">
               <Data ss:Type="String"><%= user.name %></Data>
