@@ -28,7 +28,9 @@
       <table data-role="table" id="encounter_encounters_table" class="ui-responsive">
         <thead>
           <tr class="fullwidth">
-            <th>Resident</th>
+            <% if current_user.role == 'Admin' %>
+              <th>Resident</th>
+            <% end %>
             <th>Type</th>
             <th>Encountered</th>
             <th>Submitted</th>
@@ -39,7 +41,9 @@
           <% @encounters.each do |encounter| %>
             <% if policy(encounter).index? %>
               <tr class="lineitem_index fullwidth">
-                <td><%= encounter.user.present? ? encounter.user.name : "Unknown" %></th>
+                <% if current_user.role == 'Admin' %>
+                  <td><%= encounter.user.present? ? encounter.user.name : "Unknown" %></th>
+                <% end %>
                 <td><%= link_to encounter.encounter_type, encounter %></td>
                 <td><%= encounter.encountered_on %></td>
                 <td><%= encounter.created_at.to_date %></td>
