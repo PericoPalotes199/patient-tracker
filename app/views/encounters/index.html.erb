@@ -1,7 +1,9 @@
 <!-- Begin Page 1 -->
 <div data-role="page" id="encounters_index" data-url="encounters" tabindex="0">
 
-  <% content_for :header_title, 'Encounter Encounters' %>
+  <% content_for :user_first_name_header, "#{current_user.first_name}" %>
+  <% content_for :user_last_name_header, "#{current_user.last_name}'s" %>
+  <% content_for :header_title, 'Encounters' %>
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
 
