@@ -7,8 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 ENCOUNTER_TYPES = [
-                    'adult inpatient and ed',
+                    'adult inpatient',
+                    'adult ed',
                     'adult icu',
+                    'adult inpatient_surgery',
                     'pediatric inpatient',
                     'pediatric newborn',
                     'pediatric ed',
@@ -16,18 +18,20 @@ ENCOUNTER_TYPES = [
                     'continuity external'
                   ]
 
-
 User.destroy_all
 
-developer = User.create!({ first_name: 'Developer', last_name: 'Developer', role: 'Developer',  email: ENV['SEED_USER_EMAIL'], password: ENV['SEED_USER_PASSWORD'] })
+developer = User.create!({ first_name: 'Developer', last_name: 'Developer', role: 'Developer',  email: ENV['DEV_USER_EMAIL'], password: ENV['DEV_USER_PASSWORD'] })
+developer = User.create!({ first_name: 'Resident',  last_name: 'Resident',  role: 'Resident',   email: ENV['ADMIN_USER_EMAIL'], password: ENV['ADMIN_USER_PASSWORD'] })
 
 puts "Created #{User.count} users!"
 
 Encounter.destroy_all
 
 ENCOUNTER_TYPES.each do |type|
-  Encounter.create!(encounter_type: type, encountered_on: Time.zone.today, user: developer)
-  Encounter.create!(encounter_type: type, encountered_on: 7.days.ago, user: developer)
+  User.all.each do |user|
+    Encounter.create!(encounter_type: type, encountered_on: Time.zone.today, user: user)
+    Encounter.create!(encounter_type: type, encountered_on: 7.days.ago, user: user)
+  end
 end
 
 puts "Created #{Encounter.count} encounters!"
