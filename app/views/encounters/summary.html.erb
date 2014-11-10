@@ -20,11 +20,8 @@
     <%= render 'layouts/sign_in_message' %>
 
   <% else %> <!-- Show nav. and table if signed in -->
-    <div class="wrap_section_narrow_wc" style="background-color: none"> <!-- Navigation -->
-      <div class="spacer">
-        <%= render 'layouts/nav' %>
-      </div>
-    </div>
+
+    <%= render 'layouts/nav' %>
 
     <div class="wrap_section_narrow">
       <table data-role="table" id="encounter_encounters_table" class="encounters_summary">

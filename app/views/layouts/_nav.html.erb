@@ -1,15 +1,27 @@
 <% if current_user %>
-  <% if controller_name == 'encounters' && action_name == 'index' && policy(@encounters).create? %>
-    <%= link_to 'Add Encounters', new_encounter_path %> |
-  <% else %>
-    <%= link_to 'All Encounters', encounters_path %> |
-  <% end %>
-  <% if controller_name == 'encounters' && action_name == 'summary' %>
-    <%= link_to 'Download as Excel', summary_path(format: 'xls'), data: {ajax: false} %> <br />
-  <% else %>
-    <%= link_to 'Summary', summary_path %> <br />
-  <% end %>
-  <%= link_to 'Sign Out', destroy_user_session_path(user_session), method: "delete" %> |
-  <%= mail_to 'the.encounter.counter@gmail.com', 'Feedback', subject: 'Feedback',
-  body: "Please share any feedback for this app!  You might want to report unexpected behavior, errors, display problems, navigation problems, confusing information, desired features, or any other topic. Be as brief or elaborate as you wish.\n\nDuplicate feedback is welcome; it helps with prioritization." %>
+  <div data-role="navbar">
+    <ul>
+      <li>
+        <% if controller_name == 'encounters' && action_name == 'index' && policy(@encounters).create? %>
+          <%= link_to 'Add', new_encounter_path %>
+        <% else %>
+          <%= link_to 'Log', encounters_path %>
+        <% end %>
+      </li>
+      <li>
+        <% if controller_name == 'encounters' && action_name == 'summary' %>
+          <%= link_to 'Download as Excel', summary_path(format: 'xls'), data: {ajax: false} %> <br />
+        <% else %>
+          <%= link_to 'Summary', summary_path %> <br />
+        <% end %>
+      </li>
+      <li>
+        <%= mail_to 'the.encounter.counter@gmail.com', 'Help', subject: 'Help',
+          body: "If you need help, send us an e-mail and someone will respond promptly. \n\n Please share any feedback for this app!  You might want to report unexpected behavior, errors, display problems, navigation problems, confusing information, desired features, or any other topic. Be as brief or elaborate as you wish." %>
+      </li>
+      <li>
+        <%= link_to 'Sign Out', destroy_user_session_path(user_session), method: "delete" %>
+      </li>
+    </ul>
+  </div><!-- /navbar -->
 <% end %>
