@@ -1,7 +1,7 @@
 <!-- Begin Page 1 -->
 <div data-role="page" id="index" data-url="index" tabindex="0">
 
-  <% if current_user.present? %>
+  <% if current_user.present? %> <!-- header content -->
     <% if policy(Encounter).summary? %>
       <% content_for :user_first_name_header, "All" %>
       <% content_for :user_last_name_header, "Residents" %>
@@ -14,18 +14,23 @@
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
 
-  <div class="wrap_section_narrow_wc" style="background-color: none">
-    <div class="spacer">
-      <%= render 'layouts/nav' %>
-    </div>
-  </div>
 
-  <div class="wrap_section_narrow">
-    <% if current_user %>
+  <% if !current_user %> <!-- Show sign in message if not signed in. -->
+
+    <%= render 'layouts/sign_in_message' %>
+
+  <% else %> <!-- Show nav. and table if signed in -->
+    <div class="wrap_section_narrow_wc" style="background-color: none"> <!-- Navigation -->
+      <div class="spacer">
+        <%= render 'layouts/nav' %>
+      </div>
+    </div>
+
+    <div class="wrap_section_narrow">
       <table data-role="table" id="encounter_encounters_table" class="encounters_summary">
         <thead>
           <tr class="fullwidth">
-            <% if policy(Encounter).summary? %>
+            <% if policy(Encounter).summary? %>  <!-- Show name column if policy allows -->
               <th>Resident</th>
             <% end %>
             <th>Type</th>
@@ -36,9 +41,9 @@
         <tbody>
           <% @encounters_count.each do |group, count| %>
             <% user = User.find(group[0]) %>
-            <% if user == current_user %>
+            <% if user == current_user || policy(Encounter).summary? %>  <!-- Show rows belonging to the current_user or permitted rows -->
               <tr class="lineitem fullwidth">
-                <% if policy(Encounter).summary? %>
+                <% if policy(Encounter).summary? %> <!-- Show name column if policy allows -->
                   <td><%= user.name %></td>
                 <% end %>
                 <td><%= group[1] %></td>
@@ -48,10 +53,8 @@
           <% end %>
         </tbody>
       </table>
-    <% else %>
-      <div class="spacer">You must <%= link_to 'sign in', new_user_session_path %> to view this page.</div>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
   <div class="form-block">
   </div>
