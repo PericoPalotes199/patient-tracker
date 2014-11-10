@@ -25,7 +25,9 @@
       <table data-role="table" id="encounter_encounters_table" class="encounters_summary">
         <thead>
           <tr class="fullwidth">
-            <th>Resident</th>
+            <% if policy(Encounter).summary? %>
+              <th>Resident</th>
+            <% end %>
             <th>Type</th>
             <th>Total</th>
           </tr>
@@ -34,9 +36,11 @@
         <tbody>
           <% @encounters_count.each do |group, count| %>
             <% user = User.find(group[0]) %>
-            <% if user == current_user || policy(Encounter).summary? %>
+            <% if user == current_user %>
               <tr class="lineitem fullwidth">
-                <td><%= user.name %></td>
+                <% if policy(Encounter).summary? %>
+                  <td><%= user.name %></td>
+                <% end %>
                 <td><%= group[1] %></td>
                 <td><%= count %></td>
               </tr>
