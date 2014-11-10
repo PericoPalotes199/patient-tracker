@@ -1,9 +1,15 @@
-<div class="ui-content wrap_section_narrow_top">
-  <div class="row">
-    <p>
-      You must
-      <%= link_to 'sign in', new_user_session_path, data: {transition: 'flip'} %>
-      to view this page.
-    </p>
+<div id="must_sign_in" class="fullwidth">
+  <div class="wrap_section_narrow_top">
+    <div class="row">
+      <p>
+        You must
+        <%= link_to 'sign in', new_user_session_path, data: {transition: 'flip'} %>
+        to view this page.
+      </p>
+      <br />
+      <p>
+        <%= mail_to 'the.encounter.counter@gmail.com', 'Contact', body: "If you are having difficult using this app, or would like to contact the creator of this app, please add your message below." %> Encounter Counter if you are having trouble with this app.
+      </p>
+    </div>
   </div>
 </div>
