@@ -2,7 +2,7 @@ class UserPolicy < ApplicationPolicy
   attr_reader :user, :scope
 
   def index?
-    admin?
+    user.admin?
   end
 
   class Scope < Struct.new(:user, :scope)
