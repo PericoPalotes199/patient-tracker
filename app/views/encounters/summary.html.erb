@@ -21,10 +21,8 @@
 
   <% else %> <!-- Show nav. and table if signed in -->
 
-    <%= render 'layouts/nav' %>
-
-    <div class="wrap_section_narrow">
-      <table data-role="table" id="encounter_encounters_table" class="encounters_summary">
+    <div class="wrap_section_narrow encounters_index_section">
+      <table data-role="table" class="encounters_summary">
         <thead>
           <tr class="fullwidth">
             <% if policy(Encounter).summary? %>  <!-- Show name column if policy allows -->
