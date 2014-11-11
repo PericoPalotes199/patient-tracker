@@ -10,7 +10,7 @@ ENCOUNTER_TYPES = [
                     'adult inpatient',
                     'adult ed',
                     'adult icu',
-                    'adult inpatient_surgery',
+                    'adult inpatient surgery',
                     'pediatric inpatient',
                     'pediatric newborn',
                     'pediatric ed',
