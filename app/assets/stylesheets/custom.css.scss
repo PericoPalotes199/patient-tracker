@@ -60,6 +60,16 @@ footer.fixed_footer {
   bottom: 0;
 }
 
+.footer {
+  margin-top: 10px;
+}
+
+.footertitle {
+  font-family: 'GibsonSemiBold', Verdana, sans-serif;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
 #navBox_wc {
   width: 100%;
   min-height: 100px;
@@ -1261,16 +1271,6 @@ strong {
   border-right: 1px solid #d0d2d3;
   height: 210px;
   padding: 20px;
-}
-
-.footer {
-  margin-top: 10px;
-}
-
-.footertitle {
-  font-family: 'GibsonSemiBold', Verdana, sans-serif;
-  font-size: 14px;
-  margin-bottom: 15px;
 }
 
 .tickettitle {
