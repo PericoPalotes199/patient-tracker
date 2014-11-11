@@ -10,11 +10,9 @@
     <%= render 'layouts/sign_in_message' %>
 
   <% elsif !policy(@encounter).show? %>
-    <div class="wrap_section_narrow_top">
-      <div class="row">
+      <div class="unauthorized_content">
         <p>You are not authorized to view this encounter.</p>
       </div>
-    </div>
   <% else %>
 
     <%= render 'layouts/nav' %>
