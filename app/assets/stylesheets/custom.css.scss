@@ -31,6 +31,7 @@ div.encounters_index_section,
 div.encounters_summary_section,
 div.encounters_show_section {
   margin-top: 1em;
+  min-height: 500px;
 }
 
 div.ui-navbar {
@@ -1688,6 +1689,22 @@ section {
   .ui-table-reflow.encounters_summary td .ui-table-cell-label,
   .ui-table-reflow.encounters_summary th .ui-table-cell-label {
     display: none;
+  }
+}
+
+@media ( min-width: 23.75em ) {
+  /* Fixes table rendering when switching between breakpoints in Safari <= 5.
+  /* See https://github.com/jquery/jquery-mobile/issues/5380 */
+  .ui-table-reflow.encounters_index {
+    display: table;
+  }
+}
+
+@media ( min-width: 23.75em ) {
+  /* Fixes table rendering when switching between breakpoints in Safari <= 5.
+  /* See https://github.com/jquery/jquery-mobile/issues/5380 */
+  .ui-table-reflow.encounters_summary {
+    display: table;
   }
 }
 
