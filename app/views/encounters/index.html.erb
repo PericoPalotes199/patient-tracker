@@ -13,45 +13,44 @@
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
 
-    <% if !current_user %>
+  <% if !current_user %>
 
-      <%= render 'layouts/sign_in_message' %>
+    <%= render 'layouts/sign_in_message' %>
 
-    <% else %>
+  <% else %>
 
-      <div class="wrap_section_narrow encounters_index_section">
-        <table data-role="table" class="encounters_index">
-          <thead>
-            <tr class="fullwidth">
-              <% if current_user.role == 'Admin' %>
-                <th>Resident</th>
-              <% end %>
-              <th>Type</th>
-              <th>Encountered</th>
-              <th>Submitted</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% @encounters.each do |encounter| %>
-              <% if policy(encounter).index? %>
-                <tr class="lineitem_index fullwidth">
-                  <% if current_user.role == 'Admin' %>
-                    <td><%= encounter.user.present? ? encounter.user.name : "Unknown" %></th>
-                  <% end %>
-                  <td><%= link_to encounter.encounter_type, encounter %></td>
-                  <td><%= encounter.encountered_on %></td>
-                  <td><%= encounter.created_at.to_date %></td>
-                </tr>
-              <% end %>
+    <div class="wrap_section_narrow encounters_index_section">
+      <table data-role="table" class="encounters_index">
+        <thead>
+          <tr class="fullwidth">
+            <% if current_user.role == 'Admin' %>
+              <th>Resident</th>
             <% end %>
-          </tbody>
-        </table>
-      </div>
-    <% end %>
+            <th>Type</th>
+            <th>Encountered</th>
+            <th>Submitted</th>
+          </tr>
+        </thead>
 
-  <div class="form-block">
-  </div>
+        <tbody>
+          <% @encounters.each do |encounter| %>
+            <% if policy(encounter).index? %>
+              <tr class="lineitem_index fullwidth">
+                <% if current_user.role == 'Admin' %>
+                  <td><%= encounter.user.present? ? encounter.user.name : "Unknown" %></th>
+                <% end %>
+                <td><%= link_to encounter.encounter_type, encounter %></td>
+                <td><%= encounter.encountered_on %></td>
+                <td><%= encounter.created_at.to_date %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+  <% end %>
+
   <%= render 'layouts/footer' %>
 </div>
 <!-- End Page 1 -->
