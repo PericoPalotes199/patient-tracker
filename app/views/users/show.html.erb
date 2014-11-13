@@ -28,14 +28,13 @@
           <% end %>
         </tbody>
       </table>
+      <% if policy(@user).edit? %>
+        <%= link_to 'Edit', edit_user_path(@user) %>
+      <% end %>
+      <% if policy(@user).index? %>
+        |<%= link_to 'Residents', users_path %>
+      <% end %>
     </div>
-
-    <% if policy(@user).edit? %>
-      <%= link_to 'Edit', edit_user_path(@user) %>
-    <% end %>
-    <% if policy(@user).index? %>
-      | <%= link_to 'Residents', users_path %>
-    <% end %>
 
   <% end %>
 
