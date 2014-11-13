@@ -27,11 +27,14 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
   color: #221f1f;
 }
 
-div.encounters_index_section,
-div.encounters_summary_section,
-div.encounters_show_section {
+div.wrap_section_narrow.encounters_index_section,
+div.wrap_section_narrow.encounters_summary_section,
+div.wrap_section_narrow.encounters_show_section,
+div.wrap_section_narrow.users_show_section {
   margin-top: 1em;
   min-height: 500px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 div.ui-navbar {
