@@ -7,30 +7,37 @@
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
 
-  <p>
-    <strong>Name:</strong>
-    <%= @user.name %>
-  </p>
+  <% if current_user.present? && policy(@user).show? %>
+    <div class="wrap_section_narrow users_show_section">
+      <table data-role="table" class="ui-responsive">
+        <thead>
+          <tr class="fullwidth">
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Role</th>
+          </tr>
+        </thead>
 
-  <p>
-    <strong>First Name:</strong>
-    <%= @user.first_name %>
-  </p>
+        <tbody>
+          <% if policy(@user).show? %>
+            <tr class="lineitem fullwidth">
+              <td><%= @user.first_name %></td>
+              <td><%= @user.last_name %></td>
+              <td><%= @user.role %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
 
-  <p>
-    <strong>Last Name:</strong>
-    <%= @user.last_name %>
-  </p>
+    <% if policy(@user).edit? %>
+      <%= link_to 'Edit', edit_user_path(@user) %>
+    <% end %>
+    <% if policy(@user).index? %>
+      | <%= link_to 'Residents', users_path %>
+    <% end %>
 
-  <p>
-    <strong>Role:</strong>
-    <%= @user.role %>
-  </p>
-
-  <% if current_user == @user %>
-    <%= link_to 'Edit', edit_user_path(@user) %> |
   <% end %>
-  <%= link_to 'Back', users_path %>
 
   <%= render 'layouts/footer' %>
 </div>
