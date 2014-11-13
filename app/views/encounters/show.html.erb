@@ -33,7 +33,7 @@
         <tbody>
           <% if policy(@encounter).index? %>
             <tr class="lineitem fullwidth">
-              <td><%= @encounter.user.present? ? @encounter.user.name : "Unknown" %></th>
+              <td><%= @encounter.user.present? ? @encounter.user.name : "Unknown" %></td>
               <td><%= @encounter.encounter_type %></td>
               <td><%= @encounter.encountered_on %></td>
               <td><%= @encounter.created_at.to_date %></td>
