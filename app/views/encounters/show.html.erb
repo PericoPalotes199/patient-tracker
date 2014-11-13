@@ -1,7 +1,11 @@
 <!-- Begin Page 1 -->
 <div data-role="page" id="show">
 
-  <% content_for :header_title, 'Encounter <br /> Details'.html_safe %>
+  <% if !current_user.present? %>
+    <% content_for :header_title, 'How many patients did you help today?' %>
+  <% else %>
+    <% content_for :header_title, 'Encounter <br /> Details'.html_safe %>
+  <% end %>
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
 

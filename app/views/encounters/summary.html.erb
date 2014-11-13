@@ -1,7 +1,9 @@
 <!-- Begin Page 1 -->
 <div data-role="page" id="index" data-url="index" tabindex="0">
 
-  <% if current_user.present? %> <!-- header content -->
+  <% if !current_user.present? %> <!-- header content -->
+    <% content_for :header_title, 'How many patients did you help today?' %>
+  <% else %>
     <% if policy(Encounter).summary? %>
       <% content_for :user_first_name_header, "All" %>
       <% content_for :user_last_name_header, "Residents" %>
@@ -9,8 +11,8 @@
       <% content_for :user_first_name_header, "#{current_user.first_name}" %>
       <% content_for :user_last_name_header, "#{current_user.last_name}'s" %>
     <% end %>
+    <% content_for :header_title, "Summary" %>
   <% end %>
-  <% content_for :header_title, "Summary" %>
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
 

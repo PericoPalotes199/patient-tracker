@@ -1,5 +1,9 @@
 <div data-role="page">
-  <% content_for :header_title, 'User Details' %>
+  <% if !current_user.present? %> <!-- header content -->
+    <% content_for :header_title, 'How many patients did you help today?' %>
+  <% else %>
+    <% content_for :header_title, 'User Details' %>
+  <% end  %>
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
 
