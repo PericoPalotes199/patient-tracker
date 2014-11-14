@@ -28,11 +28,12 @@
           <% end %>
         </tbody>
       </table>
+
       <% if policy(@user).edit? %>
-        <%= link_to 'Edit', edit_user_path(@user) %>
+        <%= link_to 'Edit', edit_user_path(@user), class: 'ui-btn ui-btn-inline ui-shadow' %>
       <% end %>
-      <% if policy(@user).index? %>
-        |<%= link_to 'Residents', users_path %>
+      <% if true #policy(@user).index? %>
+        <%= link_to 'Residents', users_path, class: 'ui-btn ui-btn-inline ui-shadow' %>
       <% end %>
     </div>
 
