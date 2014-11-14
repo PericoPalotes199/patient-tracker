@@ -1695,22 +1695,6 @@ section {
   }
 }
 
-@media ( min-width: 23.75em ) {
-  /* Fixes table rendering when switching between breakpoints in Safari <= 5.
-  /* See https://github.com/jquery/jquery-mobile/issues/5380 */
-  .ui-table-reflow.encounters_index {
-    display: table;
-  }
-}
-
-@media ( min-width: 23.75em ) {
-  /* Fixes table rendering when switching between breakpoints in Safari <= 5.
-  /* See https://github.com/jquery/jquery-mobile/issues/5380 */
-  .ui-table-reflow.encounters_summary {
-    display: table;
-  }
-}
-
 .unauthorized_content {
   min-height: 5em;
   width: 50%;
