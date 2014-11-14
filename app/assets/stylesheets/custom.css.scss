@@ -35,6 +35,10 @@ div.wrap_section_narrow.users_show_section {
   min-height: 500px;
   padding-left: 0;
   padding-right: 0;
+
+  #user_show_buttons {
+    margin-top: 0.5em;
+  }
 }
 
 div.ui-navbar {
@@ -1691,6 +1695,30 @@ section {
   /* Hide the labels in each cell */
   .ui-table-reflow.encounters_summary td .ui-table-cell-label,
   .ui-table-reflow.encounters_summary th .ui-table-cell-label {
+    display: none;
+  }
+}
+
+/*This query is for the User#show table */
+@media ( min-width: 23.75em ) {
+  /* Fixes table rendering when switching between breakpoints in Safari <= 5.
+  /* See https://github.com/jquery/jquery-mobile/issues/5380 */
+  .ui-table-reflow.users_show {
+    display: table;
+  }
+  /* Show the table header rows */
+  .ui-table-reflow.users_show td,
+  .ui-table-reflow.users_show th,
+  .ui-table-reflow.users_show tbody th,
+  .ui-table-reflow.users_show tbody td,
+  .ui-table-reflow.users_show thead td,
+  .ui-table-reflow.users_show thead th {
+    display: table-cell;
+    margin: 0;
+  }
+  /* Hide the labels in each cell */
+  .ui-table-reflow.users_show td .ui-table-cell-label,
+  .ui-table-reflow.users_show th .ui-table-cell-label {
     display: none;
   }
 }

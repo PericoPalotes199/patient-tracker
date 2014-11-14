@@ -9,7 +9,7 @@
 
   <% if current_user.present? && policy(@user).show? %>
     <div class="wrap_section_narrow users_show_section">
-      <table data-role="table" class="ui-responsive">
+      <table data-role="table" class="users_show">
         <thead>
           <tr class="fullwidth">
             <th>First Name</th>
@@ -29,12 +29,20 @@
         </tbody>
       </table>
 
-      <% if policy(@user).edit? %>
-        <%= link_to 'Edit', edit_user_path(@user), class: 'ui-btn ui-btn-inline ui-shadow' %>
-      <% end %>
-      <% if true #policy(@user).index? %>
-        <%= link_to 'Residents', users_path, class: 'ui-btn ui-btn-inline ui-shadow' %>
-      <% end %>
+      <div id="user_show_buttons" data-role="navbar">
+        <ul>
+          <li>
+            <% if policy(@user).edit? %>
+              <%= link_to 'Edit Profile', edit_user_path(@user), class: 'ui-shadow' %>
+            <% end %>
+          </li>
+          <li>
+            <% if true #policy(@user).index? %>
+              <%= link_to 'My Residents', users_path, class: 'ui-shadow' %>
+            <% end %>
+          </li>
+        </ul>
+      </div><!-- /navbar -->
     </div>
 
   <% end %>
