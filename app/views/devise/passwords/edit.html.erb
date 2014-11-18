@@ -1,18 +1,29 @@
-<div data-role="page">
-  <h2>Change your password</h2>
+<div data-role="page" data-dialog="true" data-close-btn="false" data-no-transition-cache>
+  <!-- data-close-btn-text="X" Will this attribute show an X in IE8 -->
+  <div data-role="header">
+    <h2>Change Password</h2>
+  </div><!-- /header -->
+
+  <%= render 'layouts/flash_messages' %>
 
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
     <%= devise_error_messages! %>
     <%= f.hidden_field :reset_password_token %>
 
-    <div><%= f.label :password, "New password" %><br />
-      <%= f.password_field :password, autofocus: true, autocomplete: "off" %></div>
+    <div>
+      <%= f.label :password, "New Password" %>
+      <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
+    </div>
+    <br />
 
-    <div><%= f.label :password_confirmation, "Confirm new password" %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+    <div>
+      <%= f.label :password_confirmation, "Confirm New Password" %>
+      <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    </div>
+    <br />
 
-    <div><%= f.button "Change my password" %></div>
+    <div>
+      <%= f.button "Change My Password" %>
+    </div>
   <% end %>
-
-  <%= render "devise/shared/links" %>
 </div>
