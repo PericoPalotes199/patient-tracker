@@ -1,27 +1,26 @@
-<div data-role="page">
-  <% if !current_user.present? %> <!-- header content -->
-    <% content_for :header_title, 'How many patients did you help today?' %>
-  <% else %>
-    <% content_for :header_title, 'Your Account' %>
-  <% end  %>
-  <%= render 'layouts/header' %>
+<div data-role="page" data-dialog="true" data-close-btn-text="X" data-no-transition-cache>
+  <!-- data-close-btn-text="X" Will this attribute show an X in IE8 -->
+  <div data-role="header">
+    <h2>Edit Account</h2>
+  </div><!-- /header -->
+
   <%= render 'layouts/flash_messages' %>
 
-  <h1><%= @user.name %></h1>
+  <% if !current_user.present? %>
 
-  <% if current_user == @user %>
-    <%= render 'form' %>
-    <div>
-      You are editing your profile information. Submit if you would like to change your name.
-    </div>
+    <%= render 'layouts/sign_in_message' %>
+
   <% else %>
-    You do not have permission to edit another user's profile!
+    <% if !policy(@user).edit? %>
+      <div class="unauthorized_content">
+        <p>You are not authorized to edit this user's account info.</p>
+      </div>
+    <% else %>
+
+      <%= render 'form' %>
+
+    <% end %>
+    <br />
   <% end %>
-
-  <br />
-  <%= link_to 'Show', @user %> |
-  <%= link_to 'Back', users_path %>
-
-  <%= render 'layouts/footer' %>
 </div>
 
