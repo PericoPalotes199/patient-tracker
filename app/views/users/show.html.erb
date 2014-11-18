@@ -31,16 +31,16 @@
 
       <div id="user_show_buttons" data-role="navbar">
         <ul>
-          <li>
-            <% if policy(@user).edit? %>
-              <%= link_to 'Edit Profile', edit_user_path(@user), class: 'ui-shadow' %>
-            <% end %>
-          </li>
-          <li>
-            <% if true #policy(@user).index? %>
+          <% if policy(@user).edit? %>
+            <li>
+              <%= link_to 'Edit Profile', edit_user_path(@user), class: 'ui-shadow', data: {transition: 'flip'} %>
+            </li>
+          <% end %>
+          <% if policy(User).index? %>
+            <li>
               <%= link_to 'My Residents', users_path, class: 'ui-shadow' %>
-            <% end %>
-          </li>
+            </li>
+          <% end %>
         </ul>
       </div><!-- /navbar -->
     </div>
