@@ -38,6 +38,10 @@ div.wrap_section_narrow.users_show_section {
 
   #user_show_buttons {
     margin-top: 0.5em;
+
+    ul li, ul li a{
+      margin: 0;
+    }
   }
 }
 
