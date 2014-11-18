@@ -60,8 +60,19 @@ form.new_user, form.edit_user, div.ui-dialog-contain a.ui-btn {
   margin-right: 1.1em;
 }
 
+form.button_to #delete_user {
+  background-color: red;
+  color: white;
+  margin: auto;
+  width: 50%;
+}
+
 div.ui-dialog-contain {
   padding-bottom: 1.1em;
+}
+
+div.ui-dialog-contain h2#close_account_header {
+  text-align: center;
 }
 
 .header_title {
