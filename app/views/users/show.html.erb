@@ -13,7 +13,13 @@
 
   <% else %>
 
-    <% if policy(@user).show? %>
+    <% if !policy(@user).show? %>
+
+      <div class="unauthorized_content">
+        <p>You are not authorized to view this user.</p>
+      </div>
+
+    <% else %>
       <div class="wrap_section_narrow users_show_section">
         <table data-role="table" class="users_show">
           <thead>
