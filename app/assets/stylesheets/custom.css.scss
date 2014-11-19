@@ -36,7 +36,7 @@ div.wrap_section_narrow.users_show_section {
   padding-left: 0;
   padding-right: 0;
 
-  #user_show_buttons {
+  #user_show_buttons, #encounter_show_buttons {
     margin-top: 0.5em;
 
     ul li, ul li a{
@@ -1736,6 +1736,10 @@ section {
   .ui-table-reflow.users_show th .ui-table-cell-label {
     display: none;
   }
+}
+
+table.ui-table-reflow.ui-responsive.encounters_show {
+  display: table;
 }
 
 .unauthorized_content {
