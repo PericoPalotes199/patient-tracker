@@ -20,7 +20,7 @@ ENCOUNTER_TYPES = [
 
 User.destroy_all
 
-developer = User.create!({ first_name: 'Developer', last_name: 'Developer', role: 'Developer',  email: ENV['DEV_USER_EMAIL'], password: ENV['DEV_USER_PASSWORD'] })
+developer = User.create!({ first_name: 'Developer', last_name: 'Developer', role: 'developer',  email: ENV['DEV_USER_EMAIL'], password: ENV['DEV_USER_PASSWORD'] })
 developer = User.create!({ first_name: 'Resident',  last_name: 'Resident',  role: 'resident',   email: ENV['ADMIN_USER_EMAIL'], password: ENV['ADMIN_USER_PASSWORD'] })
 developer = User.create!({ first_name: 'Resident',  last_name: 'Resident',  role: 'admin',   email: ENV['ADMIN_USER_EMAIL'], password: ENV['ADMIN_USER_PASSWORD'] })
 

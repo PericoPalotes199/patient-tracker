@@ -9,11 +9,11 @@ class User < ActiveRecord::Base
   before_save :set_default_name, :set_default_role
 
   def admin?
-    role == 'Admin' || role == 'admin'
+    role == 'admin'
   end
 
   def resident?
-    role == 'Resident' || role == 'resident'
+    role == 'resident'
   end
 
   private
@@ -22,6 +22,6 @@ class User < ActiveRecord::Base
     end
 
     def set_default_role
-      self.role ||= 'Resident'
+      self.role ||= 'resident'
     end
 end

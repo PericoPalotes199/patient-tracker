@@ -7,11 +7,11 @@ class EncounterPolicy < ApplicationPolicy
   end
 
   def summary?
-    user.role == 'Admin' || user.role == 'admin'
+    user.role == 'admin'
   end
 
   def index?
-    user.id == encounter.user.id || user.role == 'Admin' || user.role == 'admin'
+    user.id == encounter.user.id || user.role == 'admin'
   end
 
   def show?
@@ -23,7 +23,7 @@ class EncounterPolicy < ApplicationPolicy
   end
 
   def create?
-    user.role == 'Resident' || user.role == 'resident'
+    user.role == 'resident'
   end
 
   def edit?
@@ -31,7 +31,7 @@ class EncounterPolicy < ApplicationPolicy
   end
 
   def update?
-    (user.role == 'Resident' || user.role == 'resident') && user.id == encounter.user.id
+    user.role == 'resident' && user.id == encounter.user.id
   end
 
   def destroy?
