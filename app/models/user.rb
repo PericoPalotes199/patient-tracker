@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   before_save :set_default_name, :set_default_role
 
   def admin?
-    role == 'Admin'
+    role == 'Admin' || role == 'admin'
   end
 
   def resident?

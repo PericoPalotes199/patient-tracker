@@ -4,7 +4,7 @@
   <% if !current_user.present? %>
     <% content_for :header_title, 'How many patients did you help today?' %>
   <% else %>
-    <% if current_user.role != 'Admin' %>
+    <% if current_user.role != 'Admin' && current_user.role != 'admin' %>
       <% content_for :user_first_name_header, "#{current_user.first_name}" %>
       <% content_for :user_last_name_header, "#{current_user.last_name}'s" %>
     <% else %>
@@ -26,7 +26,7 @@
       <table data-role="table" class="encounters_index">
         <thead>
           <tr class="fullwidth">
-            <% if current_user.role == 'Admin' %>
+            <% if current_user.role == 'Admin' || current_user.role == 'admin' %>
               <th>Resident</th>
             <% end %>
             <th>Type</th>
@@ -39,7 +39,7 @@
           <% @encounters.each do |encounter| %>
             <% if policy(encounter).index? %>
               <tr class="lineitem_index fullwidth">
-                <% if current_user.role == 'Admin' %>
+                <% if current_user.role == 'Admin' || current_user.role == 'admin' %>
                   <td><%= encounter.user.present? ? encounter.user.name : "Unknown" %></th>
                 <% end %>
                 <td><%= link_to encounter.encounter_type, encounter %></td>
