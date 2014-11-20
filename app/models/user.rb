@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   end
 
   def resident?
-    role == 'Resident'
+    role == 'Resident' || role == 'resident'
   end
 
   private

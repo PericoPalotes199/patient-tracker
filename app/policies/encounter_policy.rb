@@ -23,7 +23,7 @@ class EncounterPolicy < ApplicationPolicy
   end
 
   def create?
-    user.role == 'Resident'
+    user.role == 'Resident' || user.role == 'resident'
   end
 
   def edit?
@@ -31,7 +31,7 @@ class EncounterPolicy < ApplicationPolicy
   end
 
   def update?
-    user.role == 'Resident' && user.id == encounter.user.id
+    (user.role == 'Resident' || user.role == 'resident') && user.id == encounter.user.id
   end
 
   def destroy?
