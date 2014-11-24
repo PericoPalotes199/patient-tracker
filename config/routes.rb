@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   get 'encounters/summary' => 'encounters#summary', as: :summary
-  resources :users
+  get 'users/new' => redirect('/users/sign_up')
+  resources :users, except: [:new, :create]
   resources :encounters
-  resources :charges
   root 'encounters#new'
 
   # The priority is based upon order of creation: first created -> highest priority.
