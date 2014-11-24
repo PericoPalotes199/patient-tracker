@@ -29,5 +29,9 @@
   </div>
   <br />
 
-  <%= f.button "Update Account", class: 'ui-btn ui-corner-all' %>
+  <% if @user.new_record? %>
+    <%= f.button "Create Account", class: 'ui-btn ui-corner-all' %>
+  <% else %>
+    <%= f.button "Update Account", class: 'ui-btn ui-corner-all' %>
+  <% end %>
 <% end %>
