@@ -13,6 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         #Amount in cents
         @amount = 100_00
         customer = Stripe::Customer.create(
+          email: sign_up_params[:email],
           description: ENV["STRIPE_CUSTOMER_DESCRIPTION"],
           card: params[:stripeToken]
         )
