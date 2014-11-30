@@ -27,6 +27,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         )
 
         save_customer_id(resource, customer.id)
+        assign_admin_role(resource)
 
       rescue Stripe::CardError => e
         flash[:error] = e.message
@@ -44,6 +45,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
     def save_customer_id(user, customer_id)
       user.customer_id = customer_id
+      user.save!
+    end
+
+    def assign_admin_role(user)
+      user.role = 'admin'
       user.save!
     end
 end
