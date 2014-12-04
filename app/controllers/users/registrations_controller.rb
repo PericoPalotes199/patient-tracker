@@ -15,15 +15,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
         customer = Stripe::Customer.create(
           email: sign_up_params[:email],
           description: ENV["STRIPE_CUSTOMER_DESCRIPTION"],
-          card: params[:stripeToken]
-        )
-
-        #Charge the Customer, not the card
-        charge = Stripe::Charge.create(
-          amount: @amount,
-          description: 'Rails Development Customer',
-          currency: 'usd',
-          customer: customer.id
+          card: params[:stripeToken],
+          plan: 'monthly',
+          quantity: 1
         )
 
         save_customer_id(resource, customer.id)
