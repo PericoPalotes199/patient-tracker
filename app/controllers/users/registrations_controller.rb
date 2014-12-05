@@ -10,8 +10,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     params[:user][:email] = params[:stripeEmail]
     super do |resource|
       begin
-        #Amount in cents
-        @amount = 100_00
+        @amount = 100 #Amount in cents
         customer = Stripe::Customer.create(
           email: sign_up_params[:email],
           description: ENV["STRIPE_CUSTOMER_DESCRIPTION"],
