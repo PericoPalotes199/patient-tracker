@@ -4,7 +4,7 @@
     <h2>Sign Up</h2>
   </div><!-- /header -->
 
-  <% flash[:alert] = 'Use an e-mail address outside of Swedish.org to ensure e-mail delivery.' %>
+  <% flash[:alert] = 'To ensure e-mail delivery, use a web-based address like Gmail. Check your spam folder.' %>
   <%= render 'layouts/flash_messages' %>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -30,15 +30,13 @@
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
     </div>
 
-    <div>
-      <%= f.button "Sign Up" %>
-    </div>
-
     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-            data-description="One Year's Subscription"
+            data-description="30 Day Free trueial"
+            data-label="Sign Up"
             data-amount="10000">
     </script>
+
   <% end %>
 
   <div style="text-align:center; padding: .5em;">OR</div>
