@@ -33,6 +33,8 @@ gem 'uglifier', '>= 1.3.0'
 
 
 group :development do
+  gem 'awesome_print'
+  gem 'conductor', github: 'rails/conductor'
   # Use Capistrano for deployment
   # gem 'capistrano-rails'
   gem 'pry'
