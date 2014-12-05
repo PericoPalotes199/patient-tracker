@@ -16,7 +16,7 @@
         <% end %>
       </li>
       <li>
-        <%= mail_to 'the.encounter.counter@gmail.com', 'Help', subject: 'Help',
+        <%= mail_to ENV["CONTACT_EMAIL_ADDRESS"], 'Help', subject: 'Help',
           body: "If you need help, send us an e-mail and someone will respond promptly. \n\n Please share any feedback for this app!  You might want to report unexpected behavior, errors, display problems, navigation problems, confusing information, desired features, or any other topic. Be as brief or elaborate as you wish." %>
       </li>
       <li>

@@ -6,6 +6,6 @@
   </p>
   <br />
   <p>
-    <%= mail_to 'the.encounter.counter@gmail.com', 'Contact', body: "If you are having difficult using this app, or would like to contact the creator of this app, please add your message below." %> Encounter Counter if you are having trouble with this app.
+    <%= mail_to ENV["CONTACT_EMAIL_ADDRESS"], 'Contact', body: "If you are encountering difficulties with this app, or you'd like to contact the customer service team, please add your message below." %> Encounter Counter if you are having trouble with this app.
   </p>
 </div>
