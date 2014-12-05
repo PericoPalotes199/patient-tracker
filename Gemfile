@@ -33,6 +33,8 @@ gem 'uglifier', '>= 1.3.0'
 group :development do
   # Use Capistrano for deployment
   # gem 'capistrano-rails'
+  gem 'pry'
+  gem 'pry-nav'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring', '~> 1.1.3'
 end
