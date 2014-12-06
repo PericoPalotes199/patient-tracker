@@ -32,6 +32,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         redirect_to new_user_registration_path
       rescue => e
         flash[:error] = "Unsuccessful. Please contact #{ENV["CONTACT_EMAIL_ADDRESS"]}"
+        redirect_to new_user_registration_path
       end
     end
   end
