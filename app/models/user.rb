@@ -16,6 +16,14 @@ class User < ActiveRecord::Base
     role == 'resident'
   end
 
+  def subscription_expired?
+    Time.zone.at(active_until) < Time.zone.now
+  end
+
+  def days_until_subscription_expiration
+    ((Time.zone.at(active_until) - Time.zone.now) / (3600 * 24)).floor
+  end
+
   private
     def set_default_name
       self.name = first_name + ' ' + last_name

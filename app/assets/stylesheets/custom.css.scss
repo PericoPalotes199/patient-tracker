@@ -14,7 +14,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
     zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
 
-#sign_in_message {
+#sign_in_message, #subscription_expired {
   width: device-width;
   height: auto;
   padding-top: 0.25em;

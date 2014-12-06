@@ -9,6 +9,10 @@
 
     <%= render 'layouts/sign_in_message' %>
 
+  <% elsif current_user.subscription_expired? %>
+
+    <%= render 'layouts/subscription_expired' %>
+
   <% else %>
 
     <div class="wrap_section_narrow">

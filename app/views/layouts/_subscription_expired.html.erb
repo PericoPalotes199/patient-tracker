@@ -1,0 +1,14 @@
+<div id="subscription_expired">
+
+  <% if current_user.admin? %>
+    <p>
+      Your residency's subscription has expired. Please renew the subscription if you want to count encounters.
+    </p>
+  <% elsif #current_user.resident? %>
+      Your residency's subscription has expired. Please contact your current_user.administrator.email and ask them to renew the subscription.
+  <% end %>
+  <br />
+  <p>
+    <%= mail_to ENV["CONTACT_EMAIL_ADDRESS"], 'Contact', body: "If you are encountering difficulties with this app, or you'd like to contact the customer service team, please add your message here." %> Encounter Counter if you need help.
+  </p>
+</div>
