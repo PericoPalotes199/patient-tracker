@@ -23,7 +23,7 @@ class EncounterPolicy < ApplicationPolicy
   end
 
   def create?
-    user.role == 'resident'
+    user.role == 'resident' || user.role == 'admin'
   end
 
   def edit?
