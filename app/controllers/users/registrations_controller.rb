@@ -22,17 +22,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
         #TODO: These should probably be ActiveRecord callbacks.
         assign_admin_role(resource)
         save_active_until(resource, subscription.current_period_end)
-
       rescue Stripe::CardError => e
         flash[:error] = e.message
-        redirect_to new_user_registration_path
+        redirect_to new_user_registration_path and return
       rescue Stripe::StripeError => e
         flash[:error] = "Payment unsuccessful."
         #TODO: send an e-mail to application owner
-        redirect_to new_user_registration_path
+        redirect_to new_user_registration_path and return
       rescue => e
         flash[:error] = "Unsuccessful. Please contact #{ENV["CONTACT_EMAIL_ADDRESS"]}"
-        redirect_to new_user_registration_path
+        redirect_to new_user_registration_path and return
       end
     end
   end

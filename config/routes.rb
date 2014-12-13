@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'users/new' => redirect('/users/sign_up')
   resources :users, except: [:new, :create]
   resources :encounters
+  mount StripeEvent::Engine, at: '/stripe_events'
   root 'encounters#new'
 
   # The priority is based upon order of creation: first created -> highest priority.
