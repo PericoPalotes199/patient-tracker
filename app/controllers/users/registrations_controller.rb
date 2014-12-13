@@ -29,7 +29,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         flash[:error] = "Payment unsuccessful."
         #TODO: send an e-mail to application owner
         redirect_to new_user_registration_path and return
-      rescue => e
+      rescue StandardError => e
         flash[:error] = "Unsuccessful. Please contact #{ENV["CONTACT_EMAIL_ADDRESS"]}"
         redirect_to new_user_registration_path and return
       end
