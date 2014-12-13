@@ -1,0 +1,81 @@
+{
+  "id": "evt_00000000000000",
+  "created": 1418459258,
+  "livemode": false,
+  "type": "invoice.created",
+  "data": {
+    "object": {
+      "date": 1418459258,
+      "id": "in_159BFWAVwf4zCU70N5lhySrv",
+      "period_start": 1418459258,
+      "period_end": 1418459258,
+      "lines": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/invoices/in_159BFWAVwf4zCU70N5lhySrv/lines",
+        "data": [
+          {
+            "id": "sub_00000000000000",
+            "object": "line_item",
+            "type": "subscription",
+            "livemode": false,
+            "amount": 0,
+            "currency": "usd",
+            "proration": false,
+            "period": {
+              "start": 1418459258,
+              "end": 1421051258
+            },
+            "subscription": null,
+            "quantity": 1,
+            "plan": {
+              "interval": "month",
+              "name": "MONTHLY",
+              "created": 1418456249,
+              "amount": 100,
+              "currency": "usd",
+              "id": "monthly",
+              "object": "plan",
+              "livemode": false,
+              "interval_count": 1,
+              "trial_period_days": 30,
+              "metadata": {},
+              "statement_description": "MONTHLY"
+            },
+            "description": null,
+            "metadata": {}
+          }
+        ]
+      },
+      "subtotal": 0,
+      "total": 0,
+      "customer": "cus_00000000000000",
+      "object": "invoice",
+      "attempted": true,
+      "closed": true,
+      "forgiven": false,
+      "paid": true,
+      "livemode": false,
+      "attempt_count": 0,
+      "amount_due": 0,
+      "currency": "usd",
+      "starting_balance": 0,
+      "ending_balance": 0,
+      "next_payment_attempt": null,
+      "webhooks_delivered_at": null,
+      "charge": null,
+      "discount": null,
+      "application_fee": null,
+      "subscription": "sub_00000000000000",
+      "metadata": {},
+      "statement_description": null,
+      "description": null,
+      "receipt_number": null
+    }
+  },
+  "object": "event",
+  "pending_webhooks": 1,
+  "request": "iar_5Jot0LgnxLhSE3",
+  "api_version": "2014-11-20"
+}

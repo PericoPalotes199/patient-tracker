@@ -1,0 +1,35 @@
+{
+  "id": "evt_00000000000000",
+  "created": 1418459258,
+  "livemode": false,
+  "type": "customer.card.created",
+  "data": {
+    "object": {
+      "id": "card_159BFLAVwf4zCU70iseZwuUI",
+      "object": "card",
+      "last4": "4242",
+      "brand": "Visa",
+      "funding": "credit",
+      "exp_month": 1,
+      "exp_year": 2015,
+      "fingerprint": "nP53MUYwmjSPRu21",
+      "country": "US",
+      "name": "user@example.com",
+      "address_line1": null,
+      "address_line2": null,
+      "address_city": null,
+      "address_state": null,
+      "address_zip": null,
+      "address_country": null,
+      "cvc_check": "pass",
+      "address_line1_check": null,
+      "address_zip_check": null,
+      "dynamic_last4": null,
+      "customer": "cus_00000000000000"
+    }
+  },
+  "object": "event",
+  "pending_webhooks": 1,
+  "request": "iar_5JotXq7hDGrHCH",
+  "api_version": "2014-11-20"
+}
