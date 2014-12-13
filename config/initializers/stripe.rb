@@ -63,6 +63,30 @@ StripeEvent.configure do |events|
     # event.data.object #=> #<Stripe::Charge:0x3fcb34c115f8>
   # end
 
+  events.subscribe 'customer.created' do |event|
+    Rails.logger.info '**************************************************'
+    Rails.logger.info event
+    Rails.logger.info '**************************************************'
+  end
+
+  events.subscribe 'customer.card.created' do |event|
+    Rails.logger.info '**************************************************'
+    Rails.logger.info event
+    Rails.logger.info '**************************************************'
+  end
+
+  events.subscribe 'customer.updated' do |event|
+    Rails.logger.info '**************************************************'
+    Rails.logger.info event
+    Rails.logger.info '**************************************************'
+  end
+
+  events.subscribe 'invoice.created' do |event|
+    Rails.logger.info '**************************************************'
+    Rails.logger.info event
+    Rails.logger.info '**************************************************'
+  end
+
   events.subscribe 'invoice.payment_succeeded' do |event|
     customer_id = event.data.object['customer']
     subscription = event.data.object['subscription']
@@ -91,6 +115,12 @@ StripeEvent.configure do |events|
       #TODO: send an email to application owner upon failure, or maybe Stripe will?
       raise StripeEvent::UnauthorizedError
     end
+  end
+
+  events.subscribe 'customer.subscription.created' do |event|
+    Rails.logger.info '**************************************************'
+    Rails.logger.info event
+    Rails.logger.info '**************************************************'
   end
 
   events.subscribe 'customer.subscription.updated' do |event|
