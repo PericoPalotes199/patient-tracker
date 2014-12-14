@@ -16,7 +16,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
           description: ENV["STRIPE_CUSTOMER_DESCRIPTION"],
           card: params[:stripeToken]
         )
-        subscription = customer.subscriptions.create(plan: 'monthly', quantity: 1)
+
+        subscription = customer.subscriptions.create(plan: params[:plan], quantity: 1)
         save_customer_id(resource, customer.id)
 
         #TODO: These should probably be ActiveRecord callbacks.

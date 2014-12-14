@@ -7,22 +7,18 @@
   <%= render 'layouts/flash_messages' %>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {ajax: false}) do |f| %>
-    <div>
-      <%= f.label :email %>
-      <%= f.email_field :email, data: { clear_btn: true }, autofocus: true %>
-    </div>
-    <br />
 
-    <div>
-      <%= f.label :password %>
-      <%= f.password_field :password, autocomplete: "off" %>
-    </div>
+    <%= f.label :email, class: 'ui-hidden-accessible' %>
+    <%= f.email_field :email, data: { clear_btn: true },
+     placeholder: 'Email', value: '' %>
+
+    <%= f.label :password, class: 'ui-hidden-accessible' %>
+    <%= f.password_field :password,
+      autocomplete: "off", placeholder: 'Password', value: '' %>
 
     <% if devise_mapping.rememberable? -%>
-      <div>
         <%= f.check_box :remember_me, data: {mini: true} %>
         <%= f.label :remember_me %>
-      </div>
       <br />
     <% end -%>
 
