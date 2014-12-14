@@ -4,7 +4,6 @@
     <h2>Sign Up</h2>
   </div><!-- /header -->
 
-  <% flash[:alert] = 'To ensure e-mail delivery, use a web-based address like Gmail. Check your spam folder.' %>
   <%= render 'layouts/flash_messages' %>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>

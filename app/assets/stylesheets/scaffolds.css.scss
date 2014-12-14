@@ -26,10 +26,10 @@ div {
   padding-bottom: 0em;
 }
 
-#alert, .alert{
+#alert, .alert, #error, .error, #payment, .payment{
   color: red;
   font-family: 'GibsonSemiBold', Verdana, sans-serif;
-  font-size: 1.25em;
+  font-size: 1.1em;
   text-align: center;
   padding-top: 1em;
   padding-bottom: 0em;
