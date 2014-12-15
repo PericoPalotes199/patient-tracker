@@ -2,11 +2,12 @@
   <!-- data-close-btn-text="X" Will this attribute show an X in IE8 -->
   <div data-role="header">
     <h2>Sign In</h2>
-  </div><!-- /header -->
+  </div><!-- data-role="header" -->
 
   <%= render 'layouts/flash_messages' %>
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {ajax: false}) do |f| %>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {ajax: false},
+    html: { class: "new_user_session", id: "new_user_session" }) do |f| %>
 
     <%= f.label :email, class: 'ui-hidden-accessible' %>
     <%= f.email_field :email, data: { clear_btn: true },
@@ -30,6 +31,6 @@
   <div style="text-align:center; padding: .5em;">OR</div>
 
   <%= render "devise/shared/buttons" %>
-</div>
+</div><!-- data-role="page" -->
 
 

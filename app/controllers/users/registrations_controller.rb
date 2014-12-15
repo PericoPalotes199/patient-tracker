@@ -11,7 +11,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     #process credit card if successful sign up
     super do |resource|
       begin
-        @amount = 100 #Amount in cents
         customer = Stripe::Customer.create(
           email: sign_up_params[:email],
           description: ENV["STRIPE_CUSTOMER_DESCRIPTION"],

@@ -55,7 +55,9 @@ div.ui-header.ui-bar-inherit a.ui-icon-delete {
 }
 
 /* New Registration AND New session */
-form.new_user, form.edit_user {
+form.new_user_registration,
+form.new_user_session,
+form.edit_user {
   margin-top: 1.1em;
 
   /* text inputs */
@@ -82,14 +84,12 @@ form.new_user, form.edit_user {
       font-weight: bold;
     }
   }
-
-  .stripe-button-el span {
-    padding: 0.5em;
-    font-size: 1em;
-  }
 }
 
-form.new_user, form.edit_user, div.ui-dialog-contain a.ui-btn {
+form.new_user_registration,
+form.new_user_session,
+form.edit_user,
+div.ui-dialog-contain a.ui-btn {
 /*width: 50px !important*/
   margin-left: 1.1em;
   margin-right: 1.1em;
