@@ -22,7 +22,7 @@ gem 'pundit', '~> 0.2.3'
 gem 'sass-rails', '~> 4.0.3'
 # Use Stripe for payments
 gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
-gem 'stripe_event'
+gem 'stripe_event', '~> 1.4.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
