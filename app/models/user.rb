@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 
   has_many :encounters, dependent: :destroy
   has_many :invitations, :class_name => 'User', :as => :invited_by
+  after_invitation_accepted :update_inviter_subscription_quantity
 
   before_create :set_default_role, :set_active_until
   before_save :set_name
@@ -46,5 +47,12 @@ class User < ActiveRecord::Base
 
     def update_invitees_active_until
       invitations.update_all(active_until: active_until)
+    end
+
+    def update_inviter_subscription_quantity
+      customer = Stripe::Customer.retrieve(resource.invited_by.customer_id)
+      subscription = customer.subscriptions.first
+      subscription.quantity += 1
+      subscription.save
     end
 end

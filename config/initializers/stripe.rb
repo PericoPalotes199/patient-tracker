@@ -95,6 +95,8 @@ StripeEvent.configure do |events|
       user = User.find_by(customer_id: customer_id)
       user.active_until = Stripe::Customer.retrieve(customer_id).subscriptions.retrieve(subscription).current_period_end
       user.update_invitees_active_until
+      #TODO: update the subscription quantity with only active && accepted users
+      subscription.quantity = user.invitations.invitation_accepted.count
       if user.save
         Rails.logger.info '**************************************************'
         Rails.logger.info "#{event.type} webhook successful."
