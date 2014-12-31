@@ -43,4 +43,8 @@ class User < ActiveRecord::Base
         self.active_until = invited_by.active_until
       end
     end
+
+    def update_invitees_active_until
+      invitations.update_all(active_until: active_until)
+    end
 end

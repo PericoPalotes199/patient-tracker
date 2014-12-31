@@ -94,6 +94,7 @@ StripeEvent.configure do |events|
       #User with customer_id: 'cus_00000000000000' saved in dev database
       user = User.find_by(customer_id: customer_id)
       user.active_until = Stripe::Customer.retrieve(customer_id).subscriptions.retrieve(subscription).current_period_end
+      user.update_invitees_active_until
       if user.save
         Rails.logger.info '**************************************************'
         Rails.logger.info "#{event.type} webhook successful."
@@ -130,6 +131,7 @@ StripeEvent.configure do |events|
       #User with customer_id: 'cus_00000000000000' saved in dev database
       user = User.find_by!(customer_id: customer_id)
       user.active_until = subscription.current_period_end
+      user.update_invitees_active_until
       user.save!
       Rails.logger.info '**************************************************'
       Rails.logger.info "#{event.type} webhook successful."
