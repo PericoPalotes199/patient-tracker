@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
   has_many :encounters, dependent: :destroy
+  has_many :invitations, :class_name => 'User', :as => :invited_by
 
   before_create :set_default_role, :set_active_until
   before_save :set_name
