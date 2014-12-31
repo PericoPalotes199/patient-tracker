@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
 
   has_many :encounters, dependent: :destroy
 
-  before_save :set_default_name, :set_default_role
+  before_create :set_default_role, :set_active_until
+  before_save :set_name
 
   def admin?
     role == 'admin'
@@ -26,7 +27,7 @@ class User < ActiveRecord::Base
   end
 
   private
-    def set_default_name
+    def set_name
       if first_name && last_name
         self.name = first_name + ' ' + last_name
       end
@@ -34,5 +35,11 @@ class User < ActiveRecord::Base
 
     def set_default_role
       self.role ||= 'resident'
+    end
+
+    def set_active_until
+      if invited_by_id?
+        self.active_until = invited_by.active_until
+      end
     end
 end
