@@ -12,4 +12,11 @@ class ApplicationController < ActionController::Base
     def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up) << [:first_name, :last_name]
     end
+
+    def authenticate_inviter!
+      unless current_user.role == 'admin'
+        redirect_to root_url, :alert => 'You are not authorized to invite resdients.'
+      end
+      super
+    end
 end
