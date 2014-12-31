@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   end
 
   def subscription_expired?
+    return !active_until unless active_until
     Time.zone.at(active_until) < Time.zone.now
   end
 
@@ -26,7 +27,9 @@ class User < ActiveRecord::Base
 
   private
     def set_default_name
-      self.name = first_name + ' ' + last_name
+      if first_name && last_name
+        self.name = first_name + ' ' + last_name
+      end
     end
 
     def set_default_role
