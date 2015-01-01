@@ -24,6 +24,7 @@
   <% else %> <!-- Show nav. and table if signed in -->
 
     <div class="wrap_section_narrow encounters_summary_section">
+
       <table data-role="table" class="encounters_summary">
         <thead>
           <tr class="fullwidth">
@@ -50,7 +51,23 @@
           <% end %>
         </tbody>
       </table>
+
+      <div id="encounters_summary_buttons" data-role="navbar">
+        <ul>
+          <% if current_user.admin? %>
+            <li>
+              <%= link_to 'Invite Resident', new_user_invitation_path, class: 'ui-shadow', data: {transition: 'flip'} %>
+            </li>
+          <% end %>
+          <% if policy(User).index? %>
+            <li>
+              <%= link_to 'My Residents', users_path, class: 'ui-shadow' %>
+            </li>
+          <% end %>
+        </ul>
+      </div><!-- /navbar -->
     </div>
+
   <% end %>
 
   <%= render 'layouts/footer' %>

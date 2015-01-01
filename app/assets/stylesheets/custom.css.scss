@@ -36,7 +36,7 @@ div.wrap_section_narrow.users_show_section {
   padding-left: 0;
   padding-right: 0;
 
-  #user_show_buttons, #encounter_show_buttons {
+  #user_show_buttons, #encounter_show_buttons, #encounters_summary_buttons {
     margin-top: 0.5em;
 
     ul li, ul li a{
@@ -1765,6 +1765,30 @@ section {
   /* Hide the labels in each cell */
   .ui-table-reflow.users_show td .ui-table-cell-label,
   .ui-table-reflow.users_show th .ui-table-cell-label {
+    display: none;
+  }
+}
+
+/*This query is for the Encounters#summary table */
+@media ( min-width: 23.75em ) {
+  /* Fixes table rendering when switching between breakpoints in Safari <= 5.
+  /* See https://github.com/jquery/jquery-mobile/issues/5380 */
+  .ui-table-reflow.encounters_summary {
+    display: table;
+  }
+  /* Show the table header rows */
+  .ui-table-reflow.encounters_summary td,
+  .ui-table-reflow.encounters_summary th,
+  .ui-table-reflow.encounters_summary tbody th,
+  .ui-table-reflow.encounters_summary tbody td,
+  .ui-table-reflow.encounters_summary thead td,
+  .ui-table-reflow.encounters_summary thead th {
+    display: table-cell;
+    margin: 0;
+  }
+  /* Hide the labels in each cell */
+  .ui-table-reflow.encounters_summary td .ui-table-cell-label,
+  .ui-table-reflow.encounters_summary th .ui-table-cell-label {
     display: none;
   }
 }
