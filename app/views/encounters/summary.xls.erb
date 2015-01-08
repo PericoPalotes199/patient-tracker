@@ -53,8 +53,10 @@
         <Cell ss:StyleID="s63"><Data ss:Type="String">Encountered</Data></Cell>
         <Cell ss:StyleID="s63"><Data ss:Type="String">Submitted</Data></Cell>
       </Row>
+      <% current_user_invited_users = current_user.invitations %>
       <% @encounters.each do |encounter| %>
-        <% if policy(encounter).index? %>
+        <% if current_user == encounter.user ||
+          ( policy(encounter).index? && current_user_invited_users.include?(encounter.user) ) %>
           <Row>
             <Cell ss:StyleID="s65">
               <Data ss:Type="String"><%= encounter.user.present? ? encounter.user.name : "unknown" %></Data>

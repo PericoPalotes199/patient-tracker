@@ -39,9 +39,12 @@
         </thead>
 
         <tbody>
+          <% current_user_invited_users = current_user.invitations %>
           <% @encounters_count.each do |group, count| %>
             <% user = User.find(group[0]) %>
-            <% if user == current_user || policy(Encounter).summary? %>  <!-- Show rows belonging to the current_user or permitted rows -->
+            <!-- Show a row if it belongs to the current_user or if the current_user has summary privileges  -->
+            <% if user == current_user ||
+              ( policy(Encounter).summary? && current_user_invited_users.include?(user) ) %>
               <tr class="lineitem fullwidth">
                 <% if policy(Encounter).summary? %> <!-- Show name column if policy allows -->
                   <td><%= user.name %></td>
