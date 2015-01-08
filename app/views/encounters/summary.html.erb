@@ -1,5 +1,5 @@
 <!-- Begin Page 1 -->
-<div data-role="page" id="index" data-url="index" tabindex="0">
+<div data-role="page" id="summary" data-url="summary" tabindex="0">
 
   <% if !current_user.present? %> <!-- header content -->
     <% content_for :header_title, 'How many patients did you help today?' %>
@@ -7,9 +7,11 @@
     <% if policy(Encounter).summary? %>
       <% content_for :user_first_name_header, "All" %>
       <% content_for :user_last_name_header, "Residents" %>
-    <% else %>
+    <% elsif current_user.first_name && current_user.last_name %>
       <% content_for :user_first_name_header, "#{current_user.first_name}" %>
       <% content_for :user_last_name_header, "#{current_user.last_name}'s" %>
+    <% else %>
+      <% content_for :user_last_name_header, "#{current_user.email.split('@').first}'s" %>
     <% end %>
     <% content_for :header_title, "Summary" %>
   <% end %>
@@ -52,20 +54,22 @@
         </tbody>
       </table>
 
-      <div id="encounters_summary_buttons" data-role="navbar">
-        <ul>
-          <% if current_user.admin? %>
-            <li>
-              <%= link_to 'Invite Resident', new_user_invitation_path, class: 'ui-shadow', data: {transition: 'flip'} %>
-            </li>
-          <% end %>
-          <% if policy(User).index? %>
-            <li>
-              <%= link_to 'My Residents', users_path, class: 'ui-shadow' %>
-            </li>
-          <% end %>
-        </ul>
-      </div><!-- /navbar -->
+      <% if current_user.admin? || policy(User).index? %>
+        <div id="encounters_summary_buttons" data-role="navbar">
+          <ul>
+            <% if current_user.admin? %>
+              <li>
+                <%= link_to 'Invite Resident', new_user_invitation_path, class: 'ui-shadow', data: {transition: 'flip'} %>
+              </li>
+            <% end %>
+            <% if policy(User).index? %>
+              <li>
+                <%= link_to 'My Residents', users_path, class: 'ui-shadow' %>
+              </li>
+            <% end %>
+          </ul>
+        </div><!-- /navbar -->
+      <% end %>
     </div>
 
   <% end %>

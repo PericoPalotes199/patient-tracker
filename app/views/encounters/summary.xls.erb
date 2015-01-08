@@ -39,14 +39,16 @@
     </Style>
   </Styles>
   <Worksheet ss:Name="Encounters">
-    <Table ss:ExpandedColumnCount="4" x:FullColumns="1"
+    <Table ss:ExpandedColumnCount="5" x:FullColumns="1"
     x:FullRows="1" ss:DefaultColumnWidth="65" ss:DefaultRowHeight="15">
-      <Column ss:Width="56"/>
-      <Column ss:Width="98"/>
-      <Column ss:Width="61"/>
-      <Column ss:Width="52"/>
+      <Column ss:Width="150"/>
+      <Column ss:Width="150"/>
+      <Column ss:Width="150"/>
+      <Column ss:Width="150"/>
+      <Column ss:Width="150"/>
       <Row>
         <Cell ss:StyleID="s63"><Data ss:Type="String">Resident</Data></Cell>
+        <Cell ss:StyleID="s63"><Data ss:Type="String">Email</Data></Cell>
         <Cell ss:StyleID="s63"><Data ss:Type="String">Type</Data></Cell>
         <Cell ss:StyleID="s63"><Data ss:Type="String">Encountered</Data></Cell>
         <Cell ss:StyleID="s63"><Data ss:Type="String">Submitted</Data></Cell>
@@ -55,7 +57,10 @@
         <% if policy(encounter).index? %>
           <Row>
             <Cell ss:StyleID="s65">
-              <Data ss:Type="String"><%= encounter.user.present? ? encounter.user.name : "Unknown" %></Data>
+              <Data ss:Type="String"><%= encounter.user.present? ? encounter.user.name : "unknown" %></Data>
+             </Cell>
+             <Cell ss:StyleID="s65">
+              <Data ss:Type="String"><%= encounter.user.present? ? encounter.user.email : "unknown" %></Data>
              </Cell>
             <Cell ss:StyleID="s65">
               <Data ss:Type="String"><%= encounter.encounter_type %></Data>
@@ -79,13 +84,15 @@
     </WorksheetOptions>
   </Worksheet>
   <Worksheet ss:Name="Summary">
-    <Table ss:ExpandedColumnCount="3" x:FullColumns="1"
+    <Table ss:ExpandedColumnCount="4" x:FullColumns="1"
     x:FullRows="1" ss:DefaultColumnWidth="65" ss:DefaultRowHeight="15">
-      <Column ss:Width="56"/>
-      <Column ss:Width="98"/>
-      <Column ss:Width="61"/>
+      <Column ss:Width="150"/>
+      <Column ss:Width="150"/>
+      <Column ss:Width="150"/>
+      <Column ss:Width="150"/>
       <Row>
         <Cell ss:StyleID="s63"><Data ss:Type="String">Resident</Data></Cell>
+        <Cell ss:StyleID="s63"><Data ss:Type="String">Email</Data></Cell>
         <Cell ss:StyleID="s63"><Data ss:Type="String">Type</Data></Cell>
         <Cell ss:StyleID="s63"><Data ss:Type="String">Total</Data></Cell>
       </Row>
@@ -95,7 +102,10 @@
           <Row>
             <Cell ss:StyleID="s65">
               <Data ss:Type="String"><%= user.name %></Data>
-             </Cell>
+            </Cell>
+            <Cell ss:StyleID="s65">
+              <Data ss:Type="String"><%= user.email %></Data>
+            </Cell>
             <Cell ss:StyleID="s65">
               <Data ss:Type="String"><%= group[1] %></Data>
             </Cell>

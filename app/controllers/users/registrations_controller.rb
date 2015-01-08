@@ -26,15 +26,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
       rescue Stripe::CardError => e
         flash[:error] = e.message
         flash[:payment] = "Payment unsuccessful."
+        Rails.logger.error "Payment unsuccessful: #{e.message}"
         redirect_to new_user_registration_path and return
       rescue Stripe::StripeError => e
         flash[:error] = e.message
         flash[:payment] = "Payment unsuccessful."
         #TODO: send an e-mail to application owner
+        Rails.logger.error "Payment unsuccessful: #{e.message}"
         redirect_to new_user_registration_path and return
       rescue StandardError => e
-        flash[:error] = "Unsuccessful. Please contact #{ENV["CONTACT_EMAIL_ADDRESS"]}"
+        flash[:error] = "There was a problem! Please try again.\nIf the problem persists please contact us at #{ENV["CONTACT_EMAIL_ADDRESS"]}."
         flash[:payment] = "Payment unsuccessful."
+        Rails.logger.error "Payment unsuccessful: #{e.message}"
         redirect_to new_user_registration_path and return
       end
     end
