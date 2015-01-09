@@ -14,7 +14,7 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
     zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
 
-#sign_in_message, #subscription_expired {
+#subscription_expired {
   width: device-width;
   height: auto;
   padding-top: 0.25em;
@@ -112,7 +112,8 @@ div.ui-dialog-contain h2#close_account_header {
   text-align: center;
 }
 
-div.ui-dialog-contain h2.ui-title {
+div.ui-dialog-contain h2.ui-title,
+div#sign_in_header h2.ui-title {
   text-align: center;
   margin: 0 auto;
 }
