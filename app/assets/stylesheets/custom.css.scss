@@ -57,6 +57,7 @@ div.ui-header.ui-bar-inherit a.ui-icon-delete {
 /* New Registration AND New session */
 form.new_user_registration,
 form.new_user_session,
+form#new_user.new_user, //invitation form
 form.edit_user {
   margin-top: 1.1em;
 
@@ -88,6 +89,7 @@ form.edit_user {
 
 form.new_user_registration,
 form.new_user_session,
+form#new_user.new_user, //invitation form
 form.edit_user,
 div.ui-dialog-contain a.ui-btn {
 /*width: 50px !important*/
@@ -108,6 +110,11 @@ div.ui-dialog-contain {
 
 div.ui-dialog-contain h2#close_account_header {
   text-align: center;
+}
+
+div.ui-dialog-contain h2.ui-title {
+  text-align: center;
+  margin: 0 auto;
 }
 
 .header_title {
@@ -1808,6 +1815,14 @@ table.ui-table-reflow.ui-responsive.encounters_show {
   color: #221f1f;
   font-family: 'GibsonRegular', Verdana, sans-serif;
   text-align: center;
+}
+
+#unauthorized_invitation {
+  width: 100%;
+  margin: 1em auto 0 auto;
+  padding: 0;
+  font-size: 1.3em;
+  line-height: 1.4em;
 }
 
 @media (max-width: 580px) {
