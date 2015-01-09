@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = current_user.invitations
+    @users = current_user ? current_user.invitations : User.none
   end
 
   # GET /users/1
