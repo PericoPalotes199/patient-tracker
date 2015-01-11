@@ -15,6 +15,10 @@
     <%= hidden_field_tag 'stripeEmail' %>
     <%= hidden_field_tag 'chargeForm' %>
 
+    <%= f.label :residency, class: 'ui-hidden-accessible' %>
+    <%= f.text_field :residency, data: { clear_btn: true },
+      placeholder: 'Residency Name', value: '' %>
+
     <%= f.label :first_name, class: 'ui-hidden-accessible' %>
     <%= f.text_field :first_name, data: { clear_btn: true },
       placeholder: 'First Name', value: '' %>
