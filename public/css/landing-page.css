@@ -140,6 +140,23 @@ body {
   font-size: 1.7rem;
 }
 
+/* Less than 400px */
+@media (max-width: 399px) {
+ .section {
+    min-height: 16rem;
+  }
+  .section.demo-screen .phone {
+    padding-top: 16rem;
+    max-width: 80%;
+  }
+  .section.demo-screen .feature {
+    position: absolute;
+    top: 0;
+    max-width: 95%;
+    font-size: 1.75rem;
+  }
+}
+
 /* Less than 550 */
 @media (max-width: 549px) {
   .section {
