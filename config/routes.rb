@@ -1,15 +1,23 @@
 Rails.application.routes.draw do
+
+  #Devise Users
   devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
   devise_scope :user do
     get 'payment_info' => 'users/registrations#payment_info'
     post 'pay' => 'users/registrations#pay'
   end
-  get 'encounters/summary' => 'encounters#summary', as: :summary
+
+  # Users
   get 'users/new' => redirect('/users/sign_up')
+  get 'users/sign_out' => redirect('/users/sign_in')
   resources :users, except: [:new, :create]
-  resources :encounters
+
+  # Encounters
+  get 'encounters/summary' => 'encounters#summary', as: :summary
+  resources :encounters, except: :new
+  get 'encounters/new' => 'encounters#new'
+
   mount StripeEvent::Engine, at: '/stripe_events'
-  root 'encounters#new'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
