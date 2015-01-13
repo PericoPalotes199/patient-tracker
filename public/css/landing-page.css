@@ -28,10 +28,7 @@ body {
   .navbar-item {
     position: relative;
     float: left;
-    width: 100%;
-    margin-bottom: 0;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee; }
+    margin-bottom: 0; }
   .navbar-link {
     text-transform: uppercase;
     font-size: 11px;
@@ -147,6 +144,13 @@ body {
 
 /* Less than 400px */
 @media (max-width: 399px) {
+  .navbar-item {
+    position: relative;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee; }
   .section {
     min-height: 16rem;
   }
