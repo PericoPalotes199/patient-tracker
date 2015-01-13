@@ -27,4 +27,14 @@ class ApplicationController < ActionController::Base
     def after_invite_path_for(resource)
       users_path
     end
+
+    def after_sign_in_path_for(resource)
+      if resource.admin?
+        users_path
+      elsif resource.resident?
+        new_encounter_path
+      else
+        super
+      end
+    end
 end
