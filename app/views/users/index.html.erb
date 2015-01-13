@@ -15,7 +15,7 @@
       <p>You are not authorized to view this page.</p>
     </div>
   <% else %>
-    <div class="ui-content">
+    <div class="ui-content users_index_section">
       <table class="ui-table">
         <thead>
           <tr>
@@ -48,7 +48,24 @@
           <% end %>
         </tbody>
       </table>
+
+      <% if current_user.admin? || policy(User).index? %>
+        <div id="users_index_buttons" data-role="navbar">
+          <ul>
+            <% if current_user.admin? %>
+              <li>
+                <%= link_to 'Invite Resident', new_user_invitation_path, class: 'ui-shadow', data: {transition: 'flip'} %>
+              </li>
+            <% end %>
+            <% if policy(User).index? %>
+              <li>
+                <%= link_to 'My Residents', users_path, class: 'ui-shadow' %>
+              </li>
+            <% end %>
+          </ul>
+        </div><!-- /navbar -->
+      <% end %>
+    </div>
     </div>
   <% end %>
-  <%= render 'layouts/footer' %>
 </div>

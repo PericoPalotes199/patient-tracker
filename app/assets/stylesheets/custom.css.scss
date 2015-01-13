@@ -14,29 +14,20 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
     zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
 
-#subscription_expired {
-  width: device-width;
-  height: auto;
-  padding-top: 0.25em;
-  padding-right: 0.25em;
-  padding-left: 0.25em;
-  background-color: none;
-  font-size: 2em;
-  line-height: 40px;
-  font-family: 'GibsonLight', Verdana, sans-serif;
-  color: #221f1f;
-}
-
 div.wrap_section_narrow.encounters_index_section,
 div.wrap_section_narrow.encounters_summary_section,
 div.wrap_section_narrow.encounters_show_section,
+div.wrap_section_narrow.users_index_section,
 div.wrap_section_narrow.users_show_section {
   margin-top: 1em;
   min-height: 500px;
   padding-left: 0;
   padding-right: 0;
 
-  #user_show_buttons, #encounter_show_buttons, #encounters_summary_buttons {
+  #user_show_buttons,
+  #users_index_buttons,
+  #encounter_show_buttons,
+  #encounters_summary_buttons {
     margin-top: 0.5em;
 
     ul li, ul li a{
@@ -56,6 +47,7 @@ div.ui-header.ui-bar-inherit a.ui-icon-delete {
 
 /* New Registration AND New session */
 form.new_user_registration,
+form.payment_info,
 form.new_user_session,
 form#new_user.new_user, //invitation form
 form.edit_user {
@@ -88,6 +80,7 @@ form.edit_user {
 }
 
 form.new_user_registration,
+form.payment_info,
 form.new_user_session,
 form#new_user.new_user, //invitation form
 form.edit_user,
@@ -113,9 +106,14 @@ div.ui-dialog-contain h2#close_account_header {
 }
 
 div.ui-dialog-contain h2.ui-title,
+div#subscription_expired_header h2.ui-title,
 div#sign_in_header h2.ui-title {
   text-align: center;
   margin: 0 auto;
+  // Fore the jQM headers to wrap.
+  // StackO: questions/8718384/why-is-my-header-text-being-truncated
+  overflow: visible !important;
+  white-space: normal !important;
 }
 
 .header_title {

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: "users/sessions", registrations: "users/registrations" }
+  devise_scope :user do
+    get 'payment_info' => 'users/registrations#payment_info'
+    post 'pay' => 'users/registrations#pay'
+  end
   get 'encounters/summary' => 'encounters#summary', as: :summary
   get 'users/new' => redirect('/users/sign_up')
   resources :users, except: [:new, :create]

@@ -64,45 +64,4 @@
 
   <%= render "devise/shared/buttons" %>
 
-  <script>
-    var radioAmount = function() {
-      return $('input[name="plan"]:checked').data('amount');
-    }
-
-    var payButtonText = function() {
-      if ( $('input[name="plan"]:checked').val() == 'monthly' ) {
-        return "{{amount}} per user per mo.";
-      } else {  //  $('input[name="plan"]:checked').val() == 'annual' )
-        return "{{amount}} per user per yr.";
-      }
-    };
-
-    var handler = StripeCheckout.configure({
-      key: "<%= Rails.configuration.stripe[:publishable_key] %>",
-      // image: "<%= image_path 'logo_229x235.png' %>",
-      token: function(token) {
-        // Use the token to create the charge with a server-side script.
-        // You can access the token ID with `token.id`
-        $("#stripeToken").val( token.id );
-        $("#stripeEmail").val( token.email );
-        $('form#new_user_registration').submit();
-      }
-    });
-
-    $('#customButton').on('click', function(e) {
-      // Open Checkout with further options
-      handler.open({
-        description: '30 Day Free Trial',
-        allowRememberMe: false,
-        amount: radioAmount(),
-        panelLabel: payButtonText()
-      });
-      e.preventDefault();
-    });
-
-    // Close Checkout on page navigation
-    $(window).on('popstate', function() {
-      handler.close();
-    });
-  </script>
 </div><!-- data-role="page" -->
