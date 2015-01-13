@@ -1,4 +1,5 @@
 # include WebMock::API
+# WebMock.allow_net_connect!
 
 Rails.configuration.stripe = {
   publishable_key: ENV['STRIPE_TEST_PUBLISHABLE_KEY'],
@@ -96,7 +97,9 @@ StripeEvent.configure do |events|
       user.active_until = Stripe::Customer.retrieve(customer_id).subscriptions.retrieve(subscription).current_period_end
       user.update_invitees_active_until
       #TODO: update the subscription quantity with only active && accepted users
-      subscription.quantity = user.invitations.invitation_accepted.count
+      #TODO: update the quanity based on the entire residency's users,
+      #TODO: so that multiple admin's can exist (like chief's are admins)
+      subscription.quantity = user.invitations.invitation_accepted.count + 1
       if user.save
         Rails.logger.info '**************************************************'
         Rails.logger.info "#{event.type} webhook successful."
