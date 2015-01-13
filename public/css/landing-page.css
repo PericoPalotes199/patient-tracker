@@ -19,14 +19,19 @@ body {
     display: none; }
   .navbar > .container {
     max-width: none;
-    width: 100%; }
+    width: 100%;
+    background: #fff;
+    margin-bottom: 1.5rem; }
   .navbar-list {
     list-style: none;
     margin-bottom: 0; }
   .navbar-item {
     position: relative;
     float: left;
-    margin-bottom: 0; }
+    width: 100%;
+    margin-bottom: 0;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee; }
   .navbar-link {
     text-transform: uppercase;
     font-size: 11px;
@@ -142,8 +147,11 @@ body {
 
 /* Less than 400px */
 @media (max-width: 399px) {
- .section {
+  .section {
     min-height: 16rem;
+  }
+  .section.hero {
+    padding-top: 14rem;
   }
   .section.demo-screen .phone {
     padding-top: 16rem;
