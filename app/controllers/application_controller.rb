@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
     def authenticate_inviter!
       unless current_user.role == 'admin'
-        redirect_to root_url, :alert => 'You are not authorized to invite resdients.'
+        redirect_to root_url, :alert => 'You are not authorized to invite residents.'
       end
       super
     end
