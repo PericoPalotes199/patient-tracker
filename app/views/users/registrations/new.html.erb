@@ -19,6 +19,10 @@
     <%= f.text_field :residency, data: { clear_btn: true },
       placeholder: 'Residency Name', value: '' %>
 
+    <%= f.label :email, class: 'ui-hidden-accessible' %>
+    <%= f.text_field :email, data: { clear_btn: true },
+      placeholder: 'Email', value: '' %>
+
     <%= f.label :first_name, class: 'ui-hidden-accessible' %>
     <%= f.text_field :first_name, data: { clear_btn: true },
       placeholder: 'First Name', value: '' %>
