@@ -164,7 +164,7 @@ body {
   .section.demo-screen .feature {
     position: absolute;
     top: 0;
-    max-width: 95%;
+    max-width: 90%;
     font-size: 1.75rem;
   }
 }
