@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   # Users
   get 'users/new' => redirect('/users/sign_up')
   get 'users/sign_out' => redirect('/users/sign_in')
+  get 'users/invitation' => redirect('/users')
   resources :users, except: [:new, :create]
 
   # Encounters
