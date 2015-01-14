@@ -7,6 +7,7 @@ gem 'rails', '4.1.6'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
 gem 'devise', '~> 3.2.4'
+gem 'devise_invitable', '~> 1.4.0'
 # Simple, Heroku-friendly Rails app configuration using ENV and a single YAML file
 gem 'figaro', '>= 1.0.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -20,6 +21,9 @@ gem 'pg', '~> 0.17.1'
 gem 'pundit', '~> 0.2.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
+# Use Stripe for payments
+gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
+gem 'stripe_event', '~> 1.4.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -31,6 +35,7 @@ gem 'uglifier', '>= 1.3.0'
 
 
 group :development do
+  gem 'awesome_print'
   # Use Capistrano for deployment
   # gem 'capistrano-rails'
   gem 'pry'
@@ -44,6 +49,7 @@ group :development, :test do
   # Use debugger
   # gem 'debugger', group: [:development, :test]
   gem 'binding_of_caller', '~> 0.7.2'
+  gem 'webmock'
 end
 
 group :production do

@@ -1,0 +1,44 @@
+{
+  "id": "evt_00000000000000",
+  "created": 1418459258,
+  "livemode": false,
+  "type": "customer.subscription.created",
+  "data": {
+    "object": {
+      "id": "sub_00000000000000",
+      "plan": {
+        "interval": "month",
+        "name": "MONTHLY",
+        "created": 1418456249,
+        "amount": 100,
+        "currency": "usd",
+        "id": "monthly",
+        "object": "plan",
+        "livemode": false,
+        "interval_count": 1,
+        "trial_period_days": 30,
+        "metadata": {},
+        "statement_description": "MONTHLY"
+      },
+      "object": "subscription",
+      "start": 1418459258,
+      "status": "trialing",
+      "customer": "cus_00000000000000",
+      "cancel_at_period_end": false,
+      "current_period_start": 1418459258,
+      "current_period_end": 1421051258,
+      "ended_at": null,
+      "trial_start": 1418459258,
+      "trial_end": 1421051258,
+      "canceled_at": null,
+      "quantity": 1,
+      "application_fee_percent": null,
+      "discount": null,
+      "metadata": {}
+    }
+  },
+  "object": "event",
+  "pending_webhooks": 1,
+  "request": "iar_5Jot0LgnxLhSE3",
+  "api_version": "2014-11-20"
+}

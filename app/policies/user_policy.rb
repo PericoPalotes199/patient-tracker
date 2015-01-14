@@ -13,6 +13,10 @@ class UserPolicy < ApplicationPolicy
     user == record
   end
 
+  def invite?
+    user.admin?
+  end
+
   class Scope < Struct.new(:user, :scope)
     def resolve
       scope

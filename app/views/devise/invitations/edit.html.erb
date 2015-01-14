@@ -1,0 +1,47 @@
+<div data-role="page" data-dialog="true" data-close-btn-text="X" data-no-transition-cache>
+  <!-- data-close-btn-text="X" TODO: Will this attribute show an X in IE8 -->
+
+  <div data-role="header">
+    <h2><%= t 'devise.invitations.edit.header' %></h2>
+  </div><!-- /header -->
+
+
+
+  <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
+    <%= devise_error_messages! %>
+    <%= f.hidden_field :invitation_token %>
+
+    <%= f.label :first_name, class: 'ui-hidden-accessible' %>
+    <%= f.text_field :first_name, data: { clear_btn: true },
+      placeholder: 'First Name', value: '' %>
+
+    <%= f.label :last_name, class: 'ui-hidden-accessible' %>
+    <%= f.text_field :last_name, data: { clear_btn: true },
+      placeholder: 'Last Name', value: '' %>
+
+    <%= f.label :password, class: 'ui-hidden-accessible' %>
+    <%= f.password_field :password,
+    autocomplete: "off", placeholder: 'Password', value: '' %>
+
+    <%= f.label :password_confirmation, class: 'ui-hidden-accessible' %>
+    <%= f.password_field :password_confirmation,
+      autocomplete: "off", placeholder: 'Confirm Password', value: '' %>
+
+    <div id="tos-notice" style="margin-top: 1.5em; margin-bottom: 1em;">
+      <p>
+        Please ackowledge the
+        <a href="http://www.encountercounter.com/terms-of-service">Terms of Service</a>
+        and
+        <a href="http://www.encountercounter.com/privacy-policy">Privacy Policy</a>.
+      </p>
+    </div>
+
+    <div id="tos-checkbox" class="ui-checkbox">
+      <%= f.label :tos_accepted, 'I agree to the Terms of Service and Privacy Policy.',
+        class: 'ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off' %>
+      <%= f.check_box :tos_accepted, data: {enhanced: "true"} %>
+    </div>
+
+    <p><%= f.button t("devise.invitations.edit.submit_button"), class: 'ui-btn ui-corner-all' %></p>
+  <% end %>
+</div>

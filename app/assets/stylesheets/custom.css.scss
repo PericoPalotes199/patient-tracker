@@ -14,29 +14,20 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
     zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
 
-#sign_in_message {
-  width: device-width;
-  height: auto;
-  padding-top: 0.25em;
-  padding-right: 0.25em;
-  padding-left: 0.25em;
-  background-color: none;
-  font-size: 2em;
-  line-height: 40px;
-  font-family: 'GibsonLight', Verdana, sans-serif;
-  color: #221f1f;
-}
-
 div.wrap_section_narrow.encounters_index_section,
 div.wrap_section_narrow.encounters_summary_section,
 div.wrap_section_narrow.encounters_show_section,
+div.wrap_section_narrow.users_index_section,
 div.wrap_section_narrow.users_show_section {
   margin-top: 1em;
   min-height: 500px;
   padding-left: 0;
   padding-right: 0;
 
-  #user_show_buttons, #encounter_show_buttons {
+  #user_show_buttons,
+  #users_index_buttons,
+  #encounter_show_buttons,
+  #encounters_summary_buttons {
     margin-top: 0.5em;
 
     ul li, ul li a{
@@ -54,11 +45,46 @@ div.ui-header.ui-bar-inherit a.ui-icon-delete {
   margin: 0px;
 }
 
-form.new_user, form.edit_user { /* New Registration AND New session */
+/* New Registration AND New session */
+form.new_user_registration,
+form.payment_info,
+form.new_user_session,
+form#new_user.new_user, //invitation form
+form.edit_user {
   margin-top: 1.1em;
+
+  /* text inputs */
+  .ui-input-text {
+    margin-bottom: 1em;
+  }
+
+  /* plan fieldset */
+  .ui-controlgroup-controls {
+    float: none;
+    display: block;
+    width: 100%;
+  }
+
+  /* plan radio buttons */
+  .ui-radio{
+    width: 50%;
+
+    label {
+      font-size: 1em;
+      text-align: center;
+      white-space: nowrap;
+      letter-spacing: 3px;
+      font-weight: bold;
+    }
+  }
 }
 
-form.new_user, form.edit_user, div.ui-dialog-contain a.ui-btn {
+form.new_user_registration,
+form.payment_info,
+form.new_user_session,
+form#new_user.new_user, //invitation form
+form.edit_user,
+div.ui-dialog-contain a.ui-btn {
 /*width: 50px !important*/
   margin-left: 1.1em;
   margin-right: 1.1em;
@@ -77,6 +103,17 @@ div.ui-dialog-contain {
 
 div.ui-dialog-contain h2#close_account_header {
   text-align: center;
+}
+
+div.ui-dialog-contain h2.ui-title,
+div#subscription_expired_header h2.ui-title,
+div#sign_in_header h2.ui-title {
+  text-align: center;
+  margin: 0 auto;
+  // Fore the jQM headers to wrap.
+  // StackO: questions/8718384/why-is-my-header-text-being-truncated
+  overflow: visible !important;
+  white-space: normal !important;
 }
 
 .header_title {
@@ -1738,6 +1775,30 @@ section {
   }
 }
 
+/*This query is for the Encounters#summary table */
+@media ( min-width: 23.75em ) {
+  /* Fixes table rendering when switching between breakpoints in Safari <= 5.
+  /* See https://github.com/jquery/jquery-mobile/issues/5380 */
+  .ui-table-reflow.encounters_summary {
+    display: table;
+  }
+  /* Show the table header rows */
+  .ui-table-reflow.encounters_summary td,
+  .ui-table-reflow.encounters_summary th,
+  .ui-table-reflow.encounters_summary tbody th,
+  .ui-table-reflow.encounters_summary tbody td,
+  .ui-table-reflow.encounters_summary thead td,
+  .ui-table-reflow.encounters_summary thead th {
+    display: table-cell;
+    margin: 0;
+  }
+  /* Hide the labels in each cell */
+  .ui-table-reflow.encounters_summary td .ui-table-cell-label,
+  .ui-table-reflow.encounters_summary th .ui-table-cell-label {
+    display: none;
+  }
+}
+
 table.ui-table-reflow.ui-responsive.encounters_show {
   display: table;
 }
@@ -1753,6 +1814,14 @@ table.ui-table-reflow.ui-responsive.encounters_show {
   color: #221f1f;
   font-family: 'GibsonRegular', Verdana, sans-serif;
   text-align: center;
+}
+
+#unauthorized_invitation {
+  width: 100%;
+  margin: 1em auto 0 auto;
+  padding: 0;
+  font-size: 1.3em;
+  line-height: 1.4em;
 }
 
 @media (max-width: 580px) {

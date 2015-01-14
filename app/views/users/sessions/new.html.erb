@@ -2,27 +2,24 @@
   <!-- data-close-btn-text="X" Will this attribute show an X in IE8 -->
   <div data-role="header">
     <h2>Sign In</h2>
-  </div><!-- /header -->
+  </div><!-- data-role="header" -->
 
   <%= render 'layouts/flash_messages' %>
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {ajax: false}) do |f| %>
-    <div>
-      <%= f.label :email %>
-      <%= f.email_field :email, data: { clear_btn: true }, autofocus: true %>
-    </div>
-    <br />
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: {ajax: false},
+    html: { class: "new_user_session", id: "new_user_session" }) do |f| %>
 
-    <div>
-      <%= f.label :password %>
-      <%= f.password_field :password, autocomplete: "off" %>
-    </div>
+    <%= f.label :email, class: 'ui-hidden-accessible' %>
+    <%= f.email_field :email, data: { clear_btn: true },
+     placeholder: 'Email', value: '' %>
+
+    <%= f.label :password, class: 'ui-hidden-accessible' %>
+    <%= f.password_field :password,
+      autocomplete: "off", placeholder: 'Password', value: '' %>
 
     <% if devise_mapping.rememberable? -%>
-      <div>
         <%= f.check_box :remember_me, data: {mini: true} %>
         <%= f.label :remember_me %>
-      </div>
       <br />
     <% end -%>
 
@@ -34,6 +31,6 @@
   <div style="text-align:center; padding: .5em;">OR</div>
 
   <%= render "devise/shared/buttons" %>
-</div>
+</div><!-- data-role="page" -->
 
 

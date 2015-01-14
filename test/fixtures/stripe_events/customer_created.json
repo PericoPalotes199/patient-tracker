@@ -1,0 +1,64 @@
+{
+  "id": "evt_00000000000000",
+  "created": 1418459258,
+  "livemode": false,
+  "type": "customer.created",
+  "data": {
+    "object": {
+      "object": "customer",
+      "created": 1418459258,
+      "id": "cus_00000000000000",
+      "livemode": false,
+      "description": "Encounter Counter",
+      "email": "user@example.com",
+      "delinquent": false,
+      "metadata": {},
+      "subscriptions": {
+        "object": "list",
+        "total_count": 0,
+        "has_more": false,
+        "url": "/v1/customers/cus_00000000000000/subscriptions",
+        "data": []
+      },
+      "discount": null,
+      "account_balance": 0,
+      "currency": null,
+      "cards": {
+        "object": "list",
+        "total_count": 1,
+        "has_more": false,
+        "url": "/v1/customers/cus_00000000000000/cards",
+        "data": [
+          {
+            "id": "card_159BFLAVwf4zCU70iseZwuUI",
+            "object": "card",
+            "last4": "4242",
+            "brand": "Visa",
+            "funding": "credit",
+            "exp_month": 1,
+            "exp_year": 2015,
+            "fingerprint": "nP53MUYwmjSPRu21",
+            "country": "US",
+            "name": "user@example.com",
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "pass",
+            "address_line1_check": null,
+            "address_zip_check": null,
+            "dynamic_last4": null,
+            "customer": "cus_00000000000000"
+          }
+        ]
+      },
+      "default_card": "card_159BFLAVwf4zCU70iseZwuUI"
+    }
+  },
+  "object": "event",
+  "pending_webhooks": 1,
+  "request": "iar_5JotXq7hDGrHCH",
+  "api_version": "2014-11-20"
+}

@@ -1,0 +1,71 @@
+<div data-role="page" data-dialog="true" data-close-btn-text="X" data-no-transition-cache>
+  <!-- data-close-btn-text="X" Will this attribute show an X in IE8 -->
+  <div data-role="header">
+    <h2>Sign Up</h2>
+  </div><!-- data-role="header" -->
+
+  <%= render 'layouts/flash_messages' %>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name),
+    html: { class: "new_user_registration", id: "new_user_registration" }) do |f| %>
+
+    <%= devise_error_messages! %>
+
+    <%= hidden_field_tag 'stripeToken' %>
+    <%= hidden_field_tag 'stripeEmail' %>
+    <%= hidden_field_tag 'chargeForm' %>
+
+    <%= f.label :residency, class: 'ui-hidden-accessible' %>
+    <%= f.text_field :residency, data: { clear_btn: true },
+      placeholder: 'Residency Name', value: '' %>
+
+    <%= f.label :email, class: 'ui-hidden-accessible' %>
+    <%= f.text_field :email, data: { clear_btn: true },
+      placeholder: 'Email', value: '' %>
+
+    <%= f.label :first_name, class: 'ui-hidden-accessible' %>
+    <%= f.text_field :first_name, data: { clear_btn: true },
+      placeholder: 'First Name', value: '' %>
+
+    <%= f.label :last_name, class: 'ui-hidden-accessible' %>
+    <%= f.text_field :last_name, data: { clear_btn: true },
+      placeholder: 'Last Name', value: '' %>
+
+    <%= f.label :password, class: 'ui-hidden-accessible' %>
+    <%= f.password_field :password,
+      autocomplete: "off", placeholder: 'Password', value: '' %>
+
+    <%= f.label :password_confirmation, class: 'ui-hidden-accessible' %>
+    <%= f.password_field :password_confirmation,
+      autocomplete: "off", placeholder: 'Confirm Password', value: '' %>
+
+    <div id="tos-notice" style="margin-top: 1.5em; margin-bottom: 1em;">
+      <p>
+        Please ackowledge the
+        <a href="http://www.encountercounter.com/terms-of-service">Terms of Service</a>
+        and
+        <a href="http://www.encountercounter.com/privacy-policy">Privacy Policy</a>.
+      </p>
+    </div>
+
+    <fieldset data-role="controlgroup" data-type="horizontal">
+      <input type="radio" name="plan" id="monthly" value="monthly" checked="checked" data-amount="100">
+      <label for="monthly">Monthly</label>
+      <input type="radio" name="plan" id="annual" value="annual" data-amount="600">
+      <label for="annual">Annual</label>
+    </fieldset>
+
+    <div id="tos-checkbox" class="ui-checkbox">
+      <%= f.label :tos_accepted, 'I agree to the Terms of Service and Privacy Policy.',
+        class: 'ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off' %>
+      <%= f.check_box :tos_accepted, data: {enhanced: "true"} %>
+    </div>
+
+    <button id="customButton">Sign Up</button>
+  <% end %>
+
+  <div style="text-align:center; padding: .5em;">OR</div>
+
+  <%= render "devise/shared/buttons" %>
+
+</div><!-- data-role="page" -->

@@ -36,8 +36,10 @@
         </thead>
 
         <tbody>
+          <% current_user_invited_users = current_user.invitations %>
           <% @encounters.each do |encounter| %>
-            <% if policy(encounter).index? %>
+            <% if current_user == encounter.user ||
+              ( policy(encounter).index? && current_user_invited_users.include?(encounter.user) ) %>
               <tr class="lineitem_index fullwidth">
                 <% if current_user.role == 'admin' %>
                   <td><%= encounter.user.present? ? encounter.user.name : "Unknown" %></th>

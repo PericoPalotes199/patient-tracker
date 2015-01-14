@@ -1,0 +1,38 @@
+<div data-role="page" data-dialog="true" data-close-btn-text="X" data-no-transition-cache>
+  <!-- data-close-btn-text="X" Will this attribute show an X in IE8 -->
+  <div data-role="header">
+    <h2><%= t("devise.invitations.new.header") %></h2>
+  </div><!-- /header -->
+
+  <%= render 'layouts/flash_messages' %>
+
+  <% if !current_user.present? %>
+
+    <%= render 'layouts/sign_in_message' %>
+
+  <% else %>
+
+    <% if !policy(@user).invite? %>
+      <div id="unauthorized_invitation" class="unauthorized_content">
+        <p>
+          You are not authorized to invite residents.
+          <a href="mailto:<%= ENV["CONTACT_EMAIL_ADDRESS"] %>">Contact us</a> if you need assistance.
+        </p>
+      </div>
+    <% else %>
+      <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
+        <%= devise_error_messages! %>
+
+      <% resource.class.invite_key_fields.each do |field| -%>
+        <p>
+          <%= f.label field %>
+          <%= f.text_field field %>
+        </p>
+      <% end -%>
+
+        <p><%= f.button t("devise.invitations.new.submit_button"), class: 'ui-btn ui-corner-all' %></p>
+      <% end %>
+    <% end %>
+    <br />
+  <% end %>
+</div>

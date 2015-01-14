@@ -4,14 +4,17 @@ class EncountersController < ApplicationController
   # GET /encounters
   # GET /encounters.json
   def index
+    #TODO: Limit this Encounters#index query to only current_user.
+    #TODO: No need to loop through every encounter in the view!
     @encounters = Encounter.all.includes(:user).order(encountered_on: :desc).order('users.name ASC')
   end
 
   def summary
+    #TODO: Limit this Encounters#summary query to only current_user and current_user's invitations.
     @encounters = Encounter.all.includes(:user).order(encountered_on: :desc).order('users.name ASC')
 
     #TODO: Map encounter_type values to an integer so that reults can be ordered
-    #identical to encounters/new view
+    #TODO: identical to encounters/new view
     @encounters_count = Encounter.group(:user_id, :encounter_type).order(:user_id, :encounter_type).count
 
     respond_to do |format|

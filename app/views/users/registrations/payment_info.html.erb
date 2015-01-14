@@ -1,0 +1,110 @@
+<div data-role="page" data-dialog="true" data-close-btn-text="X" data-no-transition-cache>
+  <!-- data-close-btn-text="X" Will this attribute show an X in IE8 -->
+  <div data-role="header">
+    <h2>Credit Card Payment</h2>
+  </div><!-- data-role="header" -->
+
+  <%= render 'layouts/flash_messages' %>
+
+  <% if !current_user %>
+
+    <%= render 'layouts/sign_in_message' %>
+
+  <% else %>
+
+    <%= form_for(resource, as: resource_name, url: pay_url, method: :post,
+      html: { class: "payment_info", id: "payment_info" }) do |f| %>
+
+      <%= devise_error_messages! %>
+
+      <%= hidden_field_tag 'stripeToken' %>
+      <%= hidden_field_tag 'stripeEmail' %>
+      <%= hidden_field_tag 'chargeForm' %>
+
+      <div class="ui-content">
+        <p><span style="font-weight: bold;">Name:</span> <%= "#{current_user.name}" %></p><br />
+        <p><span style="font-weight: bold;">Residency:</span> <%= "#{current_user.residency || 'none'}" %></p><br />
+      </div>
+
+      <div id="tos-notice" style="margin-top: 1.5em; margin-bottom: 1em;">
+        <p>
+          Please ackowledge the
+          <a href="http://www.encountercounter.com/terms-of-service">Terms of Service</a>
+          and
+          <a href="http://www.encountercounter.com/privacy-policy">Privacy Policy</a>.
+        </p>
+      </div>
+
+      <fieldset data-role="controlgroup" data-type="horizontal">
+        <input type="radio" name="plan" id="monthly" value="monthly" checked="checked" data-amount="100">
+        <label for="monthly">Monthly</label>
+        <input type="radio" name="plan" id="annual" value="annual" data-amount="600">
+        <label for="annual">Annual</label>
+      </fieldset>
+
+      <div id="tos-checkbox" class="ui-checkbox">
+        <%= f.label :tos_accepted, 'I agree to the Terms of Service and Privacy Policy.',
+          class: 'ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off' %>
+        <%= f.check_box :tos_accepted, data: {enhanced: "true"} %>
+      </div>
+
+      <button id="customButton">Continue</button>
+    <% end %>
+
+  <% end %>
+
+  <script>
+    var stripeDescription = function() {
+      if ( $('input[name="plan"]:checked').val() == 'monthly' ) {
+        return "Monthly Subscription";
+      } else {  //  $('input[name="plan"]:checked').val() == 'annual' )
+        return "Annual Subscription";
+      }
+    };
+
+    var currentUserEmail = function() {
+      return '<%= current_user.email %>';
+    };
+
+    var radioAmount = function() {
+      return $('input[name="plan"]:checked').data('amount');
+    };
+
+    var payButtonText = function() {
+      if ( $('input[name="plan"]:checked').val() == 'monthly' ) {
+        return "{{amount}} per user per mo.";
+      } else {  //  $('input[name="plan"]:checked').val() == 'annual' )
+        return "{{amount}} per user per yr.";
+      }
+    };
+
+    var handler = StripeCheckout.configure({
+      key: "<%= Rails.configuration.stripe[:publishable_key] %>",
+      // image: "<%= image_path 'logo_229x235.png' %>",
+      token: function(token) {
+        // Use the token to create the charge with a server-side script.
+        // You can access the token ID with `token.id`
+        $("#stripeToken").val( token.id );
+        $("#stripeEmail").val( token.email );
+        $('form#payment_info').submit();
+      }
+    });
+
+    $('#customButton').on('click', function(e) {
+      // Open Checkout with further options
+      handler.open({
+        description: stripeDescription(),
+        email: currentUserEmail(),
+        allowRememberMe: false,
+        amount: radioAmount(),
+        panelLabel: payButtonText()
+      });
+      e.preventDefault();
+    });
+
+    // Close Checkout on page navigation
+    $(window).on('popstate', function() {
+      handler.close();
+    });
+  </script>
+</div><!-- data-role="page" -->

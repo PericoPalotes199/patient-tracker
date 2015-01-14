@@ -1,0 +1,42 @@
+{
+  "object": "list",
+  "total_count": 1,
+  "has_more": false,
+  "url": "/v1/customers/cus_00000000000000/subscriptions",
+  "data": [
+    {
+      "id":
+      "sub_5GpqJ67vgc9OBh",
+      "plan":
+      {
+        "id": "monthly",
+        "interval": "month",
+        "name": "Monthly",
+        "created": 1417595156,
+        "amount": 100,
+        "currency": "usd",
+        "object": "plan",
+        "livemode": false,
+        "interval_count":1,
+        "trial_period_days":30,
+        "metadata":{},
+        "statement_description": "MONTHLY"
+      },
+      "object": "subscription",
+      "start": 1417770914,
+      "status": "trialing",
+      "customer": "cus_00000000000000",
+      "cancel_at_period_end": false,
+      "current_period_start": 1417770914,
+      "current_period_end":1420362914,
+      "ended_at":null,
+      "trial_start":1417770914,
+      "trial_end":1420362914,
+      "canceled_at":null,
+      "quantity":1,
+      "application_fee_percent":null,
+      "discount":null,
+      "metadata":{}
+    }
+  ]
+}
