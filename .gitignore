@@ -20,3 +20,8 @@
 /figaro.sh
 
 .ruby-gemset
+
+# Ignore SSL certificate
+*.crt
+*.pem
+*.key
