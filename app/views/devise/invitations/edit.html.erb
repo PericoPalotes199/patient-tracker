@@ -27,20 +27,21 @@
     <%= f.password_field :password_confirmation,
       autocomplete: "off", placeholder: 'Confirm Password', value: '' %>
 
-    <div id="tos-notice" style="margin-top: 1.5em; margin-bottom: 1em;">
-      <p>
-        Please ackowledge the
-        <a href="http://www.encountercounter.com/terms-of-service">Terms of Service</a>
-        and
-        <a href="http://www.encountercounter.com/privacy-policy">Privacy Policy</a>.
-      </p>
-    </div>
-
-    <div id="tos-checkbox" class="ui-checkbox">
-      <%= f.label :tos_accepted, 'I agree to the Terms of Service and Privacy Policy.',
-        class: 'ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off' %>
-      <%= f.check_box :tos_accepted, data: {enhanced: "true"} %>
-    </div>
+    <% if resource.respond_to?(:tos_accepted) && !resource.tos_accepted? %>
+      <div id="tos-notice" style="margin-top: 1.5em; margin-bottom: 1em;">
+        <p>
+          Please ackowledge the
+          <a href="http://www.encountercounter.com/terms-of-service">Terms of Service</a>
+          and
+          <a href="http://www.encountercounter.com/privacy-policy">Privacy Policy</a>.
+        </p>
+      </div>
+      <div id="tos-checkbox" class="ui-checkbox">
+        <%= f.label :tos_accepted, 'I agree to the Terms of Service and Privacy Policy.',
+          class: 'ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off' %>
+        <%= f.check_box :tos_accepted, data: {enhanced: "true"} %>
+      </div>
+    <% end %>
 
     <p><%= f.button t("devise.invitations.edit.submit_button"), class: 'ui-btn ui-corner-all' %></p>
   <% end %>

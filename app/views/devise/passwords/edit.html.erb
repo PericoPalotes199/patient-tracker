@@ -11,15 +11,31 @@
     <%= f.hidden_field :reset_password_token %>
 
     <div>
-      <%= f.label :password, "New Password" %>
-      <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
+      <%= f.label :password, class: 'ui-hidden-accessible' %>
+      <%= f.password_field :password, placeholder: "new password" autofocus: true, autocomplete: "off" %>
     </div>
     <br />
 
     <div>
-      <%= f.label :password_confirmation, "Confirm New Password" %>
-      <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      <%= f.label :password_confirmation, class: 'ui-hidden-accessible' %>
+      <%= f.password_field :password_confirmation, placeholder: "confirm new password", autocomplete: "off" %>
     </div>
+
+    <% if resource.respond_to?(:tos_accepted) && !resource.tos_accepted? %>
+      <div id="tos-notice" style="margin-top: 1.5em; margin-bottom: 1em;">
+        <p>
+          Please ackowledge the
+          <a href="http://www.encountercounter.com/terms-of-service">Terms of Service</a>
+          and
+          <a href="http://www.encountercounter.com/privacy-policy">Privacy Policy</a>.
+        </p>
+      </div>
+      <div id="tos-checkbox" class="ui-checkbox">
+        <%= f.label :tos_accepted, 'I agree to the Terms of Service and Privacy Policy.',
+          class: 'ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-checkbox-off' %>
+        <%= f.check_box :tos_accepted, data: {enhanced: "true"} %>
+      </div>
+    <% end %>
     <br />
 
     <div>
