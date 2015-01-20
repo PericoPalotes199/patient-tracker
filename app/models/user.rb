@@ -79,15 +79,18 @@ class User < ActiveRecord::Base
 
     def delete_all_customer_subscriptions
       if customer_id
-        customer = Stripe::Customer.retrieve(customer_id)
-
-        if customer
+        begin
+          customer = Stripe::Customer.retrieve(customer_id)
           subscriptions = customer.subscriptions
           subscriptions.each do |subscription|
             subscription.delete
           end
+        rescue Stripe::StripeError => e
+          Rails.logger.error "********** Stripe Error: #{e.message} **********"
+          return false
         end
       end
+      return true
     end
 
   protected
