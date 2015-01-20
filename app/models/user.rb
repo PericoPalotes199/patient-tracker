@@ -38,6 +38,10 @@ class User < ActiveRecord::Base
     ((Time.zone.at(active_until) - Time.zone.now) / (3600 * 24)).floor
   end
 
+  def update_invitees_active_until
+    invitations.update_all(active_until: active_until)
+  end
+
   private
     def set_name
       if first_name && last_name
@@ -61,10 +65,6 @@ class User < ActiveRecord::Base
       if invited_by_id?
         self.active_until = invited_by.active_until
       end
-    end
-
-    def update_invitees_active_until
-      invitations.update_all(active_until: active_until)
     end
 
     def update_inviter_subscription_quantity
