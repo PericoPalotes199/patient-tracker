@@ -80,9 +80,12 @@ class User < ActiveRecord::Base
     def delete_all_customer_subscriptions
       if customer_id
         customer = Stripe::Customer.retrieve(customer_id)
-        subscriptions = customer.subscriptions
-        subscriptions.each do |subscription|
-          subscription.delete
+
+        if customer
+          subscriptions = customer.subscriptions
+          subscriptions.each do |subscription|
+            subscription.delete
+          end
         end
       end
     end
