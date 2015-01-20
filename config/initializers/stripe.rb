@@ -101,7 +101,7 @@ StripeEvent.configure do |events|
       #TODO: update the subscription quantity with only active && accepted users
       #TODO: update the quanity based on the entire residency's users,
       #TODO: so that multiple admin's can exist (like chief's are admins)
-      subscription.quantity = user.invitations.invitation_accepted.count + 1
+      subscription.quantity = user.invitations.count + 1
       if user.save
         Rails.logger.info '**************************************************'
         Rails.logger.info "#{event.type} webhook successful."
