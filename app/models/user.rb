@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   has_many :encounters, dependent: :destroy
   has_many :invitations, :class_name => 'User', :as => :invited_by
-  after_invitation_accepted :update_inviter_subscription_quantity
+  after_invitation_accepted :update_inviter_subscription_quantity, :delete_all_customer_subscriptions, :change_role_to_resident, :set_active_until
 
   before_create :set_default_role, :set_active_until
   before_save :set_name
@@ -53,6 +53,10 @@ class User < ActiveRecord::Base
       self.role ||= 'resident'
     end
 
+    def change_role_to_resident
+      self.role = 'resident'
+    end
+
     def set_active_until
       if invited_by_id?
         self.active_until = invited_by.active_until
@@ -64,10 +68,23 @@ class User < ActiveRecord::Base
     end
 
     def update_inviter_subscription_quantity
-      customer = Stripe::Customer.retrieve(self.invited_by.customer_id)
-      subscription = customer.subscriptions.first
-      subscription.quantity += 1
-      subscription.save
+      inviter = self.invited_by
+      if inviter && inviter.customer_id
+        customer = Stripe::Customer.retrieve(inviter.customer_id)
+        subscription = customer.subscriptions.first
+        subscription.quantity += 1
+        subscription.save
+      end
+    end
+
+    def delete_all_customer_subscriptions
+      if customer_id
+        customer = Stripe::Customer.retrieve(customer_id)
+        subscriptions = customer.subscriptions
+        subscriptions.each do |subscription|
+          subscription.delete
+        end
+      end
     end
 
   protected
