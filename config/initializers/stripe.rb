@@ -90,11 +90,13 @@ StripeEvent.configure do |events|
 
   events.subscribe 'invoice.payment_succeeded' do |event|
     customer_id = event.data.object['customer']
-    subscription = event.data.object['subscription']
-    if customer_id && subscription
+    subscription_id = event.data.object['subscription']
+    if customer_id && subscription_id
+      customer = Stripe::Customer.retrieve(customer_id)
+      subscription = customer.subscriptions.retrieve(subscription_id)
       #User with customer_id: 'cus_00000000000000' saved in dev database
       user = User.find_by(customer_id: customer_id)
-      user.active_until = Stripe::Customer.retrieve(customer_id).subscriptions.retrieve(subscription).current_period_end
+      user.active_until = subscription.current_period_end
       user.update_invitees_active_until
       #TODO: update the subscription quantity with only active && accepted users
       #TODO: update the quanity based on the entire residency's users,
