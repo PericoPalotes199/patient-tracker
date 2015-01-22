@@ -1,4 +1,4 @@
-<div data-role="page" data-dialog="true" data-close-btn-text="X" data-no-transition-cache>
+<div id="payment_info" data-role="page" data-dialog="true" data-close-btn-text="X" data-no-transition-cache>
   <!-- data-close-btn-text="X" Will this attribute show an X in IE8 -->
   <div data-role="header">
     <h2>Credit Card Payment</h2>
@@ -84,8 +84,8 @@
       token: function(token) {
         // Use the token to create the charge with a server-side script.
         // You can access the token ID with `token.id`
-        $("#stripeToken").val( token.id );
-        $("#stripeEmail").val( token.email );
+        $('#stripeToken').val( token.id );
+        $('#stripeEmail').val( token.email );
         $('form#payment_info').submit();
       }
     });
