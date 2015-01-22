@@ -8,10 +8,16 @@
   <% if !current_user %>
 
     <%= render 'layouts/sign_in_message' %>
+    <footer style="margin-top: 0;" class="fullwidth_footer <%= conditional_fixed_footer %>">
+      <h4>&copy; <%= Time.now.year %> Encounter Counter</h4>
+    </footer>
 
   <% elsif current_user.subscription_expired? %>
 
     <%= render 'layouts/subscription_expired' %>
+    <footer style="margin-top: 0;" class="fullwidth_footer <%= conditional_fixed_footer %>">
+      <h4>&copy; <%= Time.now.year %> Encounter Counter</h4>
+    </footer>
 
   <% else %>
 
@@ -40,6 +46,6 @@
 
     <div class="spacer">
     </div>
+    <%= render 'layouts/footer' %>
   <% end %>
-  <%= render 'layouts/footer' %>
 </div> <!-- End Page 1 -->
