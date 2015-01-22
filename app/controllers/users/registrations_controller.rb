@@ -44,6 +44,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
       Rails.logger.error "Payment unsuccessful: #{e.message}"
       redirect_to payment_info_path and return
     end
+    Rails.logger.info "*** Payment unsuccessful: problem with payment page. ***"
+    redirect_to payment_info_path
   end
 
   # GET /users/sign_up
