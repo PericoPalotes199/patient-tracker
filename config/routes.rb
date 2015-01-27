@@ -18,6 +18,9 @@ Rails.application.routes.draw do
 
   mount StripeEvent::Engine, at: '/stripe_events'
 
+  # (Almost) Static Pages
+  get 'faq' => 'pages#faq', as: :faq
+
   root 'pages#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
