@@ -14,7 +14,7 @@ class UserPolicy < ApplicationPolicy
     # current_user is an admin who invited the user in question
     ( user.admin? && record.invited_by_id == user.id ) ||
     # current_user is an admin within the same residency
-    ( user.role == 'admin' && user.residency == encounter.user.residency )
+    ( user.role == 'admin' && user.residency == record.residency )
   end
 
   def edit?
