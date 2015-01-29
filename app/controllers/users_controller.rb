@@ -30,6 +30,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    set_user
   end
 
   # GET /users/1/edit
