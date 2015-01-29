@@ -55,8 +55,7 @@
       </Row>
       <% current_user_invited_users = current_user.invitations %>
       <% @encounters.each do |encounter| %>
-        <% if current_user == encounter.user ||
-          ( policy(encounter).index? && current_user_invited_users.include?(encounter.user) ) %>
+        <% if policy(encounter).index? %>
           <Row>
             <Cell ss:StyleID="s65">
               <Data ss:Type="String"><%= encounter.user.present? ? encounter.user.name : "unknown" %></Data>
@@ -100,7 +99,7 @@
       </Row>
       <% @encounters_count.each do |group, count| %>
         <% user = User.find(group[0]) %>
-        <% if user == current_user || policy(Encounter).summary? %>
+        <% if policy(user).show? %>
           <Row>
             <Cell ss:StyleID="s65">
               <Data ss:Type="String"><%= user.name %></Data>

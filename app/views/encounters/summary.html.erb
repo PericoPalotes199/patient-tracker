@@ -4,7 +4,7 @@
   <% if !current_user.present? %> <!-- header content -->
     <% content_for :header_title, 'How many patients did you help today?' %>
   <% else %>
-    <% if policy(Encounter).summary? %>
+    <% if current_user.admin? %>
       <% content_for :user_first_name_header, "All" %>
       <% content_for :user_last_name_header, "Residents" %>
     <% elsif current_user.first_name && current_user.last_name %>
@@ -30,7 +30,7 @@
       <table data-role="table" class="encounters_summary">
         <thead>
           <tr class="fullwidth">
-            <% if policy(Encounter).summary? %>  <!-- Show name column if policy allows -->
+            <% if current_user.admin? %>
               <th>Resident</th>
             <% end %>
             <th>Type</th>
@@ -43,10 +43,9 @@
           <% @encounters_count.each do |group, count| %>
             <% user = User.find(group[0]) %>
             <!-- Show a row if it belongs to the current_user or if the current_user has summary privileges  -->
-            <% if user == current_user ||
-              ( policy(Encounter).summary? && current_user_invited_users.include?(user) ) %>
+            <% if policy(user).show? %>
               <tr class="lineitem fullwidth">
-                <% if policy(Encounter).summary? %> <!-- Show name column if policy allows -->
+                <% if current_user.admin? %>
                   <td><%= user.name %></td>
                 <% end %>
                 <td><%= group[1] %></td>
@@ -57,19 +56,15 @@
         </tbody>
       </table>
 
-      <% if current_user.admin? || policy(User).index? %>
+      <% if current_user.admin? %>
         <div id="encounters_summary_buttons" data-role="navbar">
           <ul>
-            <% if current_user.admin? %>
-              <li>
-                <%= link_to 'Invite Resident', new_user_invitation_path, class: 'ui-shadow', data: {transition: 'flip'} %>
-              </li>
-            <% end %>
-            <% if policy(User).index? %>
-              <li>
-                <%= link_to 'My Residents', users_path, class: 'ui-shadow' %>
-              </li>
-            <% end %>
+            <li>
+              <%= link_to 'Invite Resident', new_user_invitation_path, class: 'ui-shadow', data: {transition: 'flip'} %>
+            </li>
+            <li>
+              <%= link_to 'My Residents', users_path, class: 'ui-shadow' %>
+            </li>
           </ul>
         </div><!-- /navbar -->
       <% end %>

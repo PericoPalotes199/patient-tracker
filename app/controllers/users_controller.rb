@@ -4,7 +4,18 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = current_user ? current_user.invitations : User.none
+    # the two-query implementation needs to remain until
+    # residents are assigned a residency on invitation
+
+    if current_user
+      @invited_users = current_user.invitations
+      # TODO: create a Residency resource and association
+      # get all users of the current_user residency
+      @residency_users = User.where(residency: current_user.residency)
+    else #!current_user
+      @invited_users = User.none
+      @residency_users = User.none
+    end
   end
 
   # GET /users/1

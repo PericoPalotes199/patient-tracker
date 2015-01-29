@@ -4,13 +4,14 @@ class EncountersController < ApplicationController
   # GET /encounters
   # GET /encounters.json
   def index
-    #TODO: Limit this Encounters#index query to only current_user.
+    #TODO: Limit this Encounters#index query to only current_user and current_user's invitations' encounters.
     #TODO: No need to loop through every encounter in the view!
     @encounters = Encounter.all.includes(:user).order(encountered_on: :desc).order('users.name ASC')
   end
 
   def summary
-    #TODO: Limit this Encounters#summary query to only current_user and current_user's invitations.
+    #TODO: Limit this Encounters#summary query to only current_user and current_user's invitations' encounters.
+    #TODO: @encounters is needed for the .xls format. Find out if this can be defined only for the .xls format.
     @encounters = Encounter.all.includes(:user).order(encountered_on: :desc).order('users.name ASC')
 
     #TODO: Map encounter_type values to an integer so that reults can be ordered

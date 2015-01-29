@@ -6,16 +6,19 @@ class EncounterPolicy < ApplicationPolicy
     @encounter = encounter
   end
 
-  def summary?
-    user.role == 'admin'
-  end
-
   def index?
-    user.id == encounter.user.id || user.role == 'admin'
+    # the encounter belongs to the current_user or
+    user.id == encounter.user.id ||
+    # the current_user is an admin who invited the user who created the encounter or
+    ( user.role == 'admin' && user.id == encounter.user.invited_by_id ) ||
+    # the current_user is an admin within the same residency
+    ( user.role == 'admin' && user.residency == encounter.user.residency )
   end
 
   def show?
-    index?
+    # No need to show an individual encounter unless the user is the creator.
+    # The encounters/show view is primarily used to access the destroy button.
+    user.id == encounter.user.id
   end
 
   def new?

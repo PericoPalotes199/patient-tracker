@@ -10,7 +10,7 @@
 
     <%= render 'layouts/sign_in_message' %>
 
-  <% elsif !policy(@users).index? %>
+  <% elsif !current_user.admin? %>
     <div class="unauthorized_content">
       <p>You are not authorized to view this page.</p>
     </div>
@@ -21,7 +21,7 @@
           <tr>
             <th>Name</th>
             <th>Role</th>
-            <th>E-Mail Confirmed?</th>
+            <th>Invited By</th>
             <th>Invitation Accepted?</th>
           </tr>
         </thead>
@@ -30,33 +30,37 @@
             <tr>
               <td><%= link_to current_user.name, current_user %></td>
               <td><%= current_user.role %></td>
-              <td><%= current_user.confirmed? ? current_user.confirmed_at.to_date : 'NO' %></td>
+              <td><%= current_user.invited_by ? current_user.invited_by.name : 'n/a' %></td>
               <td><%= current_user.invitation_accepted_at? ? current_user.invitation_accepted_at : 'n/a' %></td>
             </tr>
-          <% @users.each do |user| %>
+          <% @invited_users.each do |user| %>
             <tr>
               <td><%= link_to user.name, user %></td>
               <td><%= user.role %></td>
-              <td><%= user.confirmed? ? user.confirmed_at.to_date : 'NO' %></td>
+              <td><%= user.invited_by ? user.invited_by.name : 'n/a' %></td>
+              <td><%= user.invitation_accepted_at? ? user.invitation_accepted_at.to_date : 'n/a' %></td>
+            </tr>
+          <% end %>
+          <% @residency_users.each do |user| %>
+            <tr>
+              <td><%= link_to user.name, user %></td>
+              <td><%= user.role %></td>
+              <td><%= user.invited_by ? user.invited_by.name : 'n/a' %></td>
               <td><%= user.invitation_accepted_at? ? user.invitation_accepted_at.to_date : 'n/a' %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
 
-      <% if current_user.admin? || policy(User).index? %>
+      <% if current_user.admin? %>
         <div id="users_index_buttons" data-role="navbar">
           <ul>
-            <% if current_user.admin? %>
-              <li>
-                <%= link_to 'Invite Resident', new_user_invitation_path, class: 'ui-shadow', data: {transition: 'flip'} %>
-              </li>
-            <% end %>
-            <% if policy(User).index? %>
-              <li>
-                <%= link_to 'My Residents', users_path, class: 'ui-shadow' %>
-              </li>
-            <% end %>
+            <li>
+              <%= link_to 'Invite Resident', new_user_invitation_path, class: 'ui-shadow', data: {transition: 'flip'} %>
+            </li>
+            <li>
+              <%= link_to 'My Residents', users_path, class: 'ui-shadow' %>
+            </li>
           </ul>
         </div><!-- /navbar -->
       <% end %>
