@@ -33,15 +33,7 @@
               <td><%= current_user.invited_by ? current_user.invited_by.name : 'n/a' %></td>
               <td><%= current_user.invitation_accepted_at? ? current_user.invitation_accepted_at : 'n/a' %></td>
             </tr>
-          <% @invited_users.each do |user| %>
-            <tr>
-              <td><%= link_to user.name, user %></td>
-              <td><%= user.role %></td>
-              <td><%= user.invited_by ? user.invited_by.name : 'n/a' %></td>
-              <td><%= user.invitation_accepted_at? ? user.invitation_accepted_at.to_date : 'n/a' %></td>
-            </tr>
-          <% end %>
-          <% @residency_users.each do |user| %>
+          <% @users.each do |user| %>
             <tr>
               <td><%= link_to user.name, user %></td>
               <td><%= user.role %></td>

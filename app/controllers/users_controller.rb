@@ -8,10 +8,19 @@ class UsersController < ApplicationController
     # residents are assigned a residency on invitation
 
     if current_user
-      @invited_users = current_user.invitations
+      invited_users = current_user.invitations
       # TODO: create a Residency resource and association
       # get all users of the current_user residency
-      @residency_users = User.where(residency: current_user.residency)
+      residency_users = User.where(residency: current_user.residency)
+
+      @users = []
+      invited_users.each do |user|
+        @users << user unless user == current_user
+      end
+      residency_users.each do |user|
+        # filtering on current_user allows adding an explicit top row for current_user in view
+        @users << user unless @users.include?(user) || user == current_user
+      end
     else #!current_user
       @invited_users = User.none
       @residency_users = User.none
