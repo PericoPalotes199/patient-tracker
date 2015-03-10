@@ -6,15 +6,23 @@
   <% end  %>
   <%= render 'layouts/header' %>
   <%= render 'layouts/flash_messages' %>
+
   <% if !current_user %>
 
     <%= render 'layouts/sign_in_message' %>
 
+  <% elsif current_user.subscription_expired? %>
+
+    <%= render 'layouts/subscription_expired' %>
+
   <% elsif !current_user.admin? %>
+
     <div class="unauthorized_content">
       <p>You are not authorized to view this page.</p>
     </div>
+
   <% else %>
+
     <div class="ui-content users_index_section">
       <table class="ui-table">
         <thead>
@@ -58,5 +66,6 @@
       <% end %>
     </div>
     </div>
+
   <% end %>
 </div>
