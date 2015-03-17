@@ -135,6 +135,7 @@ StripeEvent.configure do |events|
     if customer_id && subscription_id
       customer = Stripe::Customer.retrieve(customer_id)
       subscription = customer.subscriptions.retrieve(subscription_id)
+      user = User.find_by(customer_id: customer_id)
       user.active_until = subscription.current_period_start
       user.update_invitees_active_until
 
