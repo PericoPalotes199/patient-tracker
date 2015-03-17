@@ -89,8 +89,10 @@ StripeEvent.configure do |events|
   end
 
   events.subscribe 'invoice.payment_succeeded' do |event|
-    customer_id = event.data.object['customer']
-    subscription_id = event.data.object['subscription']
+    customer_id = event.data.object.customer
+    subscription_id = event.data.object.subscription
+
+
     if customer_id && subscription_id
       customer = Stripe::Customer.retrieve(customer_id)
       subscription = customer.subscriptions.retrieve(subscription_id)
@@ -102,6 +104,7 @@ StripeEvent.configure do |events|
       #TODO: update the quanity based on the entire residency's users,
       #TODO: so that multiple admin's can exist (like chief's are admins)
       subscription.quantity = user.invitations.count + 1
+      subscription.save
       if user.save
         Rails.logger.info '**************************************************'
         Rails.logger.info "#{event.type} webhook successful."
@@ -125,6 +128,40 @@ StripeEvent.configure do |events|
     end
   end
 
+  events.subscribe 'invoice.payment_failed' do |event|
+    customer_id = event.data.object.customer
+    subscription_id = event.data.object.subscription
+
+    if customer_id && subscription_id
+      customer = Stripe::Customer.retrieve(customer_id)
+      subscription = customer.subscriptions.retrieve(subscription_id)
+      user.active_until = subscription.current_period_start
+      user.update_invitees_active_until
+
+      subscription.quantity = user.invitations.count + 1
+      subscription.save
+
+      if user.save
+        Rails.logger.info '**************************************************'
+        Rails.logger.info "#{event.type} webhook successful."
+        Rails.logger.info event
+        Rails.logger.info '**************************************************'
+      else
+        Rails.logger.info '**************************************************'
+        Rails.logger.info "#{event.type} webhook failed on user.save."
+        Rails.logger.info event
+        Rails.logger.info '**************************************************'
+        raise StripeEvent::UnauthorizedError
+      end
+    else
+      Rails.logger.info '************************************************************'
+      Rails.logger.info "#{event.type} webhook failed on cusomter_id && subscription."
+      Rails.logger.info event
+      Rails.logger.info '************************************************************'
+      raise StripeEvent::UnauthorizedError
+    end
+  end
+
   events.subscribe 'customer.subscription.created' do |event|
     Rails.logger.info '**************************************************'
     Rails.logger.info event
@@ -133,11 +170,19 @@ StripeEvent.configure do |events|
 
   events.subscribe 'customer.subscription.updated' do |event|
     begin
-      customer_id = event.data.object.customer
       subscription = event.data.object
+      customer_id = event.data.object.customer
       #User with customer_id: 'cus_00000000000000' saved in dev database
       user = User.find_by!(customer_id: customer_id)
-      user.active_until = subscription.current_period_end
+
+      # Possible values for subscription.status are:
+      # trialing, active, past_due, canceled, or unpaid.
+      # Source: https://stripe.com/docs/api/ruby#subscription_object
+      if subscription.status == 'trialing' || subscription.status == 'active'
+        user.active_until = subscription.current_period_end
+      else
+        user.active_until = subscription.current_period_start
+      end
       user.update_invitees_active_until
       user.save!
       Rails.logger.info '**************************************************'
