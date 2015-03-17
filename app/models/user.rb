@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
       if inviter && inviter.customer_id
         customer = Stripe::Customer.retrieve(inviter.customer_id)
         subscription = customer.subscriptions.first
-        subscription.quantity = inviter.invitations.count + 1
+        subscription.quantity = inviter.invitations.count
         subscription.save
       end
     end

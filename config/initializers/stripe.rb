@@ -103,7 +103,7 @@ StripeEvent.configure do |events|
       #TODO: update the subscription quantity with only active && accepted users
       #TODO: update the quanity based on the entire residency's users,
       #TODO: so that multiple admin's can exist (like chief's are admins)
-      subscription.quantity = user.invitations.count + 1
+      subscription.quantity = user.invitations.count
       subscription.save
       if user.save
         Rails.logger.info '**************************************************'
@@ -139,7 +139,7 @@ StripeEvent.configure do |events|
       user.active_until = subscription.current_period_start
       user.update_invitees_active_until
 
-      subscription.quantity = user.invitations.count + 1
+      subscription.quantity = user.invitations.count
       subscription.save
 
       if user.save
