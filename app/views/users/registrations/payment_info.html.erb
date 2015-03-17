@@ -93,6 +93,8 @@
     $('#customButton').on('click', function(e) {
       // Open Checkout with further options
       handler.open({
+        image: '/images/logo_295x235.png',
+        name: 'Encounter Counter',
         description: stripeDescription(),
         email: currentUserEmail(),
         allowRememberMe: false,
