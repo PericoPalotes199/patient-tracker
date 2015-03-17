@@ -14,7 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       customer.save
       subscription = customer.subscriptions.first
       subscription.plan = params[:plan]
-      subscription.quantity = @user.invitations.invitation_accepted.count + 1
+      subscription.quantity = @user.invitations.count
       if subscription.save
         #TODO: This should probably be an ActiveRecord callback.
         save_active_until(@user, subscription.current_period_end)
