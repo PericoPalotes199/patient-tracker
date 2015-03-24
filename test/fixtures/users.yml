@@ -1,9 +1,33 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  role: MyString
+# A plain resident
+resident:
+  email: resident@example.com
+  first_name: Jane
+  last_name: Intern
+  role: resident
+  active_until: <%= (Time.now + 1.99.days).to_i %>
 
-two:
-  name: MyString
-  role: MyString
+# An admin and invited residents
+admin:
+  email: admin@example.com
+  first_name: Jane
+  last_name: Administrator
+  role: admin
+  residency: Test Residency
+  active_until: <%= (Time.now + 6.99.days).to_i %>
+
+<% 5.times do |n| %>
+<%= "resident_#{n}" %>:
+  email: <%= "resident_#{n}@example.com" %>
+  first_name: <%= "Resident_#{n}" %>
+  last_name: Example
+  role: resident
+  residency: Test Residency
+  invited_by: admin
+  invited_by_type: User
+<% end %>
+
+
+
+

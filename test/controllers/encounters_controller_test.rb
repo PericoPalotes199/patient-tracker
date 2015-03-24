@@ -2,7 +2,7 @@ require 'test_helper'
 
 class EncountersControllerTest < ActionController::TestCase
   setup do
-    @encounter = encounters(:one)
+    @encounter = encounters(:adult_inpatient)
   end
 
   test "should get index" do
