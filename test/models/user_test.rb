@@ -43,7 +43,24 @@ class UserTest < ActiveSupport::TestCase
 
   test "update invitees active until" do
     users(:admin).update_invitees_active_until
-    assert_equal users(:admin).invitations.pluck(:active_until).uniq.size, 1
-    assert_includes users(:admin).invitations.pluck(:active_until).uniq, users(:admin).active_until
+    assert_equal 1, users(:admin).invitations.pluck(:active_until).uniq.size
+    assert_includes users(:admin).active_until, users(:admin).invitations.pluck(:active_until).uniq
+  end
+
+  test "when a user accepts an invitation, the inviter subscription quantity is updated" do
+    skip('User invitations must be equal to Stripe subscription quantity!')
+    assert users(:admin).invitations.count <
+           Stripe::Customer.retrieve('cus_0000000').subscriptions.first.quantity
+    User.accept_invitation!(invitation_token: users(:unconfirmed).invitation_token)
+    assert users(:admin).invitations.count ==
+           Stripe::Customer.retrieve('cus_0000000').subscriptions.first.quantity
+  end
+
+  test "change role to resident" do
+    admin = User.create!(role: 'admin', invitation_token: 'some_valid_invitation_token',
+      email: 'admin-to-resident@example.com', password: 'password', tos_accepted: true)
+    assert_equal 'admin', admin.role
+    User.accept_invitation!(invitation_token: admin.invitation_token)
+    assert_equal 'resident', admin.role
   end
 end

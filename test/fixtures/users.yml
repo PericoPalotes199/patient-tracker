@@ -6,6 +6,7 @@ resident:
   first_name: Jane
   last_name: Intern
   role: resident
+  confirmed_at: <%= Time.now %>
   active_until: <%= (Time.now + 1.99.days).to_i %>
 
 # An admin and invited residents
@@ -15,7 +16,18 @@ admin:
   last_name: Administrator
   role: admin
   residency: Test Residency
+  confirmed_at: <%= Time.now %>
   active_until: <%= (Time.now + 6.99.days).to_i %>
+
+unconfirmed:
+  email: unconfirmed@example.com
+  first_name: Unconfirmed
+  last_name: User
+  role: resident
+  residency: Test Residency
+  invited_by: admin
+  invited_by_type: User
+  invitation_token: some_valid_token
 
 <% 5.times do |n| %>
 <%= "resident_#{n}" %>:

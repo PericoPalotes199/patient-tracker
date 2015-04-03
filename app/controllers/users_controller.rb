@@ -18,8 +18,7 @@ class UsersController < ApplicationController
         @users << user unless @users.include?(user) || user == current_user
       end
     else #!current_user
-      @invited_users = User.none
-      @residency_users = User.none
+      @users = User.none
     end
   end
 
