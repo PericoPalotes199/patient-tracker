@@ -19,13 +19,20 @@
       <h4>&copy; <%= Time.now.year %> Encounter Counter</h4>
     </footer>
 
-  <% else %>
+  <% elsif current_user.admin? %>
+
+    <%= render 'layouts/admin_only' %>
+    <footer style="margin-top: 0;" class="fullwidth_footer <%= conditional_fixed_footer %>">
+      <h4>&copy; <%= Time.now.year %> Encounter Counter</h4>
+    </footer>
+
+  <% else # current_user.resident? %>
 
     <div class="wrap_section_narrow">
       <div class="spacer">
         <%= date_field_tag(:date, Time.zone.today, onchange: "setEncounteredOn()") %>
       </div>
-    </div> <!-- /wrap_section_narrow -->
+    </div><!-- /wrap_section_narrow -->
 
     <div class="wrap_section_narrow">
       <% encounter_types = ['adult_inpatient', 'adult_ed', 'adult_icu', 'adult_inpatient_surgery',
@@ -33,7 +40,7 @@
          'continuity_inpatient', 'continuity_external'] %>
       <%= render partial: 'encounter_types', locals: {encounter_types: encounter_types} %>
       <%= render partial: 'form', locals: {encounter_types: encounter_types} %>
-    </div> <!-- /wrap_section_narrow -->
+    </div><!-- /wrap_section_narrow -->
 
     <div class="wrap_section_narrow">
       <div id="buttonsLine"class="row">
@@ -42,7 +49,7 @@
           <div id="total" class="totalnumber blockFloat">0</div>
         </div>
       </div>
-    </div> <!-- /wrap_section_narrow -->
+    </div><!-- /wrap_section_narrow -->
 
     <div class="spacer">
     </div>
