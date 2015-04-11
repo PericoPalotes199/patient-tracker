@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
         users_path
       elsif resource.resident?
         new_encounter_path
-      else
+      else # resource.admin_resident?
         super
       end
     end

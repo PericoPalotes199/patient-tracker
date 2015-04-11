@@ -26,7 +26,7 @@
       <h4>&copy; <%= Time.now.year %> Encounter Counter</h4>
     </footer>
 
-  <% else # current_user.resident? %>
+  <% else # current_user.resident? || current_user.admin_resident? %>
 
     <div class="wrap_section_narrow">
       <div class="spacer">
