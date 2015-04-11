@@ -13,6 +13,8 @@ class EncounterPolicy < ApplicationPolicy
     ( user.role == 'admin' && user.id == encounter.user.invited_by_id ) ||
     # the current_user is an admin within the same residency
     ( user.role == 'admin' && user.residency == encounter.user.residency )
+    # the current_user is an admin_resident within the same residency
+    ( user.role == 'admin_resident' && user.residency == encounter.user.residency )
   end
 
   def show?
@@ -26,7 +28,7 @@ class EncounterPolicy < ApplicationPolicy
   end
 
   def create?
-    user.role == 'resident' || user.role == 'admin'
+    user.role == 'resident' || user.role == 'admin' || user.role == 'admin_resident'
   end
 
   def edit?
