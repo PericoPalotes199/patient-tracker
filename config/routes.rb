@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   #Devise Users
-  devise_for :users, controllers: {sessions: "users/sessions", registrations: "users/registrations", invitations: "users/invitations"}
+  devise_for :users, controllers: {sessions: "users/sessions", registrations: "users/registrations", invitations: "users/invitations", passwords: "users/passwords" }
   devise_scope :user do
     get 'payment_info' => 'users/registrations#payment_info'
     post 'pay' => 'users/registrations#pay'
