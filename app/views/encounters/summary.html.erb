@@ -4,7 +4,7 @@
   <% if !current_user.present? %> <!-- header content -->
     <% content_for :header_title, 'How many patients did you help today?' %>
   <% else %>
-    <% if current_user.admin? %>
+    <% if current_user.admin? || current_user.admin_resident? %>
       <% content_for :user_first_name_header, "All" %>
       <% content_for :user_last_name_header, "Residents" %>
     <% elsif current_user.first_name && current_user.last_name %>
@@ -30,7 +30,7 @@
       <table data-role="table" class="encounters_summary">
         <thead>
           <tr class="fullwidth">
-            <% if current_user.admin? %>
+            <% if current_user.admin? || current_user.admin_resident? %>
               <th>Resident</th>
             <% end %>
             <th>Type</th>
@@ -45,7 +45,7 @@
             <!-- Show a row if it belongs to the current_user or if the current_user has summary privileges  -->
             <% if policy(user).show? %>
               <tr class="lineitem fullwidth">
-                <% if current_user.admin? %>
+                <% if current_user.admin? || current_user.admin_resident? %>
                   <td><%= user.name %></td>
                 <% end %>
                 <td><%= group[1] %></td>
@@ -56,7 +56,7 @@
         </tbody>
       </table>
 
-      <% if current_user.admin? %>
+      <% if current_user.admin? || current_user.admin_resident? %>
         <div id="encounters_summary_buttons" data-role="navbar">
           <ul>
             <li>

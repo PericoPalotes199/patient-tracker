@@ -1,0 +1,16 @@
+<div id="admin_only_header" data-role="header">
+
+  <!-- TODO: Make this is a header like the sign_in_message -->
+  <h2>
+    You are an admin, and not a resident.
+  </h2>
+  <h2>
+    You do not have permission to submit encounters.
+  </h2>
+  <h2>
+    Email <%= mail_to ENV["CONTACT_EMAIL_ADDRESS"], 'Encounter Counter', body: "If you are encountering difficulties with this app, or you'd like to contact the customer service team, please add your message here." %> for help.
+  </h2>
+  <br />
+</div><!-- #subcription_expired_header -->
+
+

@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     end
 
     def authenticate_inviter!
-      unless current_user.role == 'admin'
+      unless current_user.admin?
         redirect_to users_path, :alert => 'You are not authorized to invite residents.'
       end
       super
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
         users_path
       elsif resource.resident?
         new_encounter_path
-      else
+      else # resource.admin_resident?
         super
       end
     end

@@ -10,9 +10,11 @@ class EncounterPolicy < ApplicationPolicy
     # the encounter belongs to the current_user or
     user.id == encounter.user.id ||
     # the current_user is an admin who invited the user who created the encounter or
-    ( user.role == 'admin' && user.id == encounter.user.invited_by_id ) ||
+    ( user.admin? && user.id == encounter.user.invited_by_id ) ||
     # the current_user is an admin within the same residency
-    ( user.role == 'admin' && user.residency == encounter.user.residency )
+    ( user.admin? && user.residency == encounter.user.residency )
+    # the current_user is an admin_resident within the same residency
+    ( user.admin_resident? && user.residency == encounter.user.residency )
   end
 
   def show?
@@ -26,7 +28,7 @@ class EncounterPolicy < ApplicationPolicy
   end
 
   def create?
-    user.role == 'resident' || user.role == 'admin'
+    user.resident? || user.admin? || user.admin_resident?
   end
 
   def edit?
@@ -34,7 +36,7 @@ class EncounterPolicy < ApplicationPolicy
   end
 
   def update?
-    user.role == 'resident' && user.id == encounter.user.id
+    user.resident? && user.id == encounter.user.id
   end
 
   def destroy?
