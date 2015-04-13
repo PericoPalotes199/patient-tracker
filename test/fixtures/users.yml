@@ -9,6 +9,14 @@ resident:
   confirmed_at: <%= Time.now %>
   active_until: <%= (Time.now + 1.99.days).to_i %>
 
+# A resident that forgot password
+forgetful_resident:
+  email: forgetful@example.com
+  encrypted_password: old-password
+  first_name: Forgetful
+  last_name: Memory
+  role: resident
+
 # An admin and invited residents
 admin:
   email: admin@example.com
