@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   # Encounters
   get 'encounters/summary' => 'encounters#summary', as: :summary
-  resources :encounters
+  resources :encounters, except: [:edit, :update]
 
   mount StripeEvent::Engine, at: '/stripe_events'
 

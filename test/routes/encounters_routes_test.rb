@@ -22,14 +22,6 @@ class EncountersRoutesTest < ActionController::TestCase
     assert_routing({ method: 'post', path: '/encounters' }, { controller: 'encounters', action: 'create' })
   end
 
-  test "should route to encounters edit" do
-    assert_routing({ method: 'get', path: '/encounters/1/edit' }, { controller: 'encounters', action: 'edit', id: '1' })
-  end
-
-  test "should route to encounters update" do
-    assert_routing({ method: 'patch', path: '/encounters/1' }, { controller: 'encounters', action: 'update', id: '1' })
-  end
-
   test "should route to encounters destroy" do
     assert_routing({ method: 'delete', path: '/encounters/1' }, { controller: 'encounters', action: 'destroy', id: '1' })
   end
