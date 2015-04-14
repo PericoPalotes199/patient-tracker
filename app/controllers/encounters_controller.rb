@@ -1,6 +1,6 @@
 class EncountersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_encounter, only: [:show, :edit, :update, :destroy]
-
   # GET /encounters
   # GET /encounters.json
   def index
@@ -27,15 +27,14 @@ class EncountersController < ApplicationController
   # GET /encounters/1
   # GET /encounters/1.json
   def show
+    if current_user.admin? || !current_user.eql?(@encounter.user)
+      redirect_to encounters_path and return
+    end
   end
 
   # GET /encounters/new
   def new
     @encounter = Encounter.new
-  end
-
-  # GET /encounters/1/edit
-  def edit
   end
 
   # POST /encounters
@@ -60,20 +59,6 @@ class EncountersController < ApplicationController
         redirect_to :new_encounter, alert: 'You did not count your encounters!'
       else
         redirect_to :encounters, notice: 'Your encounters have been counted!'
-      end
-    end
-  end
-
-  # PATCH/PUT /encounters/1
-  # PATCH/PUT /encounters/1.json
-  def update
-    respond_to do |format|
-      if @encounter.update(encounter_params)
-        format.html { redirect_to @encounter, notice: 'Encounter was successfully updated.' }
-        format.json { render :show, status: :ok, location: @encounter }
-      else
-        format.html { render :edit }
-        format.json { render json: @encounter.errors, status: :unprocessable_entity }
       end
     end
   end

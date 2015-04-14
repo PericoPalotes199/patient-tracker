@@ -2,33 +2,48 @@
 
 adult_inpatient:
   encounter_type: adult_inpatient
+  user: resident
 
 adult_ed:
   encounter_type: adult_ed
+  user: resident
 
 adult_icu:
   encounter_type: adult_icu
+  user: resident
 
 adult_inpatient_surgery:
   encounter_type: adult_inpatient_surgery
+  user: resident
 
 pediatric_inpatient:
   encounter_type: pediatric_inpatient
+  user: resident
 
 pediatric_newborn:
   encounter_type: pediatric_newborn
+  user: resident
 
 pediatric_ed:
   encounter_type: pediatric_ed
+  user: resident
 
 continuity_inpatient:
   encounter_type: continuity_inpatient
+  user: resident
 
 continuity_external:
   encounter_type: continuity_external
+  user: resident
 
-<% 20.times do |n| %>
+<% (1..10).each do |n| %>
 encounter_<%= n %>:
   encounter_type: adult_inpatient
   user: resident
+<% end %>
+
+<% (11..20).each do |n| %>
+encounter_<%= n %>:
+  encounter_type: adult_inpatient
+  user: resident_1
 <% end %>

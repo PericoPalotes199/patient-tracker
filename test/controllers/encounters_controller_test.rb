@@ -1,49 +1,201 @@
 require 'test_helper'
 
 class EncountersControllerTest < ActionController::TestCase
+
+  # was the web request successful?
+  # was the user redirected to the right page?
+  # was the user successfully authenticated?
+  # was the correct object stored in the response template?
+  # was the appropriate message displayed to the user in the view?
+
   setup do
-    @encounter = encounters(:adult_inpatient)
+    @resident = users(:resident)
+    @admin = users(:admin)
+    @encounter = @resident.encounters.first
   end
 
-  test "should get index" do
+  test "As a visitor, I cannot visit the encounters index" do
+    get :index
+    assert_nil assigns(:encounters)
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
+  end
+
+  test "As a resident, I can view only my encounters at the encounters index" do
+    sign_in @resident
     get :index
     assert_response :success
-    assert_not_nil assigns(:encounters)
+    assert_equal assigns(:encounters), @resident.encounters
+    assert_equal assigns(:encounters).count, @resident.encounters.count
+    assert_template :index
   end
 
-  test "should get new" do
+  test "As an admin, I can view all of my invited residents' encounters at the encounters index" do
+    sign_in @admin
+    get :index
+    assert_response :success
+    assert_equal assigns(:encounters), @resident.encounters
+    assert_template :index
+  end
+
+  test "As a visitor, I cannot visit the new encounter form" do
+    get :new
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
+  end
+
+  test "As I resident, I can visit the new encounter page" do
+    sign_in @resident
     get :new
     assert_response :success
+    assert_template :new
   end
 
-  test "should create encounter" do
-    assert_difference('Encounter.count') do
-      post :create, encounter: { type: @encounter.type }
+  test "As an admin, I can visit the new encounter page" do
+    sign_in @admin
+    get :new
+    assert_response :success
+    assert_template :new
+  end
+
+  test "As a visitor, I cannot create an encounter" do
+    assert_no_difference('Encounter.count') do
+      post :create, encounter: { encounter_types: {adult_inpatient: 1, adult_ed: 2} }
     end
-
-    assert_redirected_to encounter_path(assigns(:encounter))
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
   end
 
-  test "should show encounter" do
+  test "As a resident, I can create an encounter" do
+    sign_in @resident
+    assert_difference('Encounter.count', 3) do
+      post :create, encounter_types: {adult_inpatient: 1, adult_ed: 2}, encountered_on: Time.now.to_date
+    end
+    assert_response :redirect
+    assert_redirected_to encounters_path
+  end
+
+  test "As an admin, I cannot create an encounter" do
+    sign_in @admin
+    assert_no_difference('Encounter.count') do
+      post :create, encounter_types: {adult_inpatient: 1, adult_ed: 2}, encountered_on: Time.now.to_date
+    end
+    assert_response :redirect
+
+    assert_redirected_to new_user_session_path
+  end
+
+  test "As a visitor, I cannot view an encounter" do
+    get :show, id: @encounter
+    assert_response :redirect
+    assert_redirected_to new_user_session_path
+  end
+
+  test "As a resident, I can view one of my encounters" do
+    sign_in @resident
     get :show, id: @encounter
     assert_response :success
+    assert_template :show
   end
 
-  test "should get edit" do
-    get :edit, id: @encounter
-    assert_response :success
+  test "As a resident, I cannot view an encounter that is not mine" do
+    sign_in @resident
+    get :show, id: users(:resident_1).encounters.first
+    assert_response :redirect
+    assert_redirected_to encounters_path
   end
 
-  test "should update encounter" do
-    patch :update, id: @encounter, encounter: { type: @encounter.type }
-    assert_redirected_to encounter_path(assigns(:encounter))
+  test "As an admin, I cannot view single encounters" do
+    sign_in @admin
+    get :show, id: @encounter
+    assert_response :redirect
+    assert_redirected_to encounters_path
   end
 
-  test "should destroy encounter" do
-    assert_difference('Encounter.count', -1) do
+  test "As a visitor, I cannot edit encounters" do
+    assert_raises ActionController::UrlGenerationError do
+      get :edit, id: @encounter
+    end
+  end
+
+  test "As a resident, I cannot edit encounters" do
+    sign_in @resident
+    assert_raises ActionController::UrlGenerationError do
+      get :edit, id: @encounter
+    end
+  end
+
+  test "As an admin, I cannot edit encounters" do
+    sign_in @admin
+    assert_raises ActionController::UrlGenerationError do
+      get :edit, id: @encounter
+    end
+    assert_raises ActionController::UrlGenerationError do
+      get :edit, id: @admin.invitations.first.encounters.first
+    end
+  end
+
+  test "As a visitor, I cannot update encounters" do
+    assert_raises ActionController::UrlGenerationError do
+      put :update, id: @encounter
+    end
+  end
+
+  test "As a resident, I cannot update encounters" do
+    sign_in @resident
+    assert_raises ActionController::UrlGenerationError do
+      put :update, id: @encounter
+    end
+  end
+
+  test "As an admin, I cannot update encounters" do
+    sign_in @admin
+    assert_raises ActionController::UrlGenerationError do
+      put :update, id: @encounter
+    end
+    assert_raises ActionController::UrlGenerationError do
+      put :update, id: @admin.invitations.first.encounters.first
+    end
+  end
+
+  test "As a visitor, I cannot destroy encounters" do
+    assert_no_difference('Encounter.count') do
       delete :destroy, id: @encounter
     end
 
+    assert_redirected_to new_user_session_path
+  end
+
+  test "As a resident, I cannot destroy encounters that are not mine" do
+    sign_in @resident
+    assert_no_difference('Encounter.count') do
+      delete :destroy, id: users(:resident_1).encounters.first
+    end
+    assert_response :redirect
+    assert_redirected_to encounters_path
+  end
+
+  test "As a resident, I can destroy my own encounters" do
+    sign_in @resident
+    assert_difference('Encounter.count', -1) do
+      delete :destroy, id: @encounter
+    end
+    assert_response :redirect
+    assert_redirected_to encounters_path
+  end
+
+  test "As an admin, I cannot destroy encounters" do
+    sign_in @admin
+    assert_no_difference('Encounter.count') do
+      delete :destroy, id: @encounter
+    end
+    assert_response :redirect
+    assert_redirected_to encounters_path
+
+    assert_no_difference('Encounter.count') do
+      delete :destroy, id: @admin.invitations.first.encounters.first
+    end
+    assert_response :redirect
     assert_redirected_to encounters_path
   end
 end
