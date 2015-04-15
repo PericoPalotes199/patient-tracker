@@ -25,17 +25,33 @@ class EncountersControllerTest < ActionController::TestCase
     sign_in @resident
     get :index
     assert_response :success
-    assert_equal assigns(:encounters), @resident.encounters
     assert_equal assigns(:encounters).count, @resident.encounters.count
+    assert_equal assigns(:encounters), @resident.encounters.order(encountered_on: :desc)
     assert_template :index
+  end
+
+  test "As a resident, when I visit the encounters index, encounters are reverse sorted by encountered_on" do
+    sign_in @resident
+    get :index
+    assert_equal assigns(:encounters).pluck(:encountered_on), @resident.encounters.pluck(:encountered_on).sort.reverse
   end
 
   test "As an admin, I can view all of my invited residents' encounters at the encounters index" do
     sign_in @admin
     get :index
     assert_response :success
-    assert_equal assigns(:encounters), @resident.encounters
+    expected_encounters = []
+    @admin.invitations.each do |invitation|
+      expected_encounters += invitation.encounters
+    end
+    assert_equal assigns(:encounters).pluck(:id).sort, expected_encounters.map{ |encounter| encounter.id }.sort
     assert_template :index
+  end
+
+  test "As an admin, when I visit the encounters index, encounters are sorted by [TBD]" do
+    skip
+    sign_in @admin
+    get :index
   end
 
   test "As a visitor, I cannot visit the new encounter form" do
