@@ -44,7 +44,7 @@ class UserTest < ActiveSupport::TestCase
   test "update invitees active until" do
     users(:admin).update_invitees_active_until
     assert_equal 1, users(:admin).invitations.pluck(:active_until).uniq.size
-    assert_includes users(:admin).active_until, users(:admin).invitations.pluck(:active_until).uniq
+    assert_equal users(:admin).active_until, users(:admin).invitations.pluck(:active_until).uniq.first
   end
 
   test "when a user accepts an invitation, the inviter subscription quantity is updated" do
