@@ -40,7 +40,7 @@ class EncountersController < ApplicationController
   # POST /encounters
   # POST /encounters.json
   def create
-
+    redirect_to(encounters_path, notice: 'You cannot delete encounters!') and return if current_user.admin?
     total = 0
     begin
       ActiveRecord::Base.transaction do
@@ -66,11 +66,10 @@ class EncountersController < ApplicationController
   # DELETE /encounters/1
   # DELETE /encounters/1.json
   def destroy
-    @encounter.destroy
-    respond_to do |format|
-      format.html { redirect_to encounters_url, notice: 'Encounter was successfully deleted.' }
-      format.json { head :no_content }
+    if current_user.eql?(@encounter.user)
+      @encounter.destroy
     end
+    redirect_to encounters_url, notice: 'Encounter was successfully deleted.'
   end
 
   private

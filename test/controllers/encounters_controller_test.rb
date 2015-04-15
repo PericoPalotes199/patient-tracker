@@ -82,7 +82,7 @@ class EncountersControllerTest < ActionController::TestCase
     end
     assert_response :redirect
 
-    assert_redirected_to new_user_session_path
+    assert_redirected_to encounters_path
   end
 
   test "As a visitor, I cannot view an encounter" do
@@ -187,13 +187,7 @@ class EncountersControllerTest < ActionController::TestCase
   test "As an admin, I cannot destroy encounters" do
     sign_in @admin
     assert_no_difference('Encounter.count') do
-      delete :destroy, id: @encounter
-    end
-    assert_response :redirect
-    assert_redirected_to encounters_path
-
-    assert_no_difference('Encounter.count') do
-      delete :destroy, id: @admin.invitations.first.encounters.first
+      delete :destroy, id: users(:resident_1).encounters.first
     end
     assert_response :redirect
     assert_redirected_to encounters_path
