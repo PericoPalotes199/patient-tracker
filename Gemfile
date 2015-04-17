@@ -35,7 +35,6 @@ gem 'uglifier', '>= 1.3.0'
 
 
 group :development do
-  gem 'awesome_print'
   # Use Capistrano for deployment
   # gem 'capistrano-rails'
   gem 'pry'
@@ -45,6 +44,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'awesome_print'
   gem 'better_errors', '~> 1.1.0'
   # Use debugger
   # gem 'debugger', group: [:development, :test]

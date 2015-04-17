@@ -1,9 +1,58 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  role: MyString
+# A plain resident
+resident:
+  email: resident@example.com
+  first_name: Jane
+  last_name: Intern
+  name: Jane Intern
+  role: resident
+  confirmed_at: <%= Time.now %>
+  active_until: <%= (Time.now + 1.99.days).to_i %>
 
-two:
-  name: MyString
-  role: MyString
+# A resident that forgot password
+forgetful_resident:
+  email: forgetful@example.com
+  encrypted_password: old-password
+  first_name: Forgetful
+  last_name: Memory
+  name: Forgetful Memory
+  role: resident
+
+# An admin and invited residents
+admin:
+  email: admin@example.com
+  first_name: Jane
+  last_name: Administrator
+  name: Jane Administrator
+  role: admin
+  residency: Test Residency
+  confirmed_at: <%= Time.now %>
+  active_until: <%= (Time.now + 6.99.days).to_i %>
+
+unconfirmed:
+  email: unconfirmed@example.com
+  first_name: Unconfirmed
+  last_name: User
+  name: Unconfirmed User
+  role: resident
+  residency: Test Residency
+  invited_by: admin
+  invited_by_type: User
+  invitation_token: some_valid_token
+
+<% 5.times do |n| %>
+<%= "resident_#{n}" %>:
+  email: <%= "resident_#{n}@example.com" %>
+  first_name: <%= "Resident_#{n}" %>
+  last_name: Example
+  name: <%= "Resident_#{n} Example" %>
+  role: resident
+  residency: Test Residency
+  invited_by: admin
+  invited_by_type: User
+<% end %>
+
+
+
+

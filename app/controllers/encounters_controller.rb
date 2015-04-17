@@ -1,12 +1,18 @@
 class EncountersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_encounter, only: [:show, :edit, :update, :destroy]
-
   # GET /encounters
   # GET /encounters.json
   def index
     #TODO: Limit this Encounters#index query to only current_user and current_user's invitations' encounters.
     #TODO: No need to loop through every encounter in the view!
-    @encounters = Encounter.all.includes(:user).order(encountered_on: :desc).order('users.name ASC')
+    if current_user.admin?
+      @encounters = Encounter.includes(:user).where('users.invited_by_id  = ?', current_user.id).references(:users).order(encountered_on: :desc).order('users.name ASC')
+    elsif current_user.resident?
+      @encounters = current_user.encounters.order(encountered_on: :desc)
+    else
+      @encounters = Encounter.none
+    end
   end
 
   def summary
@@ -27,6 +33,9 @@ class EncountersController < ApplicationController
   # GET /encounters/1
   # GET /encounters/1.json
   def show
+    if current_user.admin? || !current_user.eql?(@encounter.user)
+      redirect_to encounters_path and return
+    end
   end
 
   # GET /encounters/new
@@ -34,14 +43,10 @@ class EncountersController < ApplicationController
     @encounter = Encounter.new
   end
 
-  # GET /encounters/1/edit
-  def edit
-  end
-
   # POST /encounters
   # POST /encounters.json
   def create
-
+    redirect_to(encounters_path, notice: 'You cannot delete encounters!') and return if current_user.admin?
     total = 0
     begin
       ActiveRecord::Base.transaction do
@@ -64,28 +69,13 @@ class EncountersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /encounters/1
-  # PATCH/PUT /encounters/1.json
-  def update
-    respond_to do |format|
-      if @encounter.update(encounter_params)
-        format.html { redirect_to @encounter, notice: 'Encounter was successfully updated.' }
-        format.json { render :show, status: :ok, location: @encounter }
-      else
-        format.html { render :edit }
-        format.json { render json: @encounter.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /encounters/1
   # DELETE /encounters/1.json
   def destroy
-    @encounter.destroy
-    respond_to do |format|
-      format.html { redirect_to encounters_url, notice: 'Encounter was successfully deleted.' }
-      format.json { head :no_content }
+    if current_user.eql?(@encounter.user)
+      @encounter.destroy
     end
+    redirect_to encounters_url, notice: 'Encounter was successfully deleted.'
   end
 
   private

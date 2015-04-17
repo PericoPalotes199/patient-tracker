@@ -1,7 +1,60 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  type: 
+adult_inpatient:
+  encounter_type: adult_inpatient
+  encountered_on: <%= Time.now %>
+  user: resident
 
-two:
-  type: 
+adult_ed:
+  encounter_type: adult_ed
+  encountered_on: <%= Time.now %>
+  user: resident
+
+adult_icu:
+  encounter_type: adult_icu
+  encountered_on: <%= Time.now %>
+  user: resident
+
+adult_inpatient_surgery:
+  encounter_type: adult_inpatient_surgery
+  encountered_on: <%= Time.now %>
+  user: resident
+
+pediatric_inpatient:
+  encounter_type: pediatric_inpatient
+  encountered_on: <%= Time.now %>
+  user: resident
+
+pediatric_newborn:
+  encounter_type: pediatric_newborn
+  encountered_on: <%= Time.now %>
+  user: resident
+
+pediatric_ed:
+  encounter_type: pediatric_ed
+  encountered_on: <%= Time.now %>
+  user: resident
+
+continuity_inpatient:
+  encounter_type: continuity_inpatient
+  encountered_on: <%= Time.now %>
+  user: resident
+
+continuity_external:
+  encounter_type: continuity_external
+  encountered_on: <%= Time.now %>
+  user: resident
+
+<% (1..10).each do |n| %>
+encounter_<%= n %>:
+  encounter_type: adult_inpatient
+  encountered_on: <%= Time.now + n.days %>
+  user: resident
+<% end %>
+
+<% (11..20).each do |n| %>
+encounter_<%= n %>:
+  encounter_type: adult_inpatient
+  encountered_on: <%= Time.now + n.days %>
+  user: resident_1
+<% end %>
