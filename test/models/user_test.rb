@@ -57,10 +57,21 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "change role to resident" do
-    admin = User.create!(role: 'admin', invitation_token: 'some_valid_invitation_token',
-      email: 'admin-to-resident@example.com', password: 'password', tos_accepted: true)
+    admin = User.create!(
+      email: 'admin-to-resident@example.com',
+      password: 'password',
+      role: 'admin',
+      tos_accepted: true)
     assert_equal 'admin', admin.role
-    User.accept_invitation!(invitation_token: admin.invitation_token)
+    admin.invite!
+    assert_not_nil admin.invitation_token
+    assert_not_nil admin.raw_invitation_token
+    assert_not_nil admin.invitation_created_at
+    admin = User.accept_invitation!(
+      invitation_token: admin.raw_invitation_token,
+      password: 'password',
+      password_confirmation: 'password')
+    assert_equal 'admin-to-resident@example.com', admin.email
     assert_equal 'resident', admin.role
   end
 end
