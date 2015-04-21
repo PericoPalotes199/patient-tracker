@@ -29,8 +29,8 @@ class UsersPasswordsControllerTest < ActionController::TestCase
 
   test "password can be updated if tos accepted" do
     put :update, user: {reset_password_token: @reset_token, password: 'new-password', password_confirmation: 'new-password', tos_accepted: '1'}
-    @resident.reload
-    assert_not_equal users(:forgetful_resident).encrypted_password, 'old-password'
+    assert User.find_by(email: 'forgetful@example.com').valid_password?('new-password')
+    assert_not User.find_by(email: 'forgetful@example.com').valid_password?('old-password')
     assert_response :redirect
     assert_redirected_to new_user_session_path
   end
