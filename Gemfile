@@ -18,6 +18,7 @@ gem 'newrelic_rpm', '~> 3.9.0.229'
 # Use PostgreSQL database in all environments
 gem 'pg', '~> 0.17.1'
 # Use pundit for minimal authorization through OO design and pure Ruby classes
+gem 'puma'
 gem 'pundit', '~> 0.2.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
