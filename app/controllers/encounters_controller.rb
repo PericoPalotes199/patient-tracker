@@ -4,8 +4,6 @@ class EncountersController < ApplicationController
   # GET /encounters
   # GET /encounters.json
   def index
-    #TODO: Limit this Encounters#index query to only current_user and current_user's invitations' encounters.
-    #TODO: No need to loop through every encounter in the view!
     if current_user.admin?
       @encounters = Encounter.includes(:user).where('users.invited_by_id  = ?', current_user.id).references(:users).order(encountered_on: :desc).order('users.name ASC')
     elsif current_user.resident?

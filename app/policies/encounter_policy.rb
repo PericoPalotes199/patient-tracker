@@ -12,7 +12,7 @@ class EncounterPolicy < ApplicationPolicy
     # the current_user is an admin who invited the user who created the encounter or
     ( user.admin? && user.id == encounter.user.invited_by_id ) ||
     # the current_user is an admin within the same residency
-    ( user.admin? && user.residency == encounter.user.residency )
+    ( user.admin? && user.residency == encounter.user.residency ) ||
     # the current_user is an admin_resident within the same residency
     ( user.admin_resident? && user.residency == encounter.user.residency )
   end
