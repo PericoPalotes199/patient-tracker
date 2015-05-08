@@ -6,7 +6,11 @@ class User < ActiveRecord::Base
 
   has_many :encounters, dependent: :destroy
   has_many :invitations, :class_name => 'User', :as => :invited_by
-  after_invitation_accepted :update_inviter_subscription_quantity, :delete_all_customer_subscriptions, :change_role_to_resident, :set_active_until
+  after_invitation_accepted :update_inviter_subscription_quantity,
+                            :delete_all_customer_subscriptions,
+                            :change_role_to_resident,
+                            :set_active_until,
+                            :set_residency
 
   before_create :set_default_role, :set_active_until
   before_save :set_name
@@ -68,6 +72,13 @@ class User < ActiveRecord::Base
     def set_active_until
       if invited_by_id?
         self.active_until = invited_by.active_until
+      end
+    end
+
+    def set_residency
+      if invited_by_id?
+        self.residency = invited_by.residency
+        self.save
       end
     end
 
