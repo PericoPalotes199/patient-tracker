@@ -2,9 +2,16 @@
 // # All this logic will automatically be available in application.js.
 // # You can use CoffeeScript in this file: http://coffeescript.org/
 
-var encounter_types = ['adult_inpatient', 'adult_ed', 'adult_icu', 'adult_inpatient_surgery',
-                       'pediatric_inpatient', 'pediatric_newborn', 'pediatric_ed',
-                       'continuity_inpatient', 'continuity_external'];
+var encounter_types = [];
+
+// TODO: How can this behavior be run on page ready or load instead of
+// called by event handler functions below?
+function parseEncounterLabels() {
+  if (!encounter_types.length) {
+    encounter_types = $('.encounter_type_button');
+    encounter_types = encounter_types.map(function(index, element) { return element.id; });
+  }
+}
 
 function setEncounteredOn() {
   var date = $('#date').val();
@@ -14,6 +21,7 @@ function setEncounteredOn() {
 }
 
 function resetEncounters() {
+  parseEncounterLabels();
   for (i = 0; i < encounter_types.length; i++) {
     var encounter_type = encounter_types[i];
     $("#" + encounter_type).html(0);
@@ -25,6 +33,7 @@ function resetEncounters() {
 }
 
 function incrementEncounterType(encounter_type) {
+  parseEncounterLabels();
   console.log(encounter_type);
   current_value = parseInt( $('#' + encounter_type).text() );
   console.log(current_value);
@@ -40,6 +49,7 @@ function incrementEncounterType(encounter_type) {
 }
 
 function calcTotal() {
+  parseEncounterLabels();
   var total =  parseInt($('#encounter_types_' + encounter_types[0]).val()) +
                parseInt($('#encounter_types_' + encounter_types[1]).val()) +
                parseInt($('#encounter_types_' + encounter_types[2]).val()) +

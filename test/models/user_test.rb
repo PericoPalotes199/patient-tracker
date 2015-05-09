@@ -1,6 +1,11 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
+
+  setup do
+    @admin = users(:admin)
+  end
+
   test "the truth" do
     assert true
     assert_not false
@@ -56,7 +61,7 @@ class UserTest < ActiveSupport::TestCase
            Stripe::Customer.retrieve('cus_0000000').subscriptions.first.quantity
   end
 
-  test "change role to resident" do
+  test "when a user accepts an invitation, then change role to resident" do
     admin = User.create!(
       email: 'admin-to-resident@example.com',
       password: 'password',
@@ -73,5 +78,15 @@ class UserTest < ActiveSupport::TestCase
       password_confirmation: 'password')
     assert_equal 'admin-to-resident@example.com', admin.email
     assert_equal 'resident', admin.role
+  end
+
+  test "when a user accepts an invitation set residency to inviter s residency" do
+    resident = User.invite!({email: 'invited-resident@example.com'}, users(:admin))
+    resident = User.accept_invitation!(
+      invitation_token: resident.raw_invitation_token,
+      password: 'password',
+      password_confirmation: 'password',
+      tos_accepted: true)
+    assert_equal 'Test Residency', resident.residency
   end
 end
