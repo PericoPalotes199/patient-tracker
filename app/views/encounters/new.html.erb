@@ -35,9 +35,6 @@
     </div><!-- /wrap_section_narrow -->
 
     <div class="wrap_section_narrow">
-      <% encounter_types = ['adult_inpatient', 'adult_ed', 'adult_icu', 'adult_inpatient_surgery',
-         'pediatric_inpatient', 'pediatric_newborn', 'pediatric_ed',
-         'continuity_inpatient', 'continuity_external'] %>
       <%= render partial: 'encounter_types', locals: {encounter_types: encounter_types} %>
       <%= render partial: 'form', locals: {encounter_types: encounter_types} %>
     </div><!-- /wrap_section_narrow -->

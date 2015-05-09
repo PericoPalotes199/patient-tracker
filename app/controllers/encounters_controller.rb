@@ -1,4 +1,6 @@
 class EncountersController < ApplicationController
+  include EncountersHelper
+
   before_action :authenticate_user!
   before_action :set_encounter, only: [:show, :edit, :update, :destroy]
   # GET /encounters
@@ -44,11 +46,11 @@ class EncountersController < ApplicationController
   # POST /encounters
   # POST /encounters.json
   def create
-    redirect_to(encounters_path, notice: 'You cannot delete encounters!') and return if current_user.admin?
+    redirect_to(encounters_path, notice: 'You cannot create encounters!') and return if current_user.admin?
     total = 0
     begin
       ActiveRecord::Base.transaction do
-        encounter_types.each do |type, number|
+        encounter_params.each do |type, number|
           total += number.to_i
           number.to_i.times {Encounter.create!(encounter_type: type.to_s.humanize(capitalize: false), encountered_on: encountered_on, user: current_user)}
         end
@@ -84,19 +86,11 @@ class EncountersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def encounter_params
-      params.require(:encounter).permit(:encounter_type)
+      params.require(:encounter_types).permit(encounter_types.map{|str| str.to_sym})
     end
 
     # Require that params[:encountered_on] is not empty and return the value
     def encountered_on
       params.require(:encountered_on)
-    end
-
-    def encounter_types
-      params.require(:encounter_types).permit(
-        :adult_inpatient, :adult_ed, :adult_icu, :adult_inpatient_surgery,
-        :pediatric_inpatient, :pediatric_newborn, :pediatric_ed,
-        :continuity_inpatient, :continuity_external
-      )
     end
 end

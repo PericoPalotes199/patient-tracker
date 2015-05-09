@@ -1,15 +1,11 @@
-<% display_labels = ["Adult Inpatient", "Adult ED", "Adult ICU", "Adult Inpatient Surgery",
-                    "Pediatric Inpatient", "Pediatric Newborn", "Pediatric ED",
-                    "Continuity Inpatient", "Continuity External"] %>
-
 <% display_labels.each_with_index do |display_label, i| %>
   <%= content_tag :div, class: "#{i == 0 ? 'lineitem_end' : 'lineitem'}" do %>
     <div class="linelabel blockFloat">
-      <strong><%= "#{display_label.split.first}:" %></strong>
+      <strong><%= "#{display_label.split.first.titleize}:" %></strong>
       <%= display_label.split.slice(1..-1).join(' ') %>
     </div>
     <%= link_to '#', {onclick: "incrementEncounterType('#{encounter_types[i]}')"} do %>
-      <%= content_tag :div, 0, id: encounter_types[i], class: "linenumber gradient_light blockFloatRight" %>
+      <%= content_tag :div, 0, id: encounter_types[i], class: "encounter_type_button linenumber gradient_light blockFloatRight" %>
     <% end %>
   <% end %>
 <% end %>
