@@ -44,11 +44,9 @@ end
 group :development, :test do
   gem 'awesome_print'
   gem 'better_errors', '~> 1.1.0'
-  # Use debugger
-  # gem 'debugger', group: [:development, :test]
   gem 'binding_of_caller', '~> 0.7.2'
   gem 'pry'
-  gem 'pry-nav'
+  gem 'pry-byebug'
   gem 'webmock'
 end
 
