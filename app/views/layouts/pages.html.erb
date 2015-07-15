@@ -41,22 +41,24 @@
 
 <body>
 
-<!-- Navbar
-–––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<nav class="navbar">
-  <div class="container">
-    <ul class="navbar-list">
-      <li class="navbar-item">
-        <a class="navbar-link" href="<%= root_path %>">
-          <span style="font-size: 1.2em;"><b>Encounter Counter</b></span>
-        </a>
-      </li>
-      <li class="navbar-item">
-        <a class="navbar-link" href="<%= new_user_session_path %>">Sign In</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+  <% if !(action_name == 'under_construction') %>
+    <!-- Navbar
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <nav class="navbar">
+      <div class="container">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a class="navbar-link" href="<%= root_path %>">
+              <span style="font-size: 1.2em;"><b>Encounter Counter</b></span>
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a class="navbar-link" href="<%= new_user_session_path %>">Sign In</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  <% end %>
 
 
   <%= yield %>
