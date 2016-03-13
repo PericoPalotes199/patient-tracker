@@ -25,3 +25,4 @@
 *.crt
 *.pem
 *.key
+ssl.log
