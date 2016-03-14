@@ -35,6 +35,11 @@ class UserTest < ActiveSupport::TestCase
     assert_not users(:admin).resident?
   end
 
+  test "developer?" do
+    users(:resident).update(role: 'developer')
+    assert users(:resident).developer?
+  end
+
   test "subscription expired?" do
     assert_not users(:resident).subscription_expired?
     users(:resident).active_until = Time.now - 1.second
@@ -87,6 +92,6 @@ class UserTest < ActiveSupport::TestCase
       password: 'password',
       password_confirmation: 'password',
       tos_accepted: true)
-    assert_equal 'Test Residency', resident.residency
+    assert_equal 'Residency Organization', resident.residency
   end
 end

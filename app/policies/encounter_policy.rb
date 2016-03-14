@@ -28,7 +28,7 @@ class EncounterPolicy < ApplicationPolicy
   end
 
   def create?
-    user.resident? || user.admin? || user.admin_resident?
+    user.resident? || user.admin? || user.admin_resident? || user.developer?
   end
 
   def edit?

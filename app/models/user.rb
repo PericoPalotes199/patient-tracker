@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
     role == 'admin_resident'
   end
 
+  def developer?
+    role == 'developer'
+  end
+
   def subscription_expired?
     return !active_until unless active_until
     Time.zone.at(active_until) < Time.zone.now

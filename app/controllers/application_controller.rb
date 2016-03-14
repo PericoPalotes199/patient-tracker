@@ -31,10 +31,8 @@ class ApplicationController < ActionController::Base
     def after_sign_in_path_for(resource)
       if resource.admin?
         users_path
-      elsif resource.resident?
+      else
         new_encounter_path
-      else # resource.admin_resident?
-        super
       end
     end
 
