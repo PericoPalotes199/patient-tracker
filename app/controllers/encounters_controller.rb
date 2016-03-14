@@ -53,7 +53,7 @@ class EncountersController < ApplicationController
           number.to_i.times {
             Encounter.create!(
               encounter_type: encounter_type.gsub('_', ' '),
-              encountered_on: encountered_on,
+              encountered_on: params[:encountered_on],
               user: current_user
             )
           }
