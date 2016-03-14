@@ -15,10 +15,10 @@ class Encounter < ActiveRecord::Base
   private
     #TODO: improve transaction error logging!
     def transaction_success
-      STDOUT.puts "Transaction success for Encounter #{self.inspect}"
+      logger.debug "Transaction success for Encounter #{self.inspect}" unless Rails.env.test?
     end
 
     def transaction_failure
-      STDOUT.puts "Transaction failure for Encounter #{self.inspect}"
+      logger.debug "Transaction failure for Encounter #{self.inspect}" unless Rails.env.test?
     end
 end
