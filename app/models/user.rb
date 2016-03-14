@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   end
 
   def encounter_types
-    items.pluck(:name).map { |name| name.remove("'").gsub(':', '_') }
+    items.pluck(:name)
   end
 
   def labels

@@ -3,10 +3,10 @@ require 'test_helper'
 class ItemTest < ActiveSupport::TestCase
 
   def setup
-    @item = Item.all.sample
+    @items = Item.all
   end
 
   test "the name is the same as the underscored label" do
-    assert_equal @item.label.remove(' ').underscore, @item.name
+    assert_equal @items.map { |item| item.label.parameterize('_') }, @items.pluck(:name)
   end
 end

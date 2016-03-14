@@ -3,74 +3,92 @@
 adult_inpatient:
   label: Adult Inpatient
   organization: residency_organization
+  name: $LABEL
 
 adult_ed:
   label: Adult ED
   organization: residency_organization
+  name: $LABEL
 
 adult_icu:
   label: Adult ICU
   organization: residency_organization
+  name: $LABEL
 
 adult_inpatient_surgery:
   label: Adult Inpatient Surgery
   organization: residency_organization
+  name: $LABEL
 
 pediatric_inpatient:
   label: Pediatric Inpatient
   organization: residency_organization
+  name: $LABEL
 
 pediatric_newborn:
   label: Pediatric Newborn
   organization: residency_organization
+  name: $LABEL
 
 pediatric_ed:
   label: Pediatric ED
   organization: residency_organization
+  name: $LABEL
 
 continuity_inpatient:
   label: Continuity Inpatient
   organization: residency_organization
+  name: $LABEL
 
 continuity_external:
   label: Continuity External
   organization: residency_organization
+  name: $LABEL
 
 # Custom Residency
 
 adult_inpatient:
   label: Adult Inpatient
   organization: custom_residency
+  name: $LABEL
 
 adult_icu:
   label: Adult ICU
   organization: custom_residency
+  name: $LABEL
 
 obstetrics_vaginal_deliveries:
   label: Obstetrics Vaginal Deliveries
   organization: custom_residency
+  name: $LABEL
 
 older_adults_outpatient:
   label: Older Adults Outpatient
   organization: custom_residency
+  name: $LABEL
 
 pediatric_outpatient:
   label: Pediatric Outpatient
   organization: custom_residency
+  name: $LABEL
 
 pediatric_inpatient:
   label: Pediatric Inpatient
   organization: custom_residency
+  name: $LABEL
 
 pediatric_newborn:
   label: Pediatric Newborn
   organization: custom_residency
+  name: $LABEL
 
 pediatric_ed:
   label: Pediatric ED
   organization: custom_residency
+  name: $LABEL
 
 womens_health_outpatient:
-  label: Women’s Health Outpatient
+  label: Women's Health Outpatient
   organization: custom_residency
+  name: $LABEL
 
