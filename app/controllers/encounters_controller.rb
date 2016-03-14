@@ -48,9 +48,15 @@ class EncountersController < ApplicationController
     total = 0
     begin
       ActiveRecord::Base.transaction do
-        encounter_params.each do |type, number|
+        encounter_params.each do |encounter_type, number|
           total += number.to_i
-          number.to_i.times {Encounter.create!(encounter_type: type.to_s.humanize(capitalize: false), encountered_on: encountered_on, user: current_user)}
+          number.to_i.times {
+            Encounter.create!(
+              encounter_type: encounter_type.gsub('_', ' '),
+              encountered_on: encountered_on,
+              user: current_user
+            )
+          }
         end
       end
     rescue ActiveRecord::ActiveRecordError => error
@@ -59,7 +65,7 @@ class EncountersController < ApplicationController
                       Your encounters were not counted!
                       Please count again!"
     else
-      if total == 0
+      if total.zero?
         redirect_to :new_encounter, alert: 'You did not count your encounters!'
       else
         redirect_to :encounters, notice: 'Your encounters have been counted!'
@@ -84,11 +90,11 @@ class EncountersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def encounter_params
-      params.require(:encounter_types).permit(encounter_types.map{|str| str.to_sym})
+      params.require(:encounter_types).permit( encounter_types )
     end
 
     # Require that params[:encountered_on] is not empty and return the value
     def encountered_on
-      params.require(:encountered_on)
+      params.require :encountered_on
     end
 end

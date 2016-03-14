@@ -1,10 +1,17 @@
-<% display_labels.each_with_index do |display_label, i| %>
+<% labels.each_with_index do |label, i| %>
   <%= content_tag :div, class: "#{i == 0 ? 'lineitem_end' : 'lineitem'}" do %>
+    <% display_text = label.include?(':') ? label.split(':') : label %>
+
     <div class="linelabel blockFloat">
-      <strong><%= "#{display_label.split.first.titleize}:" %></strong>
-      <%= display_label.split.slice(1..-1).join(' ') %>
+      <% if display_text.respond_to?(:join) # an array %>
+        <strong><%= display_text.first.titleize %>:</strong>
+        <%= display_text.slice(1..-1).join(' ') %>
+      <% else # a string %>
+        <strong><%= display_text.titleize %></strong>
+      <% end %>
     </div>
-    <%= link_to '#', {onclick: "incrementEncounterType('#{encounter_types[i]}')"} do %>
+
+    <%= link_to '#', { onclick: "incrementEncounterType('#{encounter_types[i]}')" } do %>
       <%= content_tag :div, 0, id: encounter_types[i], class: "encounter_type_button linenumber gradient_light blockFloatRight" %>
     <% end %>
   <% end %>

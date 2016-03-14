@@ -27,6 +27,18 @@ class User < ActiveRecord::Base
 
   validates_acceptance_of :tos_accepted, accept: true, allow_nil: false
 
+  def items
+    self.organization.items
+  end
+
+  def encounter_types
+    items.pluck(:name).map { |name| name.remove("'").gsub(':', '_') }
+  end
+
+  def labels
+    items.pluck(:label)
+  end
+
   def admin?
     role == 'admin'
   end
