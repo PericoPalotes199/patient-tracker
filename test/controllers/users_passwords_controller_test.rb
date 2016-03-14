@@ -3,8 +3,8 @@ class UsersPasswordsControllerTest < ActionController::TestCase
   setup do
     request.env["devise.mapping"] = Devise.mappings[:user]
     @controller = Users::PasswordsController.new
-    @resident = users(:forgetful_resident)
-    @reset_token  = @resident.send_reset_password_instructions
+    @forgetful_resident = users(:forgetful_resident)
+    @reset_password_token = @forgetful_resident.send_reset_password_instructions
   end
 
   #  If you are testing Devise internal controllers or a controller that inherits from Devise's,
@@ -28,18 +28,18 @@ class UsersPasswordsControllerTest < ActionController::TestCase
   end
 
   test "password can be updated if tos accepted" do
-    put :update, user: {reset_password_token: @reset_token, password: 'new-password', password_confirmation: 'new-password', tos_accepted: '1'}
-    @resident.reload
+    put :update, user: {reset_password_token: @reset_password_token, password: 'new-password', password_confirmation: 'new-password', tos_accepted: '1'}
+    @forgetful_resident.reload
     assert_not_equal users(:forgetful_resident).encrypted_password, 'old-password'
     assert_response :redirect
     assert_redirected_to new_user_session_path
   end
 
   test "password cannot be updated if tos not accepted" do
-    put :update, user: {reset_password_token: 'valid-reset-password-token', password: 'new-password', password_confirmation: 'new-password', tos_accepted: '1'}
-    @resident.reload
+    put :update, user: {reset_password_token: @reset_password_token, password: 'new-password', password_confirmation: 'new-password', tos_accepted: '0'}
+    @forgetful_resident.reload
     assert_equal users(:forgetful_resident).encrypted_password, 'old-password'
-    assert_response :success
-    assert_template :edit
+    assert_response :redirect
+    assert_redirected_to edit_user_password_path(reset_password_token: @reset_password_token)
   end
 end
