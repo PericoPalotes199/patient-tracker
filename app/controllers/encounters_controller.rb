@@ -68,7 +68,7 @@ class EncountersController < ApplicationController
       if total.zero?
         redirect_to :new_encounter, alert: 'You did not count your encounters!'
       else
-        redirect_to :encounters, notice: 'Your encounters have been counted!'
+        redirect_to :encounters, notice: "You counted #{total} encounters!"
       end
     end
   end
