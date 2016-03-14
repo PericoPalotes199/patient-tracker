@@ -1,5 +1,3 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 adult_inpatient:
   encounter_type: adult_inpatient
   encountered_on: <%= Time.now %>
@@ -48,13 +46,13 @@ continuity_external:
 <% (1..10).each do |n| %>
 encounter_<%= n %>:
   encounter_type: adult_inpatient
-  encountered_on: <%= Time.now + n.days %>
+  encountered_on: <%= Time.now - n.days %>
   user: resident
 <% end %>
 
 <% (11..20).each do |n| %>
 encounter_<%= n %>:
   encounter_type: adult_inpatient
-  encountered_on: <%= Time.now + n.days %>
+  encountered_on: <%= Time.now - n.days %>
   user: resident_1
 <% end %>
