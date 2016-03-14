@@ -11,22 +11,23 @@
     </div>
   <% end %>
 
-  <div>
-    <%= f.label :email %>
-    <%= f.email_field :email, autocomplete: "off", data: { clear_btn: true } %>
-  </div>
-  <br />
+  <%= f.label :residency, class: 'ui-hidden-accessible' %>
+  <%= f.text_field :residency, data: { clear_btn: true }, placeholder: 'Residency Name' %>
 
-  <div>
-    <%= f.label :first_name, "First Name" %>
-    <%= f.text_field :first_name, autofocus: true, autocomplete: "off", data: { clear_btn: true } %>
-  </div>
-  <br />
+  <%= f.label :email, class: 'ui-hidden-accessible' %>
+  <%= f.text_field :email, data: { clear_btn: true }, placeholder: 'Email' %>
 
-  <div>
-    <%= f.label :last_name, "Last Name" %>
-    <%= f.text_field :last_name, autocomplete: "off", data: { clear_btn: true } %>
-  </div>
+  <%= f.label :first_name, class: 'ui-hidden-accessible' %>
+  <%= f.text_field :first_name, data: { clear_btn: true }, placeholder: 'First Name' %>
+
+  <%= f.label :last_name, class: 'ui-hidden-accessible' %>
+  <%= f.text_field :last_name, data: { clear_btn: true }, placeholder: 'Last Name' %>
+
+  <% if current_user.admin? %>
+    <%= f.label :residency, class: 'ui-hidden-accessible' %>
+    <%= f.text_field :residency, data: { clear_btn: true }, placeholder: 'Residency Name' %>
+  <% end %>
+
   <br />
 
   <% if @user.new_record? %>

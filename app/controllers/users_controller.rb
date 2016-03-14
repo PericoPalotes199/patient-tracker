@@ -83,6 +83,7 @@ class UsersController < ApplicationController
     def user_params
       keys = [:email, :first_name, :last_name]
       keys << :tos_accepted if current_user.eql?(@user)
+      keys << :residency if current_user.admin?
       params.require(:user).permit(keys)
     end
 end
