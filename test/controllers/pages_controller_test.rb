@@ -9,7 +9,7 @@ class PagesControllerTest < ActionController::TestCase
   # was the appropriate message displayed to the user in the view?
 
   setup do
-    @admin = users(:admin)
+    @residency_admin = users(:residency_admin)
     @resident = users(:resident)
   end
 
@@ -26,7 +26,7 @@ class PagesControllerTest < ActionController::TestCase
   end
 
   test "As a signed in admin, when I visit the home page, I am redirected" do
-    sign_in @admin
+    sign_in @residency_admin
     get :index
     assert_response :redirect
     assert_redirected_to users_path

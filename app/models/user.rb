@@ -11,7 +11,8 @@ class User < ActiveRecord::Base
                             :delete_all_customer_subscriptions,
                             :change_role_to_resident,
                             :set_active_until,
-                            :set_residency
+                            :set_residency,
+                            :set_organization
 
   before_create :set_default_role, :set_active_until
   before_save :set_name
@@ -81,9 +82,14 @@ class User < ActiveRecord::Base
     end
 
     def set_residency
-      if invited_by_id?
-        self.residency = invited_by.residency
-        self.save
+      if invited_by_id? && invited_by.residency
+        self.update(residency: invited_by.residency)
+      end
+    end
+
+    def set_organization
+      if invited_by_id? && invited_by.organization
+        self.update(organization: invited_by.organization)
       end
     end
 

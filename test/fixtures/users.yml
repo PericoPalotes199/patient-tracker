@@ -9,6 +9,7 @@ resident:
   role: resident
   confirmed_at: <%= Time.now %>
   active_until: <%= (Time.now + 1.99.days).to_i %>
+  organization: residency_organization
 
 # A resident that forgot password
 forgetful_resident:
@@ -18,17 +19,19 @@ forgetful_resident:
   last_name: Memory
   name: Forgetful Memory
   role: resident
+  organization: residency_organization
 
 # An admin and invited residents
-admin:
+residency_admin:
   email: admin@example.com
-  first_name: Jane
+  first_name: Residency
   last_name: Administrator
-  name: Jane Administrator
+  name: Residency Administrator
   role: admin
   residency: Test Residency
   confirmed_at: <%= Time.now %>
   active_until: <%= (Time.now + 6.99.days).to_i %>
+  organization: residency_organization
 
 unconfirmed:
   email: unconfirmed@example.com
@@ -40,6 +43,7 @@ unconfirmed:
   invited_by: admin
   invited_by_type: User
   invitation_token: some_valid_token
+  organization: residency_organization
 
 <% 5.times do |n| %>
 <%= "resident_#{n}" %>:
@@ -48,10 +52,12 @@ unconfirmed:
   last_name: Example
   name: <%= "Resident_#{n} Example" %>
   role: resident
-  residency: Test Residency
-  invited_by: admin
+  invited_by: residency_admin
   invited_by_type: User
+  organization: residency_organization
 <% end %>
+
+
 
 
 

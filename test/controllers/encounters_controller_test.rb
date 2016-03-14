@@ -10,7 +10,7 @@ class EncountersControllerTest < ActionController::TestCase
 
   setup do
     @resident = users(:resident)
-    @admin = users(:admin)
+    @residency_admin = users(:residency_admin)
     @encounter = @resident.encounters.first
   end
 
@@ -37,11 +37,11 @@ class EncountersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, I can view all of my invited residents' encounters at the encounters index" do
-    sign_in @admin
+    sign_in @residency_admin
     get :index
     assert_response :success
     expected_encounters = []
-    @admin.invitations.each do |invitation|
+    @residency_admin.invitations.each do |invitation|
       expected_encounters += invitation.encounters
     end
     assert_equal assigns(:encounters).pluck(:id).sort, expected_encounters.map{ |encounter| encounter.id }.sort
@@ -50,7 +50,7 @@ class EncountersControllerTest < ActionController::TestCase
 
   test "As an admin, when I visit the encounters index, encounters are sorted by [TBD]" do
     skip
-    sign_in @admin
+    sign_in @residency_admin
     get :index
   end
 
@@ -68,7 +68,7 @@ class EncountersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, I can visit the new encounter page" do
-    sign_in @admin
+    sign_in @residency_admin
     get :new
     assert_response :success
     assert_template :new
@@ -92,7 +92,7 @@ class EncountersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, I cannot create an encounter" do
-    sign_in @admin
+    sign_in @residency_admin
     assert_no_difference('Encounter.count') do
       post :create, encounter_types: {adult_inpatient: 1, adult_ed: 2}, encountered_on: Time.now.to_date
     end
@@ -122,7 +122,7 @@ class EncountersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, I cannot view single encounters" do
-    sign_in @admin
+    sign_in @residency_admin
     get :show, id: @encounter
     assert_response :redirect
     assert_redirected_to encounters_path
@@ -142,12 +142,12 @@ class EncountersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, I cannot edit encounters" do
-    sign_in @admin
+    sign_in @residency_admin
     assert_raises ActionController::UrlGenerationError do
       get :edit, id: @encounter
     end
     assert_raises ActionController::UrlGenerationError do
-      get :edit, id: @admin.invitations.first.encounters.first
+      get :edit, id: @residency_admin.invitations.first.encounters.first
     end
   end
 
@@ -165,12 +165,12 @@ class EncountersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, I cannot update encounters" do
-    sign_in @admin
+    sign_in @residency_admin
     assert_raises ActionController::UrlGenerationError do
       put :update, id: @encounter
     end
     assert_raises ActionController::UrlGenerationError do
-      put :update, id: @admin.invitations.first.encounters.first
+      put :update, id: @residency_admin.invitations.first.encounters.first
     end
   end
 
@@ -201,7 +201,7 @@ class EncountersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, I cannot destroy encounters" do
-    sign_in @admin
+    sign_in @residency_admin
     assert_no_difference('Encounter.count') do
       delete :destroy, id: users(:resident_1).encounters.first
     end

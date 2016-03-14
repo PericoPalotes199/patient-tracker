@@ -3,7 +3,8 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
 
   setup do
-    @admin = users(:admin)
+    @residency_admin = users(:residency_admin)
+    @resident = users(:resident)
   end
 
   test "the truth" do
@@ -16,53 +17,53 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "when a user is destroyed, its encounters are destroyed" do
-    users(:resident).destroy!
-    assert users(:resident).encounters.count == 0
+    @resident.destroy!
+    assert @resident.encounters.count == 0
   end
 
   test "role" do
-    assert users(:resident).role == 'resident'
-    assert users(:admin).role == 'admin'
+    assert @resident.role == 'resident'
+    assert @residency_admin.role == 'admin'
   end
 
   test "admin?" do
-    assert users(:admin).admin?
-    assert_not users(:resident).admin?
+    assert @residency_admin.admin?
+    assert_not @resident.admin?
   end
 
   test "resident?" do
-    assert users(:resident).resident?
-    assert_not users(:admin).resident?
+    assert @resident.resident?
+    assert_not @residency_admin.resident?
   end
 
   test "developer?" do
-    users(:resident).update(role: 'developer')
-    assert users(:resident).developer?
+    @resident.update(role: 'developer')
+    assert @resident.developer?
   end
 
   test "subscription expired?" do
-    assert_not users(:resident).subscription_expired?
-    users(:resident).active_until = Time.now - 1.second
-    assert users(:resident).subscription_expired?
+    assert_not @resident.subscription_expired?
+    @resident.active_until = Time.now - 1.second
+    assert @resident.subscription_expired?
   end
 
   test "days until subscription expiration" do
-    assert users(:resident).days_until_subscription_expiration == 1
-    assert users(:admin).days_until_subscription_expiration == 6
+    assert @resident.days_until_subscription_expiration == 1
+    assert @residency_admin.days_until_subscription_expiration == 6
   end
 
   test "update invitees active until" do
-    users(:admin).update_invitees_active_until
-    assert_equal 1, users(:admin).invitations.pluck(:active_until).uniq.size
-    assert_equal users(:admin).active_until, users(:admin).invitations.pluck(:active_until).uniq.first
+    @residency_admin.update_invitees_active_until
+    assert_equal 1, @residency_admin.invitations.pluck(:active_until).uniq.size
+    assert_equal @residency_admin.active_until, @residency_admin.invitations.pluck(:active_until).uniq.first
   end
 
   test "when a user accepts an invitation, the inviter subscription quantity is updated" do
     skip('User invitations must be equal to Stripe subscription quantity!')
-    assert users(:admin).invitations.count <
+    assert @residency_admin.invitations.count <
            Stripe::Customer.retrieve('cus_0000000').subscriptions.first.quantity
     User.accept_invitation!(invitation_token: users(:unconfirmed).invitation_token)
-    assert users(:admin).invitations.count ==
+    assert @residency_admin.invitations.count ==
            Stripe::Customer.retrieve('cus_0000000').subscriptions.first.quantity
   end
 
@@ -86,7 +87,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "when a user accepts an invitation set residency to inviter s residency" do
-    resident = User.invite!({email: 'invited-resident@example.com'}, users(:admin))
+    resident = User.invite!({email: 'invited-resident@example.com'}, @residency_admin)
     resident = User.accept_invitation!(
       invitation_token: resident.raw_invitation_token,
       password: 'password',
