@@ -10,12 +10,12 @@ class User < ActiveRecord::Base
   after_invitation_accepted :update_inviter_subscription_quantity,
                             :delete_all_customer_subscriptions,
                             :change_role_to_resident,
-                            :set_active_until,
-                            :set_residency,
-                            :set_organization
+                            :update_active_until,
+                            :update_residency,
+                            :update_organization
 
-  before_create :set_default_role, :set_active_until
-  before_save :set_name
+  before_create :set_default_role, :set_active_until, :set_residency, :set_organization
+  before_save :update_name
 
   validates_presence_of   :email, if: :email_required?
   validates_uniqueness_of :email, allow_blank: true, if: :email_changed?
@@ -65,19 +65,10 @@ class User < ActiveRecord::Base
   end
 
   def update_invitees_active_until
-    invitations.update_all(active_until: active_until)
+    invitations.update_all active_until: active_until
   end
 
   private
-    def set_name
-      if first_name && last_name
-        self.name = first_name + ' ' + last_name
-      elsif email
-        self.name = email
-      else
-        self.name = ''
-      end
-    end
 
     def set_default_role
       self.role ||= 'resident'
@@ -87,6 +78,10 @@ class User < ActiveRecord::Base
       self.role = 'resident'
     end
 
+    def update_name
+      self.name = !(first_name.blank? || last_name.blank?) ? "#{first_name} #{last_name}" : email
+    end
+
     def set_active_until
       if invited_by_id?
         self.active_until = invited_by.active_until
@@ -94,14 +89,32 @@ class User < ActiveRecord::Base
     end
 
     def set_residency
-      if invited_by_id? && invited_by.residency
-        self.update(residency: invited_by.residency)
+      if invited_by_id?
+        self.residency = invited_by.residency
       end
     end
 
     def set_organization
-      if invited_by_id? && invited_by.organization
-        self.update(organization: invited_by.organization)
+      if invited_by_id?
+        self.organization = invited_by.organization
+      end
+    end
+
+    def update_active_until
+      if invited_by_id?
+        self.update active_until: invited_by.active_until
+      end
+    end
+
+    def update_residency
+      if invited_by_id?
+        self.update residency: invited_by.residency
+      end
+    end
+
+    def update_organization
+      if invited_by_id?
+        self.update organization: invited_by.organization
       end
     end
 

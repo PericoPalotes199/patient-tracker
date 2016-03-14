@@ -93,6 +93,7 @@ class UserTest < ActiveSupport::TestCase
       password: 'password',
       password_confirmation: 'password',
       tos_accepted: true)
-    assert_equal 'Residency Organization', resident.residency
+    assert_equal 'Test Residency', resident.residency
+    assert_not_nil 'Residency Organization', resident.organization.name
   end
 end
