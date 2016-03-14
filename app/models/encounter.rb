@@ -13,7 +13,7 @@ class Encounter < ActiveRecord::Base
   after_rollback :transaction_failure
 
   private
-    #TODO: improve transaction error logging!
+
     def transaction_success
       logger.debug "Transaction success for Encounter #{self.inspect}" unless Rails.env.test?
     end
