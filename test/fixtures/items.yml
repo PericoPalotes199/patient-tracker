@@ -92,3 +92,9 @@ womens_health_outpatient:
   organization: custom_residency
   name: $LABEL
 
+
+# Orphan Items for item_test.rb
+name_with_special_chars:
+  label: "Name$ !@#$%^&*)(_+=- With/.,?>< Sp;':\"|}{{}|ecial Chars"
+  name: $LABEL
+

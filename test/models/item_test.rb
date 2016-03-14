@@ -7,6 +7,6 @@ class ItemTest < ActiveSupport::TestCase
   end
 
   test "the name is the same as the underscored label" do
-    assert_equal @items.map { |item| item.label.parameterize('_') }, @items.pluck(:name)
+    assert_equal @items.map { |item| item.label.gsub!(/[^a-z0-9]/i, '').underscore }, @items.pluck(:name)
   end
 end

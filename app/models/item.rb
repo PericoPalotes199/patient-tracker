@@ -7,6 +7,6 @@ class Item < ActiveRecord::Base
   # does not trigger set_name callback.
   private
     def set_name
-      self.name = self.label.parameterize('_')
+      self.name = self.label.gsub!(/[^a-z0-9]/i, '').underscore
     end
 end
