@@ -48,8 +48,10 @@ class EncountersControllerTest < ActionController::TestCase
     assert_template :index
   end
 
-  test "As an admin, when I visit the encounters index, encounters are sorted by [TBD]" do
-    skip
+  test "As an admin, when I visit the encounters index, encounters are sorted by encounter_on and name" do
+    @encounters = Encounter.includes(:user).where('users.invited_by_id  = ?', @residency_admin.id).references(:users).order(encountered_on: :desc).order('users.name ASC')
+    assert_equal @encounters.pluck(:encountered_on), @encounters.pluck(:encountered_on).sort.reverse
+    assert_equal @encounters.pluck('users.name'), @encounters.pluck('users.name').sort
     sign_in @residency_admin
     get :index
   end
