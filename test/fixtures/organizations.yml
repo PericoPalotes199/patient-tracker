@@ -1,0 +1,12 @@
+residency_organization:
+  name: $LABEL
+  kind: residency
+
+custom_residency:
+  name: $LABEL
+  kind: residency
+
+company_organization:
+  name: $LABEL
+  kind: company
+

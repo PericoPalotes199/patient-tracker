@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110192902) do
+ActiveRecord::Schema.define(version: 20160212080416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,23 @@ ActiveRecord::Schema.define(version: 20150110192902) do
   end
 
   add_index "encounters", ["user_id"], name: "index_encounters_on_user_id", using: :btree
+
+  create_table "items", force: true do |t|
+    t.string   "name"
+    t.string   "label"
+    t.integer  "organization_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "items", ["organization_id"], name: "index_items_on_organization_id", using: :btree
+
+  create_table "organizations", force: true do |t|
+    t.string   "name"
+    t.string   "kind"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -59,6 +76,7 @@ ActiveRecord::Schema.define(version: 20150110192902) do
     t.integer  "invitations_count",      default: 0
     t.boolean  "tos_accepted"
     t.string   "residency"
+    t.integer  "organization_id"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -66,6 +84,7 @@ ActiveRecord::Schema.define(version: 20150110192902) do
   add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
+  add_index "users", ["organization_id"], name: "index_users_on_organization_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

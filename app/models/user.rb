@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :confirmable
 
+  belongs_to :organization
   has_many :encounters, dependent: :destroy
   has_many :invitations, :class_name => 'User', :as => :invited_by
   after_invitation_accepted :update_inviter_subscription_quantity,

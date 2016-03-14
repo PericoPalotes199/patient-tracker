@@ -1,0 +1,76 @@
+# Average Residency
+
+adult_inpatient:
+  label: Adult Inpatient
+  organization: residency_organization
+
+adult_ed:
+  label: Adult ED
+  organization: residency_organization
+
+adult_icu:
+  label: Adult ICU
+  organization: residency_organization
+
+adult_inpatient_surgery:
+  label: Adult Inpatient Surgery
+  organization: residency_organization
+
+pediatric_inpatient:
+  label: Pediatric Inpatient
+  organization: residency_organization
+
+pediatric_newborn:
+  label: Pediatric Newborn
+  organization: residency_organization
+
+pediatric_ed:
+  label: Pediatric ED
+  organization: residency_organization
+
+continuity_inpatient:
+  label: Continuity Inpatient
+  organization: residency_organization
+
+continuity_external:
+  label: Continuity External
+  organization: residency_organization
+
+# Custom Residency
+
+adult_inpatient:
+  label: Adult Inpatient
+  organization: custom_residency
+
+adult_icu:
+  label: Adult ICU
+  organization: custom_residency
+
+obstetrics_vaginal_deliveries:
+  label: Obstetrics Vaginal Deliveries
+  organization: custom_residency
+
+older_adults_outpatient:
+  label: Older Adults Outpatient
+  organization: custom_residency
+
+pediatric_outpatient:
+  label: Pediatric Outpatient
+  organization: custom_residency
+
+pediatric_inpatient:
+  label: Pediatric Inpatient
+  organization: custom_residency
+
+pediatric_newborn:
+  label: Pediatric Newborn
+  organization: custom_residency
+
+pediatric_ed:
+  label: Pediatric ED
+  organization: custom_residency
+
+womens_health_outpatient:
+  label: Women’s Health Outpatient
+  organization: custom_residency
+
