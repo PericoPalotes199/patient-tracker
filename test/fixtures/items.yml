@@ -47,16 +47,6 @@ continuity_external:
 
 # Custom Residency
 
-adult_inpatient:
-  label: Adult Inpatient
-  organization: custom_residency
-  name: $LABEL
-
-adult_icu:
-  label: Adult ICU
-  organization: custom_residency
-  name: $LABEL
-
 obstetrics_vaginal_deliveries:
   label: Obstetrics Vaginal Deliveries
   organization: custom_residency
@@ -72,26 +62,10 @@ pediatric_outpatient:
   organization: custom_residency
   name: $LABEL
 
-pediatric_inpatient:
-  label: Pediatric Inpatient
-  organization: custom_residency
-  name: $LABEL
-
-pediatric_newborn:
-  label: Pediatric Newborn
-  organization: custom_residency
-  name: $LABEL
-
-pediatric_ed:
-  label: Pediatric ED
-  organization: custom_residency
-  name: $LABEL
-
 womens_health_outpatient:
   label: Women's Health Outpatient
   organization: custom_residency
   name: $LABEL
-
 
 # Orphan Items for item_test.rb
 name_with_special_chars:
