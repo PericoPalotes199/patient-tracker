@@ -14,8 +14,7 @@ function parseEncounterLabels() {
 }
 
 function setEncounteredOn() {
-  var date = $('#date').val();
-  $('#encountered_on').val(date);
+  $('#encountered_on').val( $('#date').val() );
 }
 
 function resetEncounters() {
@@ -34,10 +33,9 @@ function resetEncounters() {
 function incrementEncounterType(encounter_type) {
   parseEncounterLabels();
   current_value = parseInt( $('#' + encounter_type).text() );
-  current_value++;
 
-  $("#" + encounter_type).html(current_value);
-  $('#encounter_types_' + encounter_type).val(current_value);
+  $("#" + encounter_type).html(current_value + 1);
+  $('#encounter_types_' + encounter_type).val(current_value + 1);
 
   $("#" + encounter_type)
     .addClass( "gradient_blue" )
