@@ -3,8 +3,8 @@
   <%= render 'errors' %>
 
   <%= hidden_field_tag(:encountered_on, Time.zone.today) %>
-  <% encounter_types.each do |encounter_type| %>
-    <%= hidden_field(:encounter_types, encounter_type.to_sym, value: "0") %>
+  <% current_user.items.each do |item| %>
+    <%= hidden_field(:encounter_types, item.name.to_sym, value: "0") %>
   <% end %>
 
   <div class="actions">

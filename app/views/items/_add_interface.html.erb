@@ -1,6 +1,6 @@
-<% labels.each_with_index do |label, i| %>
+<% current_user.items.each_with_index do |item, i| %>
   <%= content_tag :div, class: "#{i == 0 ? 'lineitem_end' : 'lineitem'}" do %>
-    <% display_text = label.include?(':') ? label.split(':') : label %>
+    <% display_text = item.label.include?(':') ? item.label.split(':') : item.label %>
 
     <div class="linelabel blockFloat">
       <% if display_text.respond_to?(:join) # an array %>
@@ -11,8 +11,8 @@
       <% end %>
     </div>
 
-    <%= link_to '#', { onclick: "incrementEncounterType('#{encounter_types[i]}')" } do %>
-      <%= content_tag :div, 0, id: encounter_types[i], class: "encounter_type_button linenumber gradient_light blockFloatRight" %>
+    <%= link_to '#', { onclick: "incrementEncounterType('#{item.name}')" } do %>
+      <%= content_tag :div, 0, id: item.name, class: "encounter_type_button linenumber gradient_light blockFloatRight" %>
     <% end %>
   <% end %>
 <% end %>

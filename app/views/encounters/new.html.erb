@@ -1,3 +1,4 @@
+
 <!-- Begin Page 1 -->
 <div data-role="page" id="form" data-url="form" tabindex="0" style="min-height: 658px;">
 
@@ -35,8 +36,8 @@
     </div><!-- /wrap_section_narrow -->
 
     <div class="wrap_section_narrow">
-      <%= render partial: 'encounter_types', locals: {encounter_types: encounter_types} %>
-      <%= render partial: 'form', locals: {encounter_types: encounter_types} %>
+      <%= render 'items/add_interface' %>
+      <%= render 'form' %>
     </div><!-- /wrap_section_narrow -->
 
     <div class="wrap_section_narrow">

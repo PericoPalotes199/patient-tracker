@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   validates_acceptance_of :tos_accepted, accept: true, allow_nil: false
 
   def items
-    self.organization.items
+    self.organization.items.where(active: true).order(:position)
   end
 
   def encounter_types
