@@ -145,6 +145,7 @@
         <div class="one-third column">
           <h3 class="section-heading">Not Ready?</h3>
           <p>Join the Mailing List!</p>
+
           <form accept-charset="UTF-8" action="https://zapier.com/hooks/catch/1179186/2nf27v/" method="POST">
             <input type="hidden" name="utf8" value="✓">
             <input type="email" name="email" placeholder="e-mail"><br />
@@ -156,3 +157,15 @@
       </div>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-1.12.2.min.js" integrity="sha256-lZFHibXzMHo3GGeehn1hudTAP3Sc0uKXBXAzHX1sjtk=" crossorigin="anonymous"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('form').submit(function(e) {
+        e.preventDefault();
+        $('form').fadeOut( '3000', function() {
+          $('form').parent().append( '<p><b>Thank You!</b></p>' );
+        });
+        return false;
+      });
+    });
+  </script>
