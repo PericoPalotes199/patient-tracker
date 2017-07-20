@@ -50,6 +50,11 @@ group :development, :test do
   gem 'webmock'
 end
 
+group :test do
+  gem 'minitest'
+  gem 'minitest-reporters'
+end
+
 group :production do
   gem 'rails_12factor', '~> 0.0.2'
 end
