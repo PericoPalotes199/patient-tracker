@@ -76,7 +76,7 @@ class EncountersControllerTest < ActionController::TestCase
 
   test "As a visitor, I cannot create an encounter" do
     assert_no_difference('Encounter.count') do
-      post :create, encounter: { encounter_types: {adult_inpatient: 1, adult_ed: 2} }
+      post :create, encounter: { encounter_types: { adult_inpatient: 1, adult_ed: 2 } }
     end
     assert_response :redirect
     assert_redirected_to new_user_session_path
@@ -85,7 +85,7 @@ class EncountersControllerTest < ActionController::TestCase
   test "As a resident, I can create an encounter" do
     sign_in @resident
     assert_difference('Encounter.count', 3) do
-      post :create, encounter_types: {adult_inpatient: 1, adult_ed: 2}, encountered_on: Time.now.to_date
+      post :create, encounter_types: { adult_inpatient: 1, adult_ed: 2 }, encountered_on: Time.now.to_date
     end
     assert_response :redirect
     assert_redirected_to encounters_path
@@ -94,7 +94,7 @@ class EncountersControllerTest < ActionController::TestCase
   test "As an admin, I cannot create an encounter" do
     sign_in @admin
     assert_no_difference('Encounter.count') do
-      post :create, encounter_types: {adult_inpatient: 1, adult_ed: 2}, encountered_on: Time.now.to_date
+      post :create, encounter_types: { adult_inpatient: 1, adult_ed: 2 }, encountered_on: Time.now.to_date
     end
     assert_response :redirect
 

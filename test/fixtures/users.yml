@@ -7,6 +7,7 @@ resident:
   last_name: Intern
   name: Jane Intern
   role: resident
+  residency: Test Residency
   confirmed_at: <%= Time.now %>
   active_until: <%= (Time.now + 1.99.days).to_i %>
 
