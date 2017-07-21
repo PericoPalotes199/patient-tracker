@@ -36,10 +36,10 @@ class UsersPasswordsControllerTest < ActionController::TestCase
   end
 
   test "password cannot be updated if tos not accepted" do
-    put :update, user: {reset_password_token: 'valid-reset-password-token', password: 'new-password', password_confirmation: 'new-password', tos_accepted: '1'}
+    put :update, user: { reset_password_token: 'valid-reset-password-token', password: 'new-password', password_confirmation: 'new-password', tos_accepted: '0' }
     @resident.reload
     assert_equal users(:forgetful_resident).encrypted_password, 'old-password'
-    assert_response :success
-    assert_template :edit
+    assert_response :redirect
+    assert_redirected_to edit_user_password_path(reset_password_token: 'valid-reset-password-token')
   end
 end

@@ -49,9 +49,9 @@ class EncountersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, when I visit the encounters index, encounters are sorted by [TBD]" do
-    skip
     sign_in @admin
     get :index
+    assert assigns(:encounters) == assigns(:encounters).sort_by(&:updated_at)
   end
 
   test "As a visitor, I cannot visit the new encounter form" do
