@@ -53,7 +53,6 @@
         <Cell ss:StyleID="s63"><Data ss:Type="String">Encountered</Data></Cell>
         <Cell ss:StyleID="s63"><Data ss:Type="String">Submitted</Data></Cell>
       </Row>
-      <% current_user_invited_users = current_user.invitations %>
       <% @encounters.each do |encounter| %>
         <% if policy(encounter).index? %>
           <Row>

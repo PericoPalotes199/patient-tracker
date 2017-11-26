@@ -39,7 +39,6 @@
         </thead>
 
         <tbody>
-          <% current_user_invited_users = current_user.invitations %>
           <% @encounters_count.each do |group, count| %>
             <% user = User.find(group[0]) %>
             <!-- Show a row if it belongs to the current_user or if the current_user has summary privileges  -->
