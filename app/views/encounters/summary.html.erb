@@ -56,6 +56,18 @@
         </tbody>
       </table>
 
+      <%# show residents an affiliate link %>
+      <% if current_user.resident? || current_user.admin_resident? %>
+        <p style="font-size: .8em; text-align: center; margin: 3em auto;">
+          <a target="_blank" href="https://sofi.com/share/281880">
+            <span style="display: block;">STUDENT LOAN REFINANCING</span>
+            <span style="display: block;">FOR MEDICAL RESIDENTS AND FELLOWS</span>
+            <span style="display: block;">$100 monthly payments.</span>
+            <span>Low rates. No compounding interest.</span>
+          </a>
+        </p>
+      <% end %>
+
       <% if current_user.admin? || current_user.admin_resident? %>
         <div id="encounters_summary_buttons" data-role="navbar">
           <ul>
