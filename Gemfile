@@ -34,6 +34,9 @@ gem 'uglifier', '>= 1.3.0'
 # Use unicorn as the app server
 # gem 'unicorn'
 
+# Error tracking via Rollbar and the Heroku add-on
+gem 'rollbar', '2.11.5'
+
 
 group :development do
   # Spring speeds up development by keeping your application running in the background.
