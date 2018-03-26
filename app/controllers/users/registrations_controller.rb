@@ -48,12 +48,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     redirect_to payment_info_path
   end
 
-  # GET /users/sign_up
-  def new
-    flash.now.alert = 'To ensure e-mail delivery, use a web-based address like Gmail. Check your spam folder.'
-    super
-  end
-
   # POST /users/registrations
   def create
     #create a customer if successful sign up
