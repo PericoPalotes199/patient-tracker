@@ -162,10 +162,16 @@
     $(document).ready(function() {
       $('form').submit(function(e) {
         e.preventDefault();
-        $('form').fadeOut( '3000', function() {
-          $('form').parent().append( '<p><b>Thank You!</b></p>' );
+        $form = $(this)
+        $.post({
+          url:'https://hooks.zapier.com/hooks/catch/1179186/2nf27v/',
+          data: $form.serialize(),
+          success: function() {
+            $form.fadeOut( '3000', function() {
+              $form.parent().append( '<p><b>Thank You!</b></p>' );
+            });
+          }
         });
-        return false;
       });
     });
   </script>
