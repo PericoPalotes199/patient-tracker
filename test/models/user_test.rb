@@ -15,9 +15,10 @@ class UserTest < ActiveSupport::TestCase
     assert_not_same users(:resident_0), users(:resident_1)
   end
 
-  test "when a user is destroyed, its encounters are destroyed" do
+  test "when a user is destroyed, its encounters are NOT destroyed" do
+    encounters_count = users(:resident).encounters.count
     users(:resident).destroy!
-    assert users(:resident).encounters.count == 0
+    assert users(:resident).encounters.count == encounters_count
   end
 
   test "role" do
