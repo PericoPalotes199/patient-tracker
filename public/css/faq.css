@@ -1,0 +1,31 @@
+#faq-header {
+  padding-top: 4em;
+  padding-left: 1em;
+  font-size: 2em;
+  text-decoration: underline;
+}
+
+#faq-sub-header {
+  font-size: 1.1em;
+  margin: 0 2em;
+  width: 67%;
+}
+
+#questions {
+  margin: 0 2em;
+  width: 67%;
+}
+
+#questions h5 {
+  font-weight: bold;
+}
+
+#questions a#hide-rules,
+#questions a#show-rules {
+  text-decoration: none;
+}
+
+#questions ul#faq-labels-list {
+  padding-left: 2em;
+  line-height: normal;
+}

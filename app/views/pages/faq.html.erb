@@ -1,36 +1,101 @@
-<h2 style="padding-top: 4em; padding-left: 1em; font-size: 2em; text-decoration: underline;">Previous Questions</h2>
-
-<div style="font-size: 1.1em; margin: 0 2em;">
+<h2 id="faq-header">Previous Questions</h2>
+<div id="faq-sub-header">
   <p>You might find these questions and answers helpful. Please ask if you need further details or have a new question!</p>
 </div>
-<div style="margin: 0 2em;">
-  <h5 style="font-weight: bold;">
+
+<div id="questions">
+  <h5>
+    Why was the Encounter Counter created?
+  </h5>
+  <p>
+    This tool was created to assist residencies in counting their patient
+    encounters according to the
+    <a href="https://www.acgme.org/Portals/0/PFAssets/ReviewandComment/120-17-FamilyMedicine-2017-11-13-R&C.doc.pdf" target="_blank">
+    ACGME Program Requirements for Graduate Medical Education in Family Medicine</a>.
+    This tool can free up staff and residents' time by providing a quick, easy, and mobile
+    interface for tracking encounters on-the-fly and retrieving both a summary and detailed
+    report at a later date.
+  </p>
+  <p>
+    <a id="show-rules" href="#">+ See more...</a>
+    <a id="hide-rules" href="#">- Hide</a>
+  </p>
+  <pre id="rules">
+    IV.A.6.b) Residents must have at least 600 hours (or six months) and 750
+    patient encounters dedicated to the care of hospitalized adult
+    patients with a broad range of ages and medical conditions.
+
+    IV.A.6.b).(1) Residents must have at least 100 hours (or one month) or
+    15 encounters dedicated to the care of ICU patients.
+    IV.A.6.b).(2) Residents must provide care to hospitalized adults during
+    all years of the program.
+
+    IV.A.6.c) Residents must have emergency department experience.
+    IV.A.6.c).(1) Residents must have at least 200 hours (or two months) or
+    250 patient encounters dedicated to the care of acutely ill
+    or injured adults in an emergency department setting.
+
+    IV.A.6.d) Residents must have at least 100 hours (or one month) or 125
+    patient encounters dedicated to the care of the older patient.
+
+    IV.A.6.d).(1) The experience must include functional assessment,
+    disease prevention and health promotion, and
+    management of patients with multiple chronic diseases.
+
+    IV.A.6.d).(2) The experience should incorporate care of older patients
+    across a continuum of sites.
+
+    IV.A.6.e) Residents must have at least 200 hours (or two months) and 250
+    patient encounters dedicated to the care of ill child patients in the
+    hospital and/or emergency setting.
+
+    IV.A.6.e).(1) This experience should include a minimum of 75 inpatient
+    encounters with children.
+
+    IV.A.6.e).(2) This experience should include a minimum of 75
+    emergency department patient encounters with children.
+
+    IV.A.6.f) Residents must have at least 200 hours (or two months) or 250
+    patient encounters dedicated to the care of children and
+    adolescents in an ambulatory setting.
+
+    IV.A.6.f).(1) This care must include well-child care, acute care, and
+    chronic care.
+
+    IV.A.6.g) Residents must have at least 40 newborn patient encounters,
+    including well and ill newborns.
+
+    source: ACGME Program Requirements for Graduate Medical Education
+    in Family Medicine for Review and Comment
+    ©2017 Accreditation Council for Graduate Medical Education (ACGME)
+  </pre>
+  <h5>
     Will I be charged for the admin account?
   </h5>
   <p>
     No, you will not be charged for an admin. Only residents are billed to your accocunt.
   </p>
-  <h5 style="font-weight: bold;">
+  <h5>
     Can an admin submit encounters?
   </h5>
   <p>
     Typically, an admin cannot submit encounters. You may grant an admin the ability
     to submit encounters. However, that admin will then be billed as a resident.
   </p>
-  <h5 style="font-weight: bold;">
+  <h5>
     Can my residency have more than one admin?
   </h5>
   <p>
     Yes! The first admin should invite the second admin like residents. You may need to
     contact us to grant admin priveleges to the second admin.
   </p>
-  <h5 style="font-weight: bold;">
+  <h5>
     Can a resident be an admin?
   </h5>
   <p>
     Yes. However, if they will be submitting encounters, that resident will still be billed as a resident to the account.
   </p>
-  <h5 style="font-weight: bold;">
+  <h5>
     Can the billing period be aligned with the academic year?
   </h5>
   <p>
@@ -38,7 +103,7 @@
     just send an e-mail <a href="mailto:help@encountercounter.com">help@encountercounter.com</a>
     and we will adjust your billing period. We won't split hairs over pro-rated costs.
   </p>
-  <h5 style="font-weight: bold;">
+  <h5>
     Can I count other types of encounters?
   </h5>
   <p>
@@ -46,7 +111,7 @@
     but we have had inquiries about changing these labels.
     Just send us an e-mail to <a href="mailto:help@encountercounter.com">help@encountercounter.com</a>
     so we can discuss your desired labels.
-    <ul style="padding-left: 2em;">
+    <ul id="faq-labels-list">
       <li>Adult: Inpatient</li>
       <li>Adult: ED</li>
       <li>Adult: ICU</li>
@@ -58,7 +123,7 @@
       <li>Continuity: External</li>
     </ul>
   </p>
-  <h5 style="font-weight: bold;">
+  <h5>
     How do I know the encounters are authentic?
   </h5>
   <p>
@@ -75,6 +140,28 @@
     competition and the probability that residents would be encouraged to
     falsify data.
   </p>
+  <h5>
+    How do I download Encounter Counter? Is there an app?
+  </h5>
+  <p style="margin-bottom: 5em;">
+    There is no app ... yet. Encounter Counter is mobile-friendly,
+    and you can access it in a web browser or from your homescreen, similar
+    to an app.  This ensures that the software works across
+    all sorts of devices, from desktop computers using old internet browsers to
+    modern mobile devices (in your residents' pockets). To conveniently access
+    the login like an app, bookmark <a href="https://encountercounter.com/users/sign_in">the sign-in page</a>
+    or save a shortcut to your mobile device's homescreen.
+    We'd be glad to further assist if you need help with this step.
+  </p>
 </div>
 
+<script>
+  $(document).ready(function() {
+    $('#hide-rules, pre#rules').hide()
+    $('#show-rules, #hide-rules').on('click', function(event) {
+      event.preventDefault()
+      $('#hide-rules, #show-rules, pre#rules').toggle()
+    })
+  })
+</script>
 
