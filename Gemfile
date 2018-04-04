@@ -13,7 +13,7 @@ gem 'figaro', '>= 1.0.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '~> 3.1.0'
+gem 'jquery-rails', '~> 3.1.4'
 gem 'newrelic_rpm', '~> 3.9.0.229'
 # Use PostgreSQL database in all environments
 gem 'pg', '~> 0.17.1'
