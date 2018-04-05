@@ -5,7 +5,7 @@ gem 'rails', '4.2.0'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
-gem 'devise', '~> 3.2.4'
+gem 'devise', '~> 3.4.1'
 gem 'devise_invitable', '~> 1.4.0'
 # Simple, Heroku-friendly Rails app configuration using ENV and a single YAML file
 gem 'figaro', '>= 1.0.0'
@@ -19,9 +19,6 @@ gem 'pg', '~> 0.17.1'
 # Use pundit for minimal authorization through OO design and pure Ruby classes
 gem 'puma'
 gem 'pundit', '~> 0.2.3'
-# Allow the use of respond_to and respond_with at the class level, in controllers
-# Example in upgrade guid: http://guides.rubyonrails.org/upgrading_ruby_on_rails.html#responders.
-gem 'responders', '~> 2.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Stripe for payments
