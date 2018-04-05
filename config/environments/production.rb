@@ -43,7 +43,9 @@ Rails.application.configure do
   config.force_ssl = true
 
   # Set to :debug to see everything in the log.
-  config.log_level = :info
+  # Use the Rails 5+ default value of :debug
+  # Reference: http://guides.rubyonrails.org/upgrading_ruby_on_rails.html#production-log-level
+  config.log_level = :debug
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]

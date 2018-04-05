@@ -40,6 +40,10 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  # Run tests in random order
+  # Reference: http://guides.rubyonrails.org/upgrading_ruby_on_rails.html#activesupport-testcase-default-test-order-is-now-random
+  config.active_support.test_order = :random # or `:sorted` if you prefer
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end

@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.4'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.16'
+gem 'rails', '4.2.0'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
@@ -20,6 +19,9 @@ gem 'pg', '~> 0.17.1'
 # Use pundit for minimal authorization through OO design and pure Ruby classes
 gem 'puma'
 gem 'pundit', '~> 0.2.3'
+# Allow the use of respond_to and respond_with at the class level, in controllers
+# Example in upgrade guid: http://guides.rubyonrails.org/upgrading_ruby_on_rails.html#responders.
+gem 'responders', '~> 2.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Stripe for payments
@@ -42,6 +44,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background.
   # Read more: https://github.com/rails/spring
   gem 'spring', '~> 1.1.3'
+  gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do
