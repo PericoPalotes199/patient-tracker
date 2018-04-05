@@ -2,7 +2,9 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'simplecov'
-SimpleCov.start
+# Use the Rails profile to start SimpleCov
+# Refernce: https://github.com/colszowka/simplecov/tree/v0.16.1#profiles
+SimpleCov.start 'rails'
 require "minitest/reporters"
 Minitest::Reporters.use!
 
