@@ -34,7 +34,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'unicorn'
 
 # Error tracking via Rollbar and the Heroku add-on
-gem 'rollbar', '2.13.3'
+gem 'rollbar', '2.15.5'
 
 
 group :development do
