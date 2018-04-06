@@ -13,6 +13,19 @@ class EncountersControllerTest < ActionController::TestCase
     @admin = users(:admin)
     @admin_resident = users(:admin_resident)
     @encounter = @resident.encounters.first
+
+    @encounter_types = %w(
+      adult_ed
+      adult_icu
+      adult_inpatient
+      adult_inpatient_surgery
+      continuity_external
+      continuity_inpatient
+      pediatric_ed
+      pediatric_inpatient
+      pediatric_newborn
+      adult_inpatient
+    )
   end
 
   test "As a visitor, I cannot visit the encounters index" do
@@ -81,6 +94,102 @@ class EncountersControllerTest < ActionController::TestCase
       assigns(:encounters).pluck(:encountered_on),
       assigns(:encounters).sort_by(&:encountered_on).reverse.map(&:encountered_on)
     )
+  end
+
+  test "As a resident, when I visit the encounters summary page, encounters are assigned" do
+    sign_in @resident
+    get :summary, format: :html
+    assert_not_nil assigns(:encounters)
+    assert_not_nil assigns(:encounters_count)
+    sign_in @resident
+    get :summary, format: :xls
+    assert_not_nil assigns(:encounters)
+    assert_not_nil assigns(:encounters_count)
+  end
+
+  test "As an admin_resident, when I visit the encounters summary page, encounters are assigned" do
+    sign_in @admin_resident
+    get :summary, format: :html
+    assert_not_nil assigns(:encounters)
+    assert_not_nil assigns(:encounters_count)
+    sign_in @admin_resident
+    get :summary, format: :xls
+    assert_not_nil assigns(:encounters)
+    assert_not_nil assigns(:encounters_count)
+  end
+
+  test "As an admin, when I visit the encounters summary page, encounters are assigned" do
+    sign_in @admin
+    get :summary, format: :html
+    assert_not_nil assigns(:encounters)
+    assert_not_nil assigns(:encounters_count)
+    sign_in @admin
+    get :summary, format: :xls
+    assert_not_nil assigns(:encounters)
+    assert_not_nil assigns(:encounters_count)
+  end
+
+  test "As a resident, when I visit the encounters summary page, encounter_types are grouped by user_id and encounter_type" do
+    sign_in @resident
+    get :summary
+
+    # The grouped keys should looks somethign like this result:
+    # assigns(:encounters_count).keys #=> [ [486791686, "adult_ed"], ..., [494457361, "adult_inpatient"] ]
+
+    assigns(:encounters_count).keys.map { |key|
+      user_id, encounter_type = key.first, key.second
+      assert_kind_of User, User.find(user_id), 'Each key should include a user_id!'
+      assert encounter_type.in?(@encounter_types), 'Each key should include an encounter_type!'
+    }
+  end
+
+  test "As an admin_resident, when I visit the encounters summary page, encounter_types are grouped by user_id and encounter_type" do
+    sign_in @admin_resident
+    get :summary
+
+    # The grouped keys should looks somethign like this result:
+    # assigns(:encounters_count).keys #=> [ [486791686, "adult_ed"], ..., [494457361, "adult_inpatient"] ]
+
+    assigns(:encounters_count).keys.map { |key|
+      user_id, encounter_type = key.first, key.second
+      assert_kind_of User, User.find(user_id), 'Each key should include a user_id!'
+      assert encounter_type.in?(@encounter_types), 'Each key should include an encounter_type!'
+    }
+  end
+
+  test "As an admin, when I visit the encounters summary page, encounter_types are grouped by user_id and encounter_type" do
+    sign_in @admin
+    get :summary
+
+    # The grouped keys should looks somethign like this result:
+    # assigns(:encounters_count).keys #=> [ [486791686, "adult_ed"], ..., [494457361, "adult_inpatient"] ]
+
+    assigns(:encounters_count).keys.map { |key|
+      user_id, encounter_type = key.first, key.second
+      assert_kind_of User, User.find(user_id), 'Each key should include a user_id!'
+      assert encounter_type.in?(@encounter_types), 'Each key should include an encounter_type!'
+    }
+  end
+
+  test "As a resident, when I visit the encounters summary page, only my encounters are shown" do
+    skip 'This logic is currently handled by a view and a Policy object, which should be tested in view and policy tests.'
+    sign_in @resident
+    get :summary
+    assert true
+  end
+
+  test "As an admin_resident, when I visit the encounters summary page, only my encounters are shown" do
+    skip 'This logic is currently handled by a view and a Policy object, which should be tested in view and policy tests.'
+    sign_in @admin_resident
+    get :summary
+    assert true
+  end
+
+  test "As an admin, when I visit the encounters summary page, only my residency encounters shown" do
+    skip 'This logic is currently handled by a view and a Policy object, which should be tested in view and policy tests.'
+    sign_in @admin
+    get :summary
+    assert true
   end
 
   test "As a visitor, I cannot visit the new encounter form" do
