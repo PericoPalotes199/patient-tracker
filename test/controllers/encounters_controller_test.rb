@@ -96,33 +96,42 @@ class EncountersControllerTest < ActionController::TestCase
     )
   end
 
-  test "As a resident, when I visit the encounters summary page, encounters are assigned" do
+  test "As a resident, when I visit the encounters summary page, counts are assigned" do
     sign_in @resident
     get :summary, format: :html
-    assert_not_nil assigns(:encounters)
+    assert_nil assigns(:encounters) # @encounters query not loaded for html response
     assert_not_nil assigns(:encounters_count)
-    sign_in @resident
+  end
+
+  test "As a resident, when I download the encounters summary xml, encounters are assigned" do
+    sign_in @admin
     get :summary, format: :xls
     assert_not_nil assigns(:encounters)
     assert_not_nil assigns(:encounters_count)
   end
 
-  test "As an admin_resident, when I visit the encounters summary page, encounters are assigned" do
+  test "As an admin_resident, when I visit the encounters summary page, counts are assigned" do
     sign_in @admin_resident
     get :summary, format: :html
-    assert_not_nil assigns(:encounters)
+    assert_nil assigns(:encounters) # @encounters query not loaded for html response
     assert_not_nil assigns(:encounters_count)
+  end
+
+  test "As an admin_resident, when I download the encounters summary xml, encounters are assigned" do
     sign_in @admin_resident
     get :summary, format: :xls
     assert_not_nil assigns(:encounters)
     assert_not_nil assigns(:encounters_count)
   end
 
-  test "As an admin, when I visit the encounters summary page, encounters are assigned" do
+  test "As an admin, when I visit the encounters summary page, counts are assigned" do
     sign_in @admin
     get :summary, format: :html
-    assert_not_nil assigns(:encounters)
+    assert_nil assigns(:encounters) # @encounters query not loaded for html response
     assert_not_nil assigns(:encounters_count)
+  end
+
+  test "As an admin, when I download the encounters summary xml, encounters are assigned" do
     sign_in @admin
     get :summary, format: :xls
     assert_not_nil assigns(:encounters)

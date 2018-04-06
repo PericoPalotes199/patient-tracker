@@ -16,17 +16,16 @@ class EncountersController < ApplicationController
   end
 
   def summary
-    #TODO: Limit this Encounters#summary query to only current_user and current_user's invitations' encounters.
-    #TODO: @encounters is needed for the .xls format. Find out if this can be defined only for the .xls format.
-    @encounters = Encounter.all.includes(:user).order(encountered_on: :desc).order('users.name ASC')
-
     #TODO: Map encounter_type values to an integer so that reults can be ordered
     #TODO: identical to encounters/new view
     @encounters_count = Encounter.group(:user_id, :encounter_type).order(:user_id, :encounter_type).count
 
     respond_to do |format|
       format.html
-      format.xls
+      format.xls {
+        # TODO: Limit this Encounters#summary query to only current_user and current_user's invitations' encounters.
+        @encounters = Encounter.all.includes(:user).order(encountered_on: :desc).order('users.name ASC')
+      }
     end
   end
 
