@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   before_create :set_default_role, :set_active_until
   before_save :set_name
 
-  validates_presence_of   :email, if: :email_required?
+  validates_presence_of   :email
   validates_uniqueness_of :email, allow_blank: true, if: :email_changed?
   validates_format_of     :email, with: /\A[^@]+@[^@]+\z/, allow_blank: true, if: :email_changed?
   # Validating the residency prevents a bunch of admins and residents from being
@@ -117,9 +117,5 @@ class User < ActiveRecord::Base
     # or confirmation are being set somewhere.
     def password_required?
       !persisted? || !password.nil? || !password_confirmation.nil?
-    end
-
-    def email_required?
-      true
     end
 end
