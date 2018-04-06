@@ -79,7 +79,6 @@ class User < ActiveRecord::Base
     def set_residency
       if invited_by_id?
         self.residency = invited_by.residency
-        self.save
       end
     end
 
