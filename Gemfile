@@ -10,7 +10,7 @@ gem 'devise_invitable', '~> 1.4.0'
 # Simple, Heroku-friendly Rails app configuration using ENV and a single YAML file
 gem 'figaro', '>= 1.0.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder', '~> 2.7'
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 3.1.4'
 gem 'newrelic_rpm', '~> 3.18.1.330'
