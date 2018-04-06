@@ -40,6 +40,12 @@ class User < ActiveRecord::Base
     role == 'admin_resident'
   end
 
+  # TODO: This method always returns false, but we are anticipating
+  # a boolean attribute to be added to the model.
+  def has_custom_labels?
+    false
+  end
+
   def subscription_expired?
     return true unless active_until
     Time.zone.at(active_until) < Time.zone.now

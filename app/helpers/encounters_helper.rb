@@ -8,10 +8,10 @@ module EncountersHelper
   # _labels_ arrays with `labels.remove(' ').underscore`.
 
   def encounter_types
-    if current_user.residency == ENV['CUSTOM_ENCOUNTER_TYPES_AND_LABELS_1']
+    return default_encounters_types unless current_user.has_custom_labels?
+    if current_user.has_custom_labels?
+      # TODO: these will need to be renamed and categorized/strategized
       custom_encounters_types_1
-    else
-      default_encounters_types
     end
   end
 
@@ -46,10 +46,10 @@ module EncountersHelper
   # These methods choose the set of labels to display for the
   # encounters#new view, based on the residency's name (stored in ENV).
   def display_labels
-    if current_user.residency == ENV['CUSTOM_ENCOUNTER_TYPES_AND_LABELS_1']
+    return default_display_labels unless current_user.has_custom_labels?
+    if current_user.has_custom_labels?
+      # TODO: these will need to be renamed and categorized/strategized
       custom_display_labels_1
-    else
-      default_display_labels
     end
   end
 

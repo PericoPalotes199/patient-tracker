@@ -50,6 +50,13 @@ class UserTest < ActiveSupport::TestCase
     assert     users(:resident).resident?
   end
 
+  test "has_custom_labels?" do
+    # NOTE: Always returns false, until custom labels feature is implemented
+    assert_not users(:admin).has_custom_labels?
+    assert_not users(:admin_resident).has_custom_labels?
+    assert_not users(:resident).has_custom_labels?
+  end
+
   test "subscription expired?" do
     assert_not users(:resident).subscription_expired?
     users(:resident).active_until = Time.now - 1.second
