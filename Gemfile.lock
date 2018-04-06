@@ -115,7 +115,7 @@ GEM
       ruby-progressbar
     multi_json (1.13.1)
     netrc (0.10.3)
-    newrelic_rpm (3.9.0.229)
+    newrelic_rpm (3.18.1.330)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
     orm_adapter (0.5.0)
@@ -236,7 +236,7 @@ DEPENDENCIES
   jquery-rails (~> 3.1.4)
   minitest
   minitest-reporters
-  newrelic_rpm (~> 3.9.0.229)
+  newrelic_rpm (~> 3.18.1.330)
   pg (~> 0.17.1)
   pry
   pry-byebug

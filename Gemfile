@@ -13,7 +13,7 @@ gem 'figaro', '>= 1.0.0'
 gem 'jbuilder', '~> 2.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 3.1.4'
-gem 'newrelic_rpm', '~> 3.9.0.229'
+gem 'newrelic_rpm', '~> 3.18.1.330'
 # Use PostgreSQL database in all environments
 gem 'pg', '~> 0.17.1'
 # Use pundit for minimal authorization through OO design and pure Ruby classes
