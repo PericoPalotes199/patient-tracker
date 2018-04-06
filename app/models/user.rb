@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   end
 
   def subscription_expired?
-    return !active_until unless active_until
+    return true unless active_until
     Time.zone.at(active_until) < Time.zone.now
   end
 
