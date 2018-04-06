@@ -228,7 +228,6 @@ DEPENDENCIES
   awesome_print
   better_errors (~> 1.1.0)
   binding_of_caller (~> 0.7.2)
-  coffee-rails (~> 4.0.0)
   devise (~> 3.4.1)
   devise_invitable (~> 1.4.0)
   figaro (>= 1.0.0)

@@ -3,8 +3,6 @@ ruby '2.2.4'
 
 gem 'rails', '4.2.10'
 
-# Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
 gem 'devise', '~> 3.4.1'
 gem 'devise_invitable', '~> 1.4.0'
 # Simple, Heroku-friendly Rails app configuration using ENV and a single YAML file
