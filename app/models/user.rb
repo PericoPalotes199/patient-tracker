@@ -56,11 +56,9 @@ class User < ActiveRecord::Base
   private
     def set_name
       if first_name && last_name
-        self.name = first_name + ' ' + last_name
-      elsif email
-        self.name = email
+        self.name = "#{first_name} #{last_name}"
       else
-        self.name = ''
+        self.name = email
       end
     end
 
