@@ -27,7 +27,7 @@ function resetEncounters() {
     $("#" + encounter_type).removeClass( "gradient_blue" );
     $("#" + encounter_type).addClass( "gradient_light" );
     $('#encounter_types_' + encounter_type).val(0);
-    $("#total").html(0);
+    $("#totalEncountersBlock").html(0);
   }
 }
 
@@ -58,6 +58,5 @@ function calcTotal() {
                parseInt($('#encounter_types_' + encounter_types[6]).val()) +
                parseInt($('#encounter_types_' + encounter_types[7]).val()) +
                parseInt($('#encounter_types_' + encounter_types[8]).val());
-  console.log (total);
-  $("#total").html(total);
+  $("#totalEncountersBlock").html(total);
 }
