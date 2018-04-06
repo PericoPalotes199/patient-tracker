@@ -103,6 +103,7 @@ class User < ActiveRecord::Base
           end
         rescue Stripe::StripeError => e
           Rails.logger.error "********** Stripe Error: #{e.message} **********"
+          Rollbar.error e.class, e.message
           return false
         end
       end
