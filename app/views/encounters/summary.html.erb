@@ -56,7 +56,7 @@
       </table>
 
       <%# show residents an affiliate link %>
-      <% if current_user.resident? || current_user.admin_resident? %>
+      <% if current_user.encounters.any? && (current_user.resident? || current_user.admin_resident?) %>
         <p style="font-size: .8em; text-align: center; margin: 3em auto;">
           <a target="_blank" href="https://sofi.com/share/281880">
             <span style="display: block;">STUDENT LOAN REFINANCING</span>
