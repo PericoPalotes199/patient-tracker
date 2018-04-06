@@ -13,12 +13,13 @@ class Encounter < ActiveRecord::Base
   after_rollback :transaction_failure
 
   private
-    #TODO: improve transaction error logging!
     def transaction_success
       STDOUT.puts "Transaction success for Encounter #{self.inspect}" if Rails.env.development?
     end
 
     def transaction_failure
-      STDOUT.puts "Transaction failure for Encounter #{self.inspect}" if Rails.env.development?
+      warning = "Transaction failure for Encounter #{self.inspect}"
+      STDOUT.puts warning if Rails.env.development?
+      Rollbar.warning warning, self.attributes
     end
 end
