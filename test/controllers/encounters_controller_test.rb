@@ -70,14 +70,17 @@ class EncountersControllerTest < ActionController::TestCase
     @admin.invitations.each do |invitation|
       expected_encounters += invitation.encounters
     end
-    assert_equal assigns(:encounters).pluck(:id).sort, expected_encounters.map{ |encounter| encounter.id }.sort
+    assert_equal assigns(:encounters).pluck(:id).sort, expected_encounters.map(&:id).sort
     assert_template :index
   end
 
-  test "As an admin, when I visit the encounters index, encounters are sorted by [TBD]" do
+  test "As an admin, when I visit the encounters index, encounters are reverse sorted by encountered_on" do
     sign_in @admin
     get :index
-    assert assigns(:encounters) == assigns(:encounters).sort_by(&:updated_at)
+    assert_equal(
+      assigns(:encounters).pluck(:encountered_on),
+      assigns(:encounters).sort_by(&:encountered_on).reverse.map(&:encountered_on)
+    )
   end
 
   test "As a visitor, I cannot visit the new encounter form" do
