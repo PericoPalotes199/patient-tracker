@@ -64,12 +64,8 @@ class UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     if current_user.admin? && current_user.invitations.include?(@user) || current_user.eql?(@user)
-      if @user.destroy
-        redirect_to users_url, notice: 'User was successfully destroyed.'
-      else
-        puts @user.errors.messages
-        render @user
-      end
+      @user.destroy
+      redirect_to users_url, notice: 'User was successfully destroyed.'
     else # current_user is not @user and current_user did not invite @user
       if current_user.admin?
         redirect_to users_url, notice: "You can't destroy that user."
