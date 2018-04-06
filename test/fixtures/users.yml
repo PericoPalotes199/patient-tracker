@@ -37,7 +37,7 @@ admin_resident:
   first_name: Jane
   last_name: Administrator
   name: Jane Administrator
-  role: admin
+  role: admin_resident
   residency: Test Residency
   confirmed_at: <%= Time.now %>
   active_until: <%= (Time.now + 6.99.days).to_i %>

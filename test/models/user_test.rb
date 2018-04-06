@@ -6,13 +6,18 @@ class UserTest < ActiveSupport::TestCase
     @admin = users(:admin)
   end
 
-  test "the truth" do
+  test "some simple assertions to confirm configuration is valid" do
     assert true
     assert_not false
     assert_equal true, true
     assert_not_equal false, true
 
     assert_not_same users(:resident_0), users(:resident_1)
+  end
+
+  test "when a user is saved, its name is updated" do
+    users(:resident).update first_name: 'Updated', last_name: 'Resident', tos_accepted: true
+    assert users(:resident).name, 'Updated Resident'
   end
 
   test "when a user is destroyed, its encounters are NOT destroyed" do
@@ -24,21 +29,32 @@ class UserTest < ActiveSupport::TestCase
   test "role" do
     assert users(:resident).role == 'resident'
     assert users(:admin).role == 'admin'
+    assert users(:admin_resident).role == 'admin_resident'
   end
 
   test "admin?" do
-    assert users(:admin).admin?
-    assert_not users(:resident).admin?
+    assert     users(:admin).admin?
+    assert_not users(:admin).admin_resident?
+    assert_not users(:admin).resident?
+  end
+
+  test "admin_resident?" do
+    assert_not users(:admin_resident).admin?
+    assert     users(:admin_resident).admin_resident?
+    assert_not users(:admin_resident).resident?
   end
 
   test "resident?" do
-    assert users(:resident).resident?
-    assert_not users(:admin).resident?
+    assert_not users(:resident).admin?
+    assert_not users(:resident).admin_resident?
+    assert     users(:resident).resident?
   end
 
   test "subscription expired?" do
     assert_not users(:resident).subscription_expired?
     users(:resident).active_until = Time.now - 1.second
+    assert users(:resident).subscription_expired?
+    users(:resident).active_until = nil
     assert users(:resident).subscription_expired?
   end
 
@@ -62,6 +78,14 @@ class UserTest < ActiveSupport::TestCase
            Stripe::Customer.retrieve('cus_0000000').subscriptions.first.quantity
   end
 
+  test "when a user accepts an invitation, they should no longer have Stripe subscriptions" do
+    skip('User invitations must be equal to Stripe subscription quantity!')
+    assert users(:admin).invitations.count <
+           Stripe::Customer.retrieve('cus_0000000').subscriptions.first.quantity
+    User.accept_invitation!(invitation_token: users(:unconfirmed).invitation_token)
+    assert Stripe::Customer.retrieve(users(:unconfirmed).customer_id).subscriptions.length, 0
+  end
+
   test "when a user accepts an invitation, then change role to resident" do
     admin = User.create!(
       email: 'admin-to-resident@example.com',
@@ -82,7 +106,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 'resident', admin.role
   end
 
-  test "when a user accepts an invitation set residency to inviter s residency" do
+  test "when a user accepts an invitation set residency to inviter's residency" do
     resident = User.invite!({email: 'invited-resident@example.com'}, users(:admin))
     resident = User.accept_invitation!(
       invitation_token: resident.raw_invitation_token,
@@ -90,5 +114,17 @@ class UserTest < ActiveSupport::TestCase
       password_confirmation: 'password',
       tos_accepted: true)
     assert_equal 'Test Residency', resident.residency
+    assert_equal users(:admin).residency, resident.residency
+  end
+
+  test "when a user accepts an invitation set active_until to inviter's residency" do
+    resident = User.invite!({email: 'invited-resident@example.com'}, users(:admin))
+    resident = User.accept_invitation!(
+      invitation_token: resident.raw_invitation_token,
+      password: 'password',
+      password_confirmation: 'password',
+      tos_accepted: true)
+    assert_not_nil users(:admin).active_until
+    assert_equal users(:admin).active_until, resident.active_until
   end
 end
