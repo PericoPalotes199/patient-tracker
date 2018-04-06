@@ -11,6 +11,7 @@ class EncountersControllerTest < ActionController::TestCase
   setup do
     @resident = users(:resident)
     @admin = users(:admin)
+    @admin_resident = users(:admin_resident)
     @encounter = @resident.encounters.first
   end
 
@@ -34,6 +35,31 @@ class EncountersControllerTest < ActionController::TestCase
     sign_in @resident
     get :index
     assert_equal assigns(:encounters).pluck(:encountered_on), @resident.encounters.pluck(:encountered_on).sort.reverse
+  end
+
+  test "As an admin_resident, I can view only my encounters at the encounters index" do
+    sign_in @admin_resident
+    get :index
+    assert_response :success
+    assert_equal assigns(:encounters).count, @admin_resident.encounters.count
+    assert_equal assigns(:encounters), @admin_resident.encounters.order(encountered_on: :desc)
+    assert_template :index
+  end
+
+  test "As an unrecognized role, I can view no encounters at the encounters index" do
+    unrecognized_resident = User.create!(@resident.attributes.merge({
+      id: nil,
+      role: 'unrecognized',
+      email: 'unrecognized@example.com',
+      password: 'password',
+      tos_accepted: '1'
+    }))
+    sign_in unrecognized_resident
+    get :index
+    assert_response :success
+    assert_equal assigns(:encounters).count, 0
+    assert_equal assigns(:encounters), Encounter.none
+    assert_template :index
   end
 
   test "As an admin, I can view all of my invited residents' encounters at the encounters index" do
@@ -89,6 +115,24 @@ class EncountersControllerTest < ActionController::TestCase
     end
     assert_response :redirect
     assert_redirected_to encounters_path
+  end
+
+  test "As a resident, when encountered_on date is missing, the encounters are not created" do
+    sign_in @resident
+    assert_no_difference('Encounter.count') do
+      assert_raises ActionController::ParameterMissing do
+        post :create, encounter_types: { adult_inpatient: 1, adult_ed: 2 }, encountered_on: nil
+      end
+    end
+  end
+
+  test "As a resident, when encounter_types is missing, the encounters are not created" do
+    sign_in @resident
+    assert_no_difference('Encounter.count') do
+      assert_raises ActionController::ParameterMissing do
+        post :create, encounter_types: { }, encountered_on: Time.now.to_date
+      end
+    end
   end
 
   test "As an admin, I cannot create an encounter" do

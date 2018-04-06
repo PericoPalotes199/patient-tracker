@@ -20,9 +20,42 @@ ENCOUNTER_TYPES = [
 
 User.destroy_all
 
-developer = User.create!({ first_name: 'Developer', last_name: 'Developer', role: 'developer', email: 'developer@example.com', password: 'password', tos_accepted: true, confirmed_at: Time.now })
-developer = User.create!({ first_name: 'Resident',  last_name: 'Resident',  role: 'resident',  email: 'resident@example.com',  password: 'password', tos_accepted: true, confirmed_at: Time.now })
-developer = User.create!({ first_name: 'Admin',     last_name: 'Admin',     role: 'admin',     email: 'admin@example.com',     password: 'password', tos_accepted: true, confirmed_at: Time.now })
+User.create!({
+  first_name: 'Developer',
+  last_name: 'Developer'
+  role: 'developer',
+  email: 'developer@example.com',
+  password: 'password',
+  tos_accepted: true,
+  confirmed_at: Time.now
+})
+User.create!({
+  first_name: 'Resident',
+  last_name: 'Resident',
+  role: 'resident',
+  email: 'resident@example.com',
+  password: 'password',
+  tos_accepted: true,
+  confirmed_at: Time.now
+})
+User.create!({
+  first_name: 'Admin',
+  last_name: 'Admin',
+  role: 'admin',
+  email: 'admin@example.com',
+  password: 'password',
+  tos_accepted: true,
+  confirmed_at: Time.now
+})
+User.create!({
+  first_name: 'Admin',
+  last_name: 'Resident',
+  role: 'admin_resident',
+  email: 'admin_resident@example.com',
+  password: 'password',
+  tos_accepted: true,
+  confirmed_at: Time.now
+})
 
 puts "Created #{User.count} users!"
 

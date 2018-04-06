@@ -8,7 +8,7 @@ class EncountersController < ApplicationController
   def index
     if current_user.admin?
       @encounters = Encounter.includes(:user).where('users.invited_by_id  = ?', current_user.id).references(:users).order(encountered_on: :desc).order('users.name ASC')
-    elsif current_user.resident?
+    elsif current_user.resident? || current_user.admin_resident?
       @encounters = current_user.encounters.order(encountered_on: :desc)
     else
       @encounters = Encounter.none
@@ -49,14 +49,21 @@ class EncountersController < ApplicationController
     redirect_to(encounters_path, notice: 'You cannot create encounters!') and return if current_user.admin?
     total = 0
     begin
-      ActiveRecord::Base.transaction do
+      Encounter.transaction do
         encounter_params.each do |type, number|
           total += number.to_i
-          number.to_i.times {Encounter.create!(encounter_type: type.to_s.humanize(capitalize: false), encountered_on: encountered_on, user: current_user)}
+          number.to_i.times {
+            Encounter.create!(
+              encounter_type: type.to_s.humanize(capitalize: false),
+              encountered_on: encountered_on,
+              user: current_user
+            )
+          }
         end
       end
     rescue ActiveRecord::ActiveRecordError => error
-      STDERR.puts "Error in EncountersController#create: #{error.message}"
+      STDERR.puts "Error in EncountersController#create: #{error.message}" if Rails.env.development?
+      Rollbar.warning 'Caught ActiveRecordError', error.message
       redirect_to :new_encounter, alert: "Something went wrong!
                       Your encounters were not counted!
                       Please count again!"
