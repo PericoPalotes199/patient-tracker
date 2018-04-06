@@ -2,8 +2,7 @@ class Encounter < ActiveRecord::Base
 
   belongs_to :user
 
-  validates :encounter_type, presence: true
-  validates :encountered_on, presence: true
+  validates_presence_of :encounter_type, :encountered_on, :user
 
   after_commit :transaction_success
   after_rollback :transaction_failure
