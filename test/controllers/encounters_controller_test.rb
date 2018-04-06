@@ -135,6 +135,25 @@ class EncountersControllerTest < ActionController::TestCase
     end
   end
 
+  test "As a resident, when encounter_types with all 0 values are submitted, the user sees an alert" do
+    sign_in @resident
+    assert_no_difference('Encounter.count') do
+      post(:create, encounter_types: {
+        adult_inpatient: '0',
+        adult_ed: '0',
+        adult_icu: '0',
+        adult_inpatient_surgery: '0',
+        pediatric_inpatient: '0',
+        pediatric_newborn: '0',
+        pediatric_ed: '0',
+        continuity_inpatient: '0',
+        continuity_external: '0'
+      }, encountered_on: Time.now.to_date)
+    end
+    assert_equal flash.alert, "You did not count your encounters!"
+    assert_nil flash.instance_variable_get :@now
+  end
+
   test "As an admin, I cannot create an encounter" do
     sign_in @admin
     assert_no_difference('Encounter.count') do
