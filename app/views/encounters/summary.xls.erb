@@ -54,14 +54,15 @@
         <Cell ss:StyleID="s63"><Data ss:Type="String">Submitted</Data></Cell>
       </Row>
       <% @encounters.each do |encounter| %>
+        <% user = encounter.user %>
         <% if policy(encounter).index? %>
           <Row>
             <Cell ss:StyleID="s65">
-              <Data ss:Type="String"><%= encounter.user.present? ? encounter.user.name : "unknown" %></Data>
-             </Cell>
-             <Cell ss:StyleID="s65">
-              <Data ss:Type="String"><%= encounter.user.present? ? encounter.user.email : "unknown" %></Data>
-             </Cell>
+              <Data ss:Type="String"><%= user.present? ? user.name : "unknown" %></Data>
+            </Cell>
+            <Cell ss:StyleID="s65">
+              <Data ss:Type="String"><%= user.present? ? user.email : "unknown" %></Data>
+            </Cell>
             <Cell ss:StyleID="s65">
               <Data ss:Type="String"><%= encounter.encounter_type %></Data>
             </Cell>
