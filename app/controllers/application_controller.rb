@@ -18,8 +18,9 @@ class ApplicationController < ActionController::Base
     end
 
     def authenticate_inviter!
-      unless current_user.admin?
-        redirect_to users_path, :alert => 'You are not authorized to invite residents.'
+      # Redirect if the user is not both logged in and an admin
+      if !(current_user && current_user.admin?)
+        redirect_to new_encounter_path, :alert => 'You are not authorized to invite residents.'
       end
       super
     end
