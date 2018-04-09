@@ -51,42 +51,33 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /users/registrations
   def create
     #create a customer if successful sign up
-    super do |resource|
+    super do |user|
       begin
         customer = Stripe::Customer.create(
           email: sign_up_params[:email],
           description: ENV["STRIPE_CUSTOMER_DESCRIPTION"]
         )
-
         subscription = customer.subscriptions.create(plan: params[:plan], quantity: 1)
-        save_customer_id(resource, customer.id)
 
-        #TODO: These should probably be ActiveRecord callbacks.
-        assign_admin_role(resource)
-        save_active_until(resource, subscription.current_period_end)
+        user.update!(
+          customer_id: customer.id,
+          role: 'admin',
+          active_until: Time.zone.at(subscription.current_period_end)
+        )
       rescue Stripe::StripeError => e
         flash[:error] = e.message
         Rails.logger.error "Registration unsuccessful: #{e.message}"
+        Rollbar.warning "Stripe::StripeError caught. Registration unsuccessful: #{e.message}"
         redirect_to new_user_registration_path and return
       rescue StandardError => e
-        flash[:error] = "There was a problem! Please try again.\nIf the problem persists please contact us at #{ENV["CONTACT_EMAIL_ADDRESS"]}."
-        Rails.logger.error "Registration unsuccessful: #{e.message}"
-        redirect_to new_user_registration_path and return
+        Rails.logger.warn "Registration unsuccessful: #{e.message}"
+        Rollbar.warning "Stripe::StripeError caught. Registration unsuccessful: #{e.message}"
+        # NOTE: Do not return - let the user finish being processed by the Devise::RegistrationsController
       end
     end
   end
 
   private
-    def save_customer_id(user, customer_id)
-      user.customer_id = customer_id
-      user.save!
-    end
-
-    def assign_admin_role(user)
-      user.role = 'admin'
-      user.save!
-    end
-
     def save_active_until(user, timestamp)
       user.active_until = Time.zone.at(timestamp)
       user.save!
