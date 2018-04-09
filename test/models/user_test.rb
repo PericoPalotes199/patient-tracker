@@ -67,6 +67,7 @@ class UserTest < ActiveSupport::TestCase
       email: 'admin-to-resident@example.com',
       password: 'password',
       role: 'admin',
+      residency: 'Test Residency',
       tos_accepted: true)
     assert_equal 'admin', admin.role
     admin.invite!

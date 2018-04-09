@@ -18,6 +18,9 @@ class User < ActiveRecord::Base
   validates_presence_of   :email, if: :email_required?
   validates_uniqueness_of :email, allow_blank: true, if: :email_changed?
   validates_format_of     :email, with: /\A[^@]+@[^@]+\z/, allow_blank: true, if: :email_changed?
+  # Validating the residency prevents a bunch of admins and residents from being
+  # grouped into the same nil residency
+  validates_presence_of   :residency, message: 'is required.', if: :admin?
 
   validates_presence_of     :password, if: :password_required?
   validates_confirmation_of :password, if: :password_required?

@@ -55,7 +55,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       begin
         customer = Stripe::Customer.create(
           email: sign_up_params[:email],
-          description: ENV["STRIPE_CUSTOMER_DESCRIPTION"]
+          description: "#{ENV['STRIPE_CUSTOMER_DESCRIPTION']} #{sign_up_params[:residency]}"
         )
         subscription = customer.subscriptions.create(plan: params[:plan], quantity: 1)
 
