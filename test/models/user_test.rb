@@ -70,6 +70,22 @@ class UserTest < ActiveSupport::TestCase
     assert users(:admin).days_until_subscription_expiration == 6
   end
 
+  test "an admin can invite a resident" do
+    resident = User.invite!({ email: 'invited-resident@example.com' }, @admin)
+    assert_equal resident.invited_by, @admin
+  end
+
+  test "when an admin invites a user, their role will be resident" do
+    resident = User.invite!({ email: 'invited-resident@example.com' }, @admin)
+    assert_equal resident.role, 'resident'
+  end
+
+  test "when an admin invites a resident, the resident will have the same residency" do
+    skip "Upgrade devise_invitable to use after_invitation_created callback"
+    resident = User.invite!({ email: 'invited-resident@example.com' }, @admin)
+    assert_equal @admin.residency, resident.residency
+  end
+
   test "update invitees active until" do
     users(:admin).update_invitees_active_until
     assert_equal 1, users(:admin).invitations.pluck(:active_until).uniq.size
