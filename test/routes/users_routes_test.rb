@@ -30,23 +30,6 @@ class UsersRoutesTest < ActionController::TestCase
     assert_routing({ method: 'post', path: '/pay'}, {controller: 'users/registrations', action: 'pay' })
   end
 
-  # TODO: add tests for the rest of the devise routes
-
-  test "should redirect to new user registration" do
-    # NOTE: This route is a false positve. assert_routing does not check the redirect.
-    skip 'assert_routing does not test redirects'
-  end
-
-  test "should redirect to users sign in" do
-    # NOTE: This route is a false positve. assert_routing does not check the redirect.
-    skip 'assert_routing does not test redirects'
-  end
-
-  test "should redirect to users index" do
-    # NOTE: This route is a false positve. assert_routing does not check the redirect.
-    skip 'assert_routing does not test redirects'
-  end
-
   test "should route to users index" do
     assert_routing({ method: 'get', path: '/users' }, { controller: 'users', action: 'index' })
   end
