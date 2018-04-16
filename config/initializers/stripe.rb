@@ -66,24 +66,28 @@ StripeEvent.configure do |events|
 
   events.subscribe 'customer.created' do |event|
     Rails.logger.info '**************************************************'
+    Rails.logger.info "#{event.type} webhook successful."
     Rails.logger.info event
     Rails.logger.info '**************************************************'
   end
 
   events.subscribe 'customer.card.created' do |event|
     Rails.logger.info '**************************************************'
+    Rails.logger.info "#{event.type} webhook successful."
     Rails.logger.info event
     Rails.logger.info '**************************************************'
   end
 
   events.subscribe 'customer.updated' do |event|
     Rails.logger.info '**************************************************'
+    Rails.logger.info "#{event.type} webhook successful."
     Rails.logger.info event
     Rails.logger.info '**************************************************'
   end
 
   events.subscribe 'invoice.created' do |event|
     Rails.logger.info '**************************************************'
+    Rails.logger.info "#{event.type} webhook successful."
     Rails.logger.info event
     Rails.logger.info '**************************************************'
   end
