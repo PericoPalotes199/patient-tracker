@@ -1,10 +1,12 @@
+<% admin_or_admin_resident = current_user.admin? || current_user.admin_resident? %>
+
 <!-- Begin Page 1 -->
 <div data-role="page" id="summary" data-url="summary" tabindex="0">
 
   <% if !current_user.present? %> <!-- header content -->
     <% content_for :header_title, 'How many patients did you help today?' %>
   <% else %>
-    <% if current_user.admin? || current_user.admin_resident? %>
+    <% if admin_or_admin_resident %>
       <% content_for :user_first_name_header, "All" %>
       <% content_for :user_last_name_header, "Residents" %>
     <% elsif current_user.first_name && current_user.last_name %>
@@ -30,7 +32,7 @@
       <table data-role="table" class="encounters_summary">
         <thead>
           <tr class="fullwidth">
-            <% if current_user.admin? || current_user.admin_resident? %>
+            <% if admin_or_admin_resident %>
               <th>Resident</th>
             <% end %>
             <th>Type</th>
@@ -39,18 +41,15 @@
         </thead>
 
         <tbody>
-          <% @encounters_count.each do |group, count| %>
+          <% @grouped_encounters.each do |group, count| %>
             <% user = User.find(group[0]) %>
-            <!-- Show a row if it belongs to the current_user or if the current_user has summary privileges  -->
-            <% if policy(user).show? %>
-              <tr class="lineitem fullwidth">
-                <% if current_user.admin? || current_user.admin_resident? %>
-                  <td><%= user.name %></td>
-                <% end %>
-                <td><%= group[1] %></td>
-                <td><%= count %></td>
-              </tr>
-            <% end %>
+            <tr class="lineitem fullwidth">
+              <% if admin_or_admin_resident %>
+                <td><%= user.name %></td>
+              <% end %>
+              <td><%= group[1] %></td>
+              <td><%= count %></td>
+            </tr>
           <% end %>
         </tbody>
       </table>
@@ -67,7 +66,7 @@
         </p>
       <% end %>
 
-      <% if current_user.admin? || current_user.admin_resident? %>
+      <% if admin_or_admin_resident %>
         <div id="encounters_summary_buttons" data-role="navbar">
           <ul>
             <li>

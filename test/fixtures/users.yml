@@ -1,5 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# An admin
+admin:
+  email: admin@example.com
+  first_name: Jane
+  last_name: Admin
+  name: Jane Admin
+  role: admin
+  residency: Test Residency
+  encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
+  confirmed_at: now
+  active_until: <%= (Time.now + 6.99.days).to_i %>
+
 # A plain resident
 resident:
   email: resident@example.com
@@ -8,39 +20,20 @@ resident:
   name: Jane Intern
   role: resident
   residency: Test Residency
-  confirmed_at: <%= Time.now %>
+  invited_by: admin
+  invited_by_type: User
+  encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
+  confirmed_at: now
   active_until: <%= (Time.now + 1.99.days).to_i %>
 
 # A resident that forgot password
 forgetful_resident:
   email: forgetful@example.com
-  encrypted_password: old-password
   first_name: Forgetful
   last_name: Memory
   name: Forgetful Memory
   role: resident
-
-# An admin and invited residents
-admin:
-  email: admin@example.com
-  first_name: Jane
-  last_name: Administrator
-  name: Jane Administrator
-  role: admin
-  residency: Test Residency
-  confirmed_at: <%= Time.now %>
-  active_until: <%= (Time.now + 6.99.days).to_i %>
-
-# An admin and invited residents
-admin_resident:
-  email: admin_resident@example.com
-  first_name: Jane
-  last_name: Administrator
-  name: Jane Administrator
-  role: admin_resident
-  residency: Test Residency
-  confirmed_at: <%= Time.now %>
-  active_until: <%= (Time.now + 6.99.days).to_i %>
+  encrypted_password: old-password
 
 unconfirmed:
   email: unconfirmed@example.com
@@ -54,11 +47,12 @@ unconfirmed:
   invitation_token: some_valid_token
 
 <% 5.times do |n| %>
-<%= "resident_#{n}" %>:
-  email: <%= "resident_#{n}@example.com" %>
-  first_name: <%= "Resident_#{n}" %>
+  <% i = n %>
+<%= "resident_#{i}" %>:
+  email: <%= "resident_#{i}@example.com" %>
+  first_name: <%= "Resident_#{i}" %>
   last_name: Example
-  name: <%= "Resident_#{n} Example" %>
+  name: <%= "Resident_#{i} Example" %>
   role: resident
   residency: Test Residency
   invited_by: admin
@@ -66,5 +60,61 @@ unconfirmed:
 <% end %>
 
 
+# An admin_resident
+admin_resident:
+  email: admin_resident@example.com
+  first_name: Jane
+  last_name: Admin_Resident
+  name: Jane Admin_Resident
+  role: admin_resident
+  residency: Test Residency
+  encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
+  confirmed_at: now
+  active_until: <%= (Time.now + 6.99.days).to_i %>
 
+resident_invited_by_admin_resident:
+  email: <%= "resident_invited_by_admin_resident@example.com" %>
+  first_name: Resident_Invited_By_Admin_Resident
+  last_name: Example
+  name: Resident_Invited_By_Admin_Resident Example
+  role: resident
+  residency: Test Residency
+  invited_by: admin_resident
+  invited_by_type: User
 
+<% 5.times do |n| %>
+  <% i = n + 5 %>
+<%= "resident_#{i}" %>:
+  email: <%= "resident_#{i}@example.com" %>
+  first_name: <%= "Resident_#{i}" %>
+  last_name: Example
+  name: <%= "Resident_#{i} Example" %>
+  role: resident
+  residency: Test Residency
+  invited_by: admin_resident
+  invited_by_type: User
+<% end %>
+
+another_residency_admin:
+  email: admin-at-another-res@example.com
+  first_name: Sally
+  last_name: Another_Admin
+  name: Sally Admin
+  role: admin
+  residency: Another Test Residency
+  encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
+  confirmed_at: now
+  active_until: <%= (Time.now + 50.days).to_i %>
+
+<% 5.times do |n| %>
+  <% i = n + 10 %>
+<%= "resident_#{i}" %>:
+  email: <%= "resident_#{i}@example.com" %>
+  first_name: <%= "Resident_#{i}" %>
+  last_name: Example
+  name: <%= "Resident_#{i} Example" %>
+  role: resident
+  residency: Test Residency
+  invited_by: another_residency_admin
+  invited_by_type: User
+<% end %>

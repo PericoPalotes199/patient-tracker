@@ -9,12 +9,13 @@ class EncounterPolicy < ApplicationPolicy
   def index?
     # the encounter belongs to the current_user or
     user.id == encounter.user.id ||
-    # the current_user is an admin who invited the user who created the encounter or
-    ( user.admin? && user.id == encounter.user.invited_by_id ) ||
-    # the current_user is an admin within the same residency
-    ( user.admin? && user.residency == encounter.user.residency ) ||
-    # the current_user is an admin_resident within the same residency
-    ( user.admin_resident? && user.residency == encounter.user.residency )
+    # the current_user is an admin or admin_residet and is the user
+    # who invited the user who created the encounter or
+    ( (user.admin? || user.admin_resident?) && user.id == encounter.user.invited_by_id )
+    # TOOD: the current_user is an admin or admin_resident within the same residency
+    # TODO: This was previously implmented, but not with a performant query.
+    # TODO: Going forward, a residency model should be added to enable
+    # TODO: more flexible management of the data and more performant queries.
   end
 
   def show?

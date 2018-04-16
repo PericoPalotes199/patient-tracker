@@ -15,6 +15,17 @@ class UserTest < ActiveSupport::TestCase
     assert_not_same users(:resident_0), users(:resident_1)
   end
 
+  test "the encounters fixtures are loading" do
+    assert_equal 54, users(:resident).encounters.count
+    assert_equal 45, users(:resident_1).encounters.count
+  end
+
+  test "users are related like a typical residency" do
+    assert_equal nil, users(:admin_resident).invited_by
+    assert_equal @admin, users(:resident).invited_by
+    assert_equal @admin, users(:resident_1).invited_by
+  end
+
   test "when a user is saved, its name is updated" do
     users(:resident).update first_name: 'Updated', last_name: 'Resident', tos_accepted: true
     assert users(:resident).name, 'Updated Resident'

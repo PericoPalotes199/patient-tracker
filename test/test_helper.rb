@@ -18,6 +18,38 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 end
 
+module EncountersFixturesHelpers
+  def default_encounters_types
+    [
+      'adult_inpatient',
+      'adult_ed',
+      'adult_icu',
+      'adult_inpatient_surgery',
+      'pediatric_inpatient',
+      'pediatric_newborn',
+      'pediatric_ed',
+      'continuity_inpatient',
+      'continuity_external'
+    ]
+  end
+end
+# This includes a helper module for fixtures:
+# http://api.rubyonrails.org/v4.2.10/classes/ActiveRecord/FixtureSet.html#class-ActiveRecord::FixtureSet-label-Dynamic+fixtures+with+ERB
+ActiveRecord::FixtureSet.context_class.send :include, EncountersFixturesHelpers
+
 class ActionController::TestCase
   include Devise::TestHelpers
+end
+
+# As suggested by the guides
+# Reference: http://guides.rubyonrails.org/testing.html#test-helpers
+
+module SignInHelper
+  def sign_in_as(sign_in_params)
+    post new_user_session_url({ user: sign_in_params.slice(:email, :password) })
+  end
+end
+
+class ActionDispatch::IntegrationTest
+  include SignInHelper
 end

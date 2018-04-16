@@ -97,7 +97,7 @@
         <Cell ss:StyleID="s63"><Data ss:Type="String">Type</Data></Cell>
         <Cell ss:StyleID="s63"><Data ss:Type="String">Total</Data></Cell>
       </Row>
-      <% @encounters_count.each do |group, count| %>
+      <% @grouped_encounters.each do |group, count| %>
         <% user = User.find(group[0]) %>
         <% if policy(user).show? %>
           <Row>

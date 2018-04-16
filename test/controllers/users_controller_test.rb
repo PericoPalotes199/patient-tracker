@@ -11,6 +11,7 @@ class UsersControllerTest < ActionController::TestCase
   setup do
     @resident = users(:resident)
     @admin = users(:admin)
+    @another_residency_admin = users(:another_residency_admin)
   end
 
   # UsersController#index
@@ -90,10 +91,10 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, I cannot view residents that were not invited by me" do
-    sign_in @admin
+    sign_in @another_residency_admin
     get :show, id: @resident
     assert_response :redirect
-    assert_redirected_to @admin
+    assert_redirected_to @another_residency_admin
   end
 
   # UsersController#edit
@@ -121,7 +122,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, I cannot edit user records not invited by me" do
-    sign_in @admin
+    sign_in @another_residency_admin
     get :edit, id: @resident
     assert_equal assigns(:user), @resident
     assert_response :redirect
@@ -186,7 +187,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, I cannot update user records not invited by me" do
-    sign_in @admin
+    sign_in @another_residency_admin
     patch :update, id: @resident, user: { first_name: 'Updated', last_name: 'Updated' }
     assert_response :redirect
     assert_redirected_to users_path
@@ -243,7 +244,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "As an admin, I cannot destroy residents that were not invited by me" do
-    sign_in @admin
+    sign_in @another_residency_admin
     assert_difference('User.count', 0) do
       delete :destroy, id: @resident
     end

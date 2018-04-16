@@ -1,60 +1,89 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 adult_inpatient:
-  encounter_type: adult_inpatient
+  encounter_type: "adult inpatient"
   encountered_on: <%= Time.now %>
   user: resident
 
 adult_ed:
-  encounter_type: adult_ed
+  encounter_type: "adult ed"
   encountered_on: <%= Time.now %>
   user: resident
 
 adult_icu:
-  encounter_type: adult_icu
+  encounter_type: "adult icu"
   encountered_on: <%= Time.now %>
   user: resident
 
 adult_inpatient_surgery:
-  encounter_type: adult_inpatient_surgery
+  encounter_type: "adult inpatient surgery"
   encountered_on: <%= Time.now %>
   user: resident
 
 pediatric_inpatient:
-  encounter_type: pediatric_inpatient
+  encounter_type: "pediatric inpatient"
   encountered_on: <%= Time.now %>
   user: resident
 
 pediatric_newborn:
-  encounter_type: pediatric_newborn
+  encounter_type: "pediatric newborn"
   encountered_on: <%= Time.now %>
   user: resident
 
 pediatric_ed:
-  encounter_type: pediatric_ed
+  encounter_type: "pediatric ed"
   encountered_on: <%= Time.now %>
   user: resident
 
 continuity_inpatient:
-  encounter_type: continuity_inpatient
+  encounter_type: "continuity inpatient"
   encountered_on: <%= Time.now %>
   user: resident
 
 continuity_external:
-  encounter_type: continuity_external
+  encounter_type: "continuity external"
   encountered_on: <%= Time.now %>
   user: resident
 
-<% (1..10).each do |n| %>
-encounter_<%= n %>:
-  encounter_type: adult_inpatient
+# These fixtures use custom helpers as discussed here:
+# http://api.rubyonrails.org/v4.2.10/classes/ActiveRecord/FixtureSet.html#class-ActiveRecord::FixtureSet-label-Dynamic+fixtures+with+ERB
+
+# 5 of each encounter_type for admin_resident (admin_resident may create encounters, but admin may not)
+<% default_encounters_types.each_with_index do |encounter_type, index| %>
+  <% (1..5).each do |n| %>
+encounter_<%= encounter_type.underscore %>_<%= n %>_for_admin_resident_resident:
+  encounter_type: <%= default_encounters_types[index].humanize(capitalize: false) %>
   encountered_on: <%= Time.now + n.days %>
-  user: resident
+  user: admin_resident
+  <% end %>
 <% end %>
 
-<% (11..20).each do |n| %>
-encounter_<%= n %>:
-  encounter_type: adult_inpatient
+# 5 of each encounter_type for resident_invited_by_admin_resident
+<% default_encounters_types.each_with_index do |encounter_type, index| %>
+  <% (1..5).each do |n| %>
+encounter_<%= encounter_type.underscore %>_<%= n %>_for_resident_invited_by_admin_resident:
+  encounter_type: <%= default_encounters_types[index].humanize(capitalize: false) %>
+  encountered_on: <%= Time.now + n.days %>
+  user: resident_invited_by_admin_resident
+  <% end %>
+<% end %>
+
+# 5 of each encounter_type for resident
+<% default_encounters_types.each_with_index do |encounter_type, index| %>
+  <% (1..5).each do |n| %>
+encounter_<%= encounter_type.underscore %>_<%= n %>for_resident:
+  encounter_type: <%= default_encounters_types[index].humanize(capitalize: false) %>
+  encountered_on: <%= Time.now + n.days %>
+  user: resident
+  <% end %>
+<% end %>
+
+# 5 of each encounter_type for resident_1
+<% default_encounters_types.each_with_index do |encounter_type, index| %>
+  <% (1..5).each do |n| %>
+encounter_<%= encounter_type.underscore %>_<%= n %>_for_resident_1:
+  encounter_type: <%= default_encounters_types[index].humanize(capitalize: false) %>
   encountered_on: <%= Time.now + n.days %>
   user: resident_1
+  <% end %>
 <% end %>

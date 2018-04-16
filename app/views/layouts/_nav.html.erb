@@ -2,7 +2,7 @@
   <div data-role="navbar">
     <ul>
       <li>
-        <% if controller_name == 'encounters' && action_name == 'index' && policy(@encounters).create? %>
+        <% if controller_name == 'encounters' && action_name == 'index' && policy(Encounter).create? %>
           <%= link_to 'Add', new_encounter_path %>
         <% else %>
           <%= link_to 'Log', encounters_path %>

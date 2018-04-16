@@ -6,27 +6,24 @@ class EncountersController < ApplicationController
   # GET /encounters
   # GET /encounters.json
   def index
-    if current_user.admin?
-      @encounters = Encounter.includes(:user).where('users.invited_by_id  = ?', current_user.id).references(:users).order(encountered_on: :desc).order('users.name ASC')
-    elsif current_user.resident? || current_user.admin_resident?
-      @encounters = current_user.encounters.order(encountered_on: :desc)
-    else
-      @encounters = Encounter.none
-    end
+    set_encounters
   end
 
   def summary
     #TODO: Map encounter_type values to an integer so that reults can be ordered
     #TODO: identical to encounters/new view
-    @encounters_count = Encounter.group(:user_id, :encounter_type).order(:user_id, :encounter_type).count
+    set_encounters
 
-    respond_to do |format|
-      format.html
-      format.xls {
-        # TODO: Limit this Encounters#summary query to only current_user and current_user's invitations' encounters.
-        @encounters = Encounter.all.includes(:user).order(encountered_on: :desc).order('users.name ASC')
-      }
-    end
+    # @encounters could be an array, so re-query the encounters and group them
+    # TODO: If this proves to be non-performant, support for admin_resident should
+    # be dropped until a residency model and association is implemented
+    @grouped_encounters = Encounter.
+      where(id: @encounters.map(&:id)).
+      group(:user_id, :encounter_type).
+      order(:user_id, :encounter_type).
+      count
+
+    respond_to :html, :xls
   end
 
   # GET /encounters/1
@@ -88,6 +85,39 @@ class EncountersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_encounter
       @encounter = Encounter.find(params[:id])
+    end
+
+
+    # The query should include
+    # 1. the encounters of the current user (current_user.encounters)
+    # 2. the encounters of the admin's invitations (current_user.invitations.map(&:encounters).flatten)
+    # 3. or both (in the case of an admin_resident)
+    def set_encounters
+      if current_user.admin?
+        @encounters = encounters_for_admin
+      elsif current_user.admin_resident?
+        @encounters = encounters_for_admin_resident
+      elsif current_user.resident?
+        @encounters = encounters_for_resident
+      else
+        @encounters = Encounter.none
+      end
+    end
+
+    def encounters_for_admin
+      Encounter.includes(:user).
+        where('users.invited_by_id = ?', current_user.id).
+        references(:users).
+        order(encountered_on: :desc).
+        order('users.name ASC')
+    end
+
+    def encounters_for_admin_resident
+      [encounters_for_admin, encounters_for_resident].flatten
+    end
+
+    def encounters_for_resident
+      current_user.encounters.order(encountered_on: :desc)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

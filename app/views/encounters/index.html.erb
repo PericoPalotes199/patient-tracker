@@ -22,11 +22,13 @@
 
   <% else %>
 
+    <% admin_or_admin_resident = current_user.admin? || current_user.admin_resident? %>
+
     <div class="wrap_section_narrow encounters_index_section">
       <table data-role="table" class="encounters_index">
         <thead>
           <tr class="fullwidth">
-            <% if current_user.admin? %>
+            <% if admin_or_admin_resident %>
               <th>Resident</th>
             <% end %>
             <th>Type</th>
@@ -39,7 +41,7 @@
           <% @encounters.each do |encounter| %>
             <% if policy(encounter).index? %>
               <tr class="lineitem_index fullwidth">
-                <% if current_user.admin? %>
+                <% if admin_or_admin_resident %>
                   <td><%= encounter.user.present? ? encounter.user.name : "Unknown" %></th>
                 <% end %>
                 <td><%= link_to encounter.encounter_type, encounter %></td>

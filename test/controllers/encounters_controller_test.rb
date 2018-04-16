@@ -14,18 +14,18 @@ class EncountersControllerTest < ActionController::TestCase
     @admin_resident = users(:admin_resident)
     @encounter = @resident.encounters.first
 
-    @encounter_types = %w(
-      adult_ed
-      adult_icu
-      adult_inpatient
-      adult_inpatient_surgery
-      continuity_external
-      continuity_inpatient
-      pediatric_ed
-      pediatric_inpatient
-      pediatric_newborn
-      adult_inpatient
-    )
+    @encounter_types = [
+      "adult ed",
+      "adult icu",
+      "adult inpatient",
+      "adult inpatient surgery",
+      "continuity external",
+      "continuity inpatient",
+      "pediatric ed",
+      "pediatric inpatient",
+      "pediatric newborn",
+      "adult inpatient",
+    ]
   end
 
   test "As a visitor, I cannot visit the encounters index" do
@@ -48,14 +48,42 @@ class EncountersControllerTest < ActionController::TestCase
     sign_in @resident
     get :index
     assert_equal assigns(:encounters).pluck(:encountered_on), @resident.encounters.pluck(:encountered_on).sort.reverse
+    assert_template :index
   end
 
-  test "As an admin_resident, I can view only my encounters at the encounters index" do
+  test "As an admin_resident, I can view my encounters and my residents' encounters at the encounters index" do
     sign_in @admin_resident
     get :index
     assert_response :success
-    assert_equal assigns(:encounters).count, @admin_resident.encounters.count
-    assert_equal assigns(:encounters), @admin_resident.encounters.order(encountered_on: :desc)
+
+    assert_equal(
+      # Expect the count of the assigned encounters
+      assigns(:encounters).count,
+      # Equals the sum of the counts of both the admin_resident's encounters plus all encounters of residents invited by the admin_resident
+      (@admin_resident.encounters + users(:resident_invited_by_admin_resident).encounters).flatten.count
+    )
+    assert_equal(
+      # Expect the user_id of the encoutners
+      assigns(:encounters).flatten.map(&:user_id).uniq,
+      # Equals those of the admin_resident and their residents
+      [users(:resident_invited_by_admin_resident).id, @admin_resident.id]
+    )
+  end
+
+  test "As an admin_resident, when I visit the encounters index, encounters are reverse sorted by encountered_on" do
+    sign_in @admin_resident
+    get :index
+    assert_response :success
+
+    assert_equal(
+      # Compare the encountered_on timestamps of the expected encounters
+      [
+        @admin_resident.encounters.order(encountered_on: :desc).pluck(:encountered_on),
+        users(:resident_invited_by_admin_resident).encounters.order(encountered_on: :desc).pluck(:encountered_on)
+      ].flatten,
+      # ... to the actual assigned encounters' encountered_on timestamps.
+      assigns(:encounters).map(&:encountered_on)
+    )
     assert_template :index
   end
 
@@ -96,46 +124,25 @@ class EncountersControllerTest < ActionController::TestCase
     )
   end
 
-  test "As a resident, when I visit the encounters summary page, counts are assigned" do
-    sign_in @resident
-    get :summary, format: :html
-    assert_nil assigns(:encounters) # @encounters query not loaded for html response
-    assert_not_nil assigns(:encounters_count)
-  end
-
   test "As a resident, when I download the encounters summary xml, encounters are assigned" do
     sign_in @admin
     get :summary, format: :xls
     assert_not_nil assigns(:encounters)
-    assert_not_nil assigns(:encounters_count)
-  end
-
-  test "As an admin_resident, when I visit the encounters summary page, counts are assigned" do
-    sign_in @admin_resident
-    get :summary, format: :html
-    assert_nil assigns(:encounters) # @encounters query not loaded for html response
-    assert_not_nil assigns(:encounters_count)
+    assert_not_nil assigns(:grouped_encounters)
   end
 
   test "As an admin_resident, when I download the encounters summary xml, encounters are assigned" do
     sign_in @admin_resident
     get :summary, format: :xls
     assert_not_nil assigns(:encounters)
-    assert_not_nil assigns(:encounters_count)
-  end
-
-  test "As an admin, when I visit the encounters summary page, counts are assigned" do
-    sign_in @admin
-    get :summary, format: :html
-    assert_nil assigns(:encounters) # @encounters query not loaded for html response
-    assert_not_nil assigns(:encounters_count)
+    assert_not_nil assigns(:grouped_encounters)
   end
 
   test "As an admin, when I download the encounters summary xml, encounters are assigned" do
     sign_in @admin
     get :summary, format: :xls
     assert_not_nil assigns(:encounters)
-    assert_not_nil assigns(:encounters_count)
+    assert_not_nil assigns(:grouped_encounters)
   end
 
   test "As a resident, when I visit the encounters summary page, encounter_types are grouped by user_id and encounter_type" do
@@ -143,9 +150,9 @@ class EncountersControllerTest < ActionController::TestCase
     get :summary
 
     # The grouped keys should looks somethign like this result:
-    # assigns(:encounters_count).keys #=> [ [486791686, "adult_ed"], ..., [494457361, "adult_inpatient"] ]
+    # assigns(:grouped_encounters).keys #=> [ [486791686, "adult_ed"], ..., [494457361, "adult_inpatient"] ]
 
-    assigns(:encounters_count).keys.map { |key|
+    assigns(:grouped_encounters).keys.map { |key|
       user_id, encounter_type = key.first, key.second
       assert_kind_of User, User.find(user_id), 'Each key should include a user_id!'
       assert encounter_type.in?(@encounter_types), 'Each key should include an encounter_type!'
@@ -157,9 +164,9 @@ class EncountersControllerTest < ActionController::TestCase
     get :summary
 
     # The grouped keys should looks somethign like this result:
-    # assigns(:encounters_count).keys #=> [ [486791686, "adult_ed"], ..., [494457361, "adult_inpatient"] ]
+    # assigns(:grouped_encounters).keys #=> [ [486791686, "adult_ed"], ..., [494457361, "adult_inpatient"] ]
 
-    assigns(:encounters_count).keys.map { |key|
+    assigns(:grouped_encounters).keys.map { |key|
       user_id, encounter_type = key.first, key.second
       assert_kind_of User, User.find(user_id), 'Each key should include a user_id!'
       assert encounter_type.in?(@encounter_types), 'Each key should include an encounter_type!'
@@ -171,9 +178,9 @@ class EncountersControllerTest < ActionController::TestCase
     get :summary
 
     # The grouped keys should looks somethign like this result:
-    # assigns(:encounters_count).keys #=> [ [486791686, "adult_ed"], ..., [494457361, "adult_inpatient"] ]
+    # assigns(:grouped_encounters).keys #=> [ [486791686, "adult_ed"], ..., [494457361, "adult_inpatient"] ]
 
-    assigns(:encounters_count).keys.map { |key|
+    assigns(:grouped_encounters).keys.map { |key|
       user_id, encounter_type = key.first, key.second
       assert_kind_of User, User.find(user_id), 'Each key should include a user_id!'
       assert encounter_type.in?(@encounter_types), 'Each key should include an encounter_type!'
