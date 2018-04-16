@@ -53,17 +53,23 @@ class Users::RegistrationsController < Devise::RegistrationsController
     #create a customer if successful sign up
     super do |user|
       begin
-        customer = Stripe::Customer.create(
-          email: sign_up_params[:email],
-          description: "#{ENV['STRIPE_CUSTOMER_DESCRIPTION']} #{sign_up_params[:residency]}"
-        )
-        subscription = customer.subscriptions.create(plan: params[:plan], quantity: 1)
+        # When a user signs up, they should be assigned the admin role
+        # Otherwise, they are a resident, and should be invited instead (or manually change the role)
 
-        user.update!(
-          customer_id: customer.id,
-          role: 'admin',
-          active_until: Time.zone.at(subscription.current_period_end)
-        )
+        # If we can successfully update the user's role (indicating the user is still valid),
+        # then proceed with creatinga a customer and subscription.
+        if user.update! role: 'admin'
+          customer = Stripe::Customer.create(
+            email: sign_up_params[:email],
+            description: "#{ENV['STRIPE_CUSTOMER_DESCRIPTION']} #{sign_up_params[:residency]}"
+          )
+          subscription = customer.subscriptions.create(plan: params[:plan], quantity: 1)
+
+          user.update!(
+            customer_id: customer.id,
+            active_until: Time.zone.at(subscription.current_period_end)
+          )
+        end
       rescue Stripe::StripeError => e
         flash[:error] = e.message
         Rails.logger.error "Registration unsuccessful: #{e.message}"
