@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
 
   private
     def set_name
-      if first_name && last_name
+      if first_name.present? && last_name.present? # false if first_name == ''
         self.name = "#{first_name} #{last_name}"
       else
         self.name = email
