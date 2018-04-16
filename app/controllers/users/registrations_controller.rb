@@ -50,7 +50,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /users/registrations
   def create
-    #create a customer if successful sign up
+    # If the user (a new admin) did not provide a residency upon login - redirect.
+    if sign_up_params[:residency].blank?
+      flash[:error] = 'You must provide a residency.'
+      # NOTE: Unfortuntely, this renders a new page and the user must re-type all form values
+      redirect_to new_user_registration_path and return
+    end
+
     super do |user|
       begin
         # When a user signs up, they should be assigned the admin role
