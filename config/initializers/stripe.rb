@@ -124,7 +124,7 @@ StripeEvent.configure do |events|
       end
     else
       Rails.logger.info '************************************************************'
-      Rails.logger.info "#{event.type} webhook failed on cusomter_id && subscription."
+      Rails.logger.info "#{event.type} webhook failed on cusomter_id && subscription_id."
       Rails.logger.info event
       Rails.logger.info '************************************************************'
       #TODO: send an email to application owner upon failure, or maybe Stripe will?
@@ -156,14 +156,14 @@ StripeEvent.configure do |events|
         Rails.logger.info "#{event.type} webhook failed on user.save."
         Rails.logger.info event
         Rails.logger.info '**************************************************'
-        raise StripeEvent::UnauthorizedError
+        Rollbar.warning "#{event.type} webhook failed on user.save."
       end
     else
       Rails.logger.info '************************************************************'
-      Rails.logger.info "#{event.type} webhook failed on cusomter_id && subscription."
+      Rails.logger.info "#{event.type} webhook failed on cusomter_id && subscription_id."
       Rails.logger.info event
       Rails.logger.info '************************************************************'
-      raise StripeEvent::UnauthorizedError
+      Rollbar.warning "#{event.type} webhook failed on cusomter_id && subscription_id."
     end
   end
 
