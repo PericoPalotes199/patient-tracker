@@ -83,7 +83,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         redirect_to new_user_registration_path and return
       rescue StandardError => e
         Rails.logger.warn "Registration unsuccessful: #{e.message}"
-        Rollbar.warning "Stripe::StripeError caught. Registration unsuccessful: #{e.message}"
+        Rollbar.warning "StandardError caught. Registration unsuccessful: #{e.message}"
         # NOTE: Do not return - let the user finish being processed by the Devise::RegistrationsController
       end
     end
