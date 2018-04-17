@@ -26,6 +26,7 @@
 
       if (!window.console) {
         console = {log: function() {}};
+        Rollbar.warning("window.console is not defined.")
       }
     </script>
 
