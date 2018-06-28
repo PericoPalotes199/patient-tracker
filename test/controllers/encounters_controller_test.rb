@@ -15,6 +15,19 @@ class EncountersControllerTest < ActionController::TestCase
     @encounter = @resident.encounters.first
 
     @encounter_types = [
+      "adult_ed",
+      "adult_icu",
+      "adult_inpatient",
+      "adult_inpatient surgery",
+      "continuity_external",
+      "continuity_inpatient",
+      "pediatric_ed",
+      "pediatric_inpatient",
+      "pediatric_newborn",
+      "adult_inpatient",
+    ]
+
+    @encounter_types_in_db = [
       "adult ed",
       "adult icu",
       "adult inpatient",
@@ -155,7 +168,7 @@ class EncountersControllerTest < ActionController::TestCase
     assigns(:grouped_encounters).keys.map { |key|
       user_id, encounter_type = key.first, key.second
       assert_kind_of User, User.find(user_id), 'Each key should include a user_id!'
-      assert encounter_type.in?(@encounter_types), 'Each key should include an encounter_type!'
+      assert encounter_type.in?(@encounter_types_in_db), 'Each key should include an encounter_type!'
     }
   end
 
@@ -169,7 +182,7 @@ class EncountersControllerTest < ActionController::TestCase
     assigns(:grouped_encounters).keys.map { |key|
       user_id, encounter_type = key.first, key.second
       assert_kind_of User, User.find(user_id), 'Each key should include a user_id!'
-      assert encounter_type.in?(@encounter_types), 'Each key should include an encounter_type!'
+      assert encounter_type.in?(@encounter_types_in_db), 'Each key should include an encounter_type!'
     }
   end
 
@@ -183,7 +196,7 @@ class EncountersControllerTest < ActionController::TestCase
     assigns(:grouped_encounters).keys.map { |key|
       user_id, encounter_type = key.first, key.second
       assert_kind_of User, User.find(user_id), 'Each key should include a user_id!'
-      assert encounter_type.in?(@encounter_types), 'Each key should include an encounter_type!'
+      assert encounter_type.in?(@encounter_types_in_db), 'Each key should include an encounter_type!'
     }
   end
 
