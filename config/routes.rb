@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :residencies
   #Devise Users
   devise_for :users, controllers: {
     sessions: "users/sessions",
@@ -24,6 +23,9 @@ Rails.application.routes.draw do
   resources :encounters, except: [:edit, :update]
 
   mount StripeEvent::Engine, at: '/stripe_events'
+
+  # Residencies
+  resources :residencies, except: :destroy
 
   # (Almost) Static Pages
   get 'faq' => 'pages#faq', as: :faq
