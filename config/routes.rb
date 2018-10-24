@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :residencies
   #Devise Users
   devise_for :users, controllers: {
     sessions: "users/sessions",
