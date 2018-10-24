@@ -3,6 +3,7 @@ class EncountersController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_encounter, only: [:show, :edit, :update, :destroy]
+
   # GET /encounters
   # GET /encounters.json
   def index

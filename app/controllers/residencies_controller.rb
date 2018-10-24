@@ -1,4 +1,6 @@
 class ResidenciesController < ApplicationController
+
+  before_action :authenticate_user!
   before_action :set_residency, only: [:show, :edit, :update, :destroy]
 
   # GET /residencies
