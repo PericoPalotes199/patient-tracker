@@ -13,9 +13,9 @@
   <tbody>
     <% @residencies.each do |residency| %>
       <tr>
+        <td><%= residency.id %></td>
         <td><%= residency.name %></td>
         <td><%= link_to 'Show', residency %></td>
-        <td><%= link_to 'Edit', edit_residency_path(residency) %></td>
       </tr>
     <% end %>
   </tbody>

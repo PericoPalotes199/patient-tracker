@@ -54,6 +54,7 @@ end
 group :test do
   gem 'minitest'
   gem 'minitest-reporters'
+  gem 'minitest-spec-rails', '~> 5.4.0'
   gem 'simplecov', '~> 0.16.1', require: false
 end
 

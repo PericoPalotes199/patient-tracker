@@ -113,6 +113,9 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
+    minitest-spec-rails (5.4.0)
+      minitest (~> 5.0)
+      rails (>= 4.1)
     multi_json (1.13.1)
     netrc (0.10.3)
     newrelic_rpm (3.18.1.330)
@@ -235,6 +238,7 @@ DEPENDENCIES
   jquery-rails (~> 3.1.4)
   minitest
   minitest-reporters
+  minitest-spec-rails (~> 5.4.0)
   newrelic_rpm (~> 3.18.1.330)
   pg (~> 0.17.1)
   pry

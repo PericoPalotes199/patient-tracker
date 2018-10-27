@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   mount StripeEvent::Engine, at: '/stripe_events'
 
   # Residencies
-  resources :residencies, except: :destroy
+  resources :residencies, only: [:index, :show, :new, :create]
 
   # (Almost) Static Pages
   get 'faq' => 'pages#faq', as: :faq

@@ -1,9 +1,19 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>ID:</strong>
+  <%= @residency.id %>
   <strong>Name:</strong>
   <%= @residency.name %>
 </p>
 
-<%= link_to 'Edit', edit_residency_path(@residency) %> |
+<p>
+  <strong>users:</strong>
+  <ul>
+    <% @residency.users.each do |user| %>
+      <li><%= user.id %></li>
+    <% end %>
+  </ul>
+</p>
+
 <%= link_to 'Back', residencies_path %>
