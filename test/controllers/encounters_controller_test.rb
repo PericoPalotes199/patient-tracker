@@ -200,25 +200,56 @@ class EncountersControllerTest < ActionController::TestCase
     }
   end
 
-  test "As a resident, when I visit the encounters summary page, only my encounters are shown" do
-    skip 'This logic is currently handled by a view and a Policy object, which should be tested in view and policy tests.'
+  test "As a resident, when I visit the encounters summary page, only my encounters are queried" do
     sign_in @resident
     get :summary
-    assert true
+    current_user = @resident
+
+    assert_equal current_user.residency, 'Test Residency'
+    assert_equal assigns(:encounters).length, 54
+    assert_equal assigns(:encounters).map { |encounter| encounter.user.residency }.uniq, ['Test Residency']
+    assert_equal assigns(:encounters), current_user.encounters.order(encountered_on: :desc)
   end
 
-  test "As an admin_resident, when I visit the encounters summary page, only my encounters are shown" do
-    skip 'This logic is currently handled by a view and a Policy object, which should be tested in view and policy tests.'
-    sign_in @admin_resident
-    get :summary
-    assert true
-  end
-
-  test "As an admin, when I visit the encounters summary page, only my residency encounters shown" do
-    skip 'This logic is currently handled by a view and a Policy object, which should be tested in view and policy tests.'
+  test "As an admin, when I visit the encounters summary page, only my residency's encounters are queried" do
     sign_in @admin
     get :summary
-    assert true
+
+    current_user = @admin
+
+    assert_equal current_user.residency, 'Test Residency'
+
+    encounters_for_admin = Encounter.includes(:user).
+      where('users.invited_by_id = ?', current_user.id).
+      references(:users).
+      order(encountered_on: :desc).
+      order('users.name ASC')
+
+    assert_equal assigns(:encounters).length, 99
+    assert_equal assigns(:encounters).map { |encounter| encounter.user.residency }.uniq, ['Test Residency']
+    assert_equal assigns(:encounters), encounters_for_admin
+  end
+
+
+  test "As an admin_resident, when I visit the encounters summary page, my encounters and residency's encounters are queried" do
+    sign_in @admin_resident
+    get :summary
+
+    current_user = @admin_resident
+
+    assert_equal current_user.residency, 'Test Residency'
+
+    encounters_for_admin_resident = [
+      Encounter.includes(:user).
+        where('users.invited_by_id = ?', current_user.id).
+        references(:users).
+        order(encountered_on: :desc).
+        order('users.name ASC'),
+      current_user.encounters.order(encountered_on: :desc)
+    ].flatten
+    assert_equal assigns(:encounters).length, 90
+    assert_equal assigns(:encounters).map { |encounter| encounter.user.residency }.uniq, ['Test Residency']
+    assert_equal assigns(:encounters), encounters_for_admin_resident
   end
 
   test "As a visitor, I cannot visit the new encounter form" do
