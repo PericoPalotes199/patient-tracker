@@ -206,8 +206,10 @@ class EncountersControllerTest < ActionController::TestCase
     current_user = @resident
 
     assert_equal current_user.residency_name, 'Test Residency'
+    assert_equal current_user.residency.name, 'Test Residency'
     assert_equal assigns(:encounters).length, 54
     assert_equal assigns(:encounters).map { |encounter| encounter.user.residency_name }.uniq, ['Test Residency']
+    assert_equal assigns(:encounters).map { |encounter| encounter.user.residency.name }.uniq, ['Test Residency']
     assert_equal assigns(:encounters), current_user.encounters.order(encountered_on: :desc)
   end
 
@@ -218,6 +220,7 @@ class EncountersControllerTest < ActionController::TestCase
     current_user = @admin
 
     assert_equal current_user.residency_name, 'Test Residency'
+    assert_equal current_user.residency.name, 'Test Residency'
 
     encounters_for_admin = Encounter.includes(:user).
       where('users.invited_by_id = ?', current_user.id).
@@ -227,6 +230,7 @@ class EncountersControllerTest < ActionController::TestCase
 
     assert_equal assigns(:encounters).length, 99
     assert_equal assigns(:encounters).map { |encounter| encounter.user.residency_name }.uniq, ['Test Residency']
+    assert_equal assigns(:encounters).map { |encounter| encounter.user.residency.name }.uniq, ['Test Residency']
     assert_equal assigns(:encounters), encounters_for_admin
   end
 
@@ -238,6 +242,7 @@ class EncountersControllerTest < ActionController::TestCase
     current_user = @admin_resident
 
     assert_equal current_user.residency_name, 'Test Residency'
+    assert_equal current_user.residency.name, 'Test Residency'
 
     encounters_for_admin_resident = [
       Encounter.includes(:user).
@@ -249,6 +254,7 @@ class EncountersControllerTest < ActionController::TestCase
     ].flatten
     assert_equal assigns(:encounters).length, 90
     assert_equal assigns(:encounters).map { |encounter| encounter.user.residency_name }.uniq, ['Test Residency']
+    assert_equal assigns(:encounters).map { |encounter| encounter.user.residency.name }.uniq, ['Test Residency']
     assert_equal assigns(:encounters), encounters_for_admin_resident
   end
 

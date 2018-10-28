@@ -8,6 +8,7 @@ admin:
   name: Jane Admin
   role: admin
   residency_name: Test Residency
+  residency: test_residency
   encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
   confirmed_at: now
   active_until: <%= (Time.now + 6.99.days).to_i %>
@@ -20,6 +21,7 @@ resident:
   name: Jane Intern
   role: resident
   residency_name: Test Residency
+  residency: test_residency
   invited_by: admin
   invited_by_type: User
   encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
@@ -42,6 +44,7 @@ unconfirmed:
   name: Unconfirmed User
   role: resident
   residency_name: Test Residency
+  residency: test_residency
   invited_by: admin
   invited_by_type: User
   invitation_token: some_valid_token
@@ -55,6 +58,7 @@ unconfirmed:
   name: <%= "Resident_#{i} Example" %>
   role: resident
   residency_name: Test Residency
+  residency: test_residency
   invited_by: admin
   invited_by_type: User
 <% end %>
@@ -68,6 +72,7 @@ admin_resident:
   name: Jane Admin_Resident
   role: admin_resident
   residency_name: Test Residency
+  residency: test_residency
   encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
   confirmed_at: now
   active_until: <%= (Time.now + 6.99.days).to_i %>
@@ -79,6 +84,7 @@ resident_invited_by_admin_resident:
   name: Resident_Invited_By_Admin_Resident Example
   role: resident
   residency_name: Test Residency
+  residency: test_residency
   invited_by: admin_resident
   invited_by_type: User
 
@@ -91,6 +97,7 @@ resident_invited_by_admin_resident:
   name: <%= "Resident_#{i} Example" %>
   role: resident
   residency_name: Test Residency
+  residency: test_residency
   invited_by: admin_resident
   invited_by_type: User
 <% end %>
@@ -102,6 +109,7 @@ another_residency_admin:
   name: Sally Admin
   role: admin
   residency_name: Another Test Residency
+  residency: another_test_residency
   encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
   confirmed_at: now
   active_until: <%= (Time.now + 50.days).to_i %>
@@ -115,6 +123,7 @@ another_residency_admin:
   name: <%= "Resident_#{i} Example" %>
   role: resident
   residency_name: Test Residency
+  residency: test_residency
   invited_by: another_residency_admin
   invited_by_type: User
 <% end %>

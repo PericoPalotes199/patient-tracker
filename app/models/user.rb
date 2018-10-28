@@ -4,16 +4,21 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :confirmable
 
+  belongs_to :residency
   has_many :encounters
   has_many :invitations, :class_name => 'User', :as => :invited_by
+
+  before_create :set_default_role, :set_active_until
+  before_save :set_name
+  before_save :ensure_residency_exists, :ensure_belongs_to_residency, if: -> { residency_name.present? }
+
   after_invitation_accepted :update_inviter_subscription_quantity,
                             :delete_all_customer_subscriptions,
                             :change_role_to_resident,
                             :set_active_until,
-                            :set_residency_name
+                            :set_residency_name,
+                            :set_residency
 
-  before_create :set_default_role, :set_active_until
-  before_save :set_name
 
   validates_presence_of   :email
   validates_uniqueness_of :email, allow_blank: true, if: :email_changed?
@@ -21,6 +26,7 @@ class User < ActiveRecord::Base
   # Validating the residency prevents a bunch of admins and residents from being
   # grouped into the same nil residency
   validates_presence_of   :residency_name, message: 'is required.', if: :admin?
+  validates_presence_of   :residency, message: 'is required.', if: :admin?
 
   validates_presence_of     :password, if: :password_required?
   validates_confirmation_of :password, if: :password_required?
@@ -68,6 +74,14 @@ class User < ActiveRecord::Base
       end
     end
 
+    def ensure_residency_exists
+      Residency.find_or_create_by! name: residency_name
+    end
+
+    def ensure_belongs_to_residency
+      self.residency = Residency.find_by! name: residency_name
+    end
+
     def set_default_role
       self.role ||= 'resident'
     end
@@ -85,6 +99,12 @@ class User < ActiveRecord::Base
     def set_residency_name
       if invited_by_id?
         self.residency_name = invited_by.residency_name
+      end
+    end
+
+    def set_residency
+      if invited_by_id?
+        self.residency = invited_by.residency
       end
     end
 

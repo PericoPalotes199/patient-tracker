@@ -3,3 +3,8 @@
 valid_residency:
   name: $LABEL
 
+test_residency:
+  name: Test Residency
+
+another_test_residency:
+  name: Another Test Residency
