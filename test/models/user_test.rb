@@ -94,7 +94,7 @@ class UserTest < ActiveSupport::TestCase
   test "when an admin invites a resident, the resident will have the same residency" do
     skip "Upgrade devise_invitable to use after_invitation_created callback"
     resident = User.invite!({ email: 'invited-resident@example.com' }, @admin)
-    assert_equal @admin.residency, resident.residency
+    assert_equal @admin.residency_name, resident.residency_name
   end
 
   test "update invitees active until" do
@@ -125,7 +125,7 @@ class UserTest < ActiveSupport::TestCase
       email: 'admin-to-resident@example.com',
       password: 'password',
       role: 'admin',
-      residency: 'Test Residency',
+      residency_name: 'Test Residency',
       tos_accepted: true)
     assert_equal 'admin', admin.role
     admin.invite!
@@ -147,8 +147,8 @@ class UserTest < ActiveSupport::TestCase
       password: 'password',
       password_confirmation: 'password',
       tos_accepted: true)
-    assert_equal 'Test Residency', resident.residency
-    assert_equal users(:admin).residency, resident.residency
+    assert_equal 'Test Residency', resident.residency_name
+    assert_equal users(:admin).residency_name, resident.residency_name
   end
 
   test "when a user accepts an invitation set active_until to inviter's residency" do

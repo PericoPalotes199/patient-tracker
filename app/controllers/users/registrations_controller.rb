@@ -51,7 +51,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /users/registrations
   def create
     # If the user (a new admin) did not provide a residency upon login - redirect.
-    if sign_up_params[:residency].blank?
+    if sign_up_params[:residency_name].blank?
       flash[:error] = 'You must provide a residency.'
       # NOTE: Unfortuntely, this renders a new page and the user must re-type all form values
       redirect_to new_user_registration_path and return
@@ -67,7 +67,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         if user.update! role: 'admin'
           customer = Stripe::Customer.create(
             email: sign_up_params[:email],
-            description: "#{ENV['STRIPE_CUSTOMER_DESCRIPTION']} #{sign_up_params[:residency]}"
+            description: "#{ENV['STRIPE_CUSTOMER_DESCRIPTION']} #{sign_up_params[:residency_name]}"
           )
           subscription = customer.subscriptions.create(plan: params[:plan], quantity: 1)
 

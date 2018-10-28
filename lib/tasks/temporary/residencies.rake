@@ -16,7 +16,7 @@ namespace :residencies do
     puts "Updating #{User.count} users and #{Residency.count} residencies ..."
     Residency.all.each do |residency|
       puts "Updating #{residency.name} ..."
-      users = User.where(residency: residency.name)
+      users = User.where(residency_name: residency.name)
       residency.users << users
       puts "... #{users.count} added to #{residency.name}."
     end

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     @users = current_user.invitations.to_a
     # TODO: create a Residency resource and association
     # get all users of the current_user residency
-    residency_users = User.where(residency: current_user.residency).order(invitation_created_at: :desc)
+    residency_users = User.where(residency_name: current_user.residency_name).order(invitation_created_at: :desc)
 
     residency_users.each do |user|
       # filtering on current_user allows adding an explicit top row for current_user in view

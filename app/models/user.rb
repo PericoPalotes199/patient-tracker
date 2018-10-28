@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
                             :delete_all_customer_subscriptions,
                             :change_role_to_resident,
                             :set_active_until,
-                            :set_residency
+                            :set_residency_name
 
   before_create :set_default_role, :set_active_until
   before_save :set_name
@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   validates_format_of     :email, with: /\A[^@]+@[^@]+\z/, allow_blank: true, if: :email_changed?
   # Validating the residency prevents a bunch of admins and residents from being
   # grouped into the same nil residency
-  validates_presence_of   :residency, message: 'is required.', if: :admin?
+  validates_presence_of   :residency_name, message: 'is required.', if: :admin?
 
   validates_presence_of     :password, if: :password_required?
   validates_confirmation_of :password, if: :password_required?
@@ -82,9 +82,9 @@ class User < ActiveRecord::Base
       end
     end
 
-    def set_residency
+    def set_residency_name
       if invited_by_id?
-        self.residency = invited_by.residency
+        self.residency_name = invited_by.residency_name
       end
     end
 

@@ -24,7 +24,7 @@ class UsersRegistrationsControllerTest < ActionController::TestCase
 
   test "Registering a new user creates a user and redirects to users#index." do
     assert_difference('User.count', 1) {
-      post :create, user: { residency: 'Test Registration Residency', email: 'test@example.com', password: 'password', password_confirmation: 'password', tos_accepted: '1' }
+      post :create, user: { residency_name: 'Test Registration Residency', email: 'test@example.com', password: 'password', password_confirmation: 'password', tos_accepted: '1' }
     }
     assert_not_nil User.find_by email: 'test@example.com'
     assert_template 'devise/mailer/confirmation_instructions'
