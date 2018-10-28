@@ -88,12 +88,19 @@ class EncountersControllerTest < ActionController::TestCase
     get :index
     assert_response :success
 
+    admin_resident_enconters = @admin_resident.encounters.order(encountered_on: :desc).pluck(:encountered_on)
+    resident_encounters = users(:resident_invited_by_admin_resident).encounters.order(encountered_on: :desc).pluck(:encountered_on)
+
+    assert_equal(
+      # Compare the length the expected encounters
+      [admin_resident_enconters, resident_encounters].flatten.length,
+      # ... to the actual assigned encounters' length
+      assigns(:encounters).length
+    )
+
     assert_equal(
       # Compare the encountered_on timestamps of the expected encounters
-      [
-        @admin_resident.encounters.order(encountered_on: :desc).pluck(:encountered_on),
-        users(:resident_invited_by_admin_resident).encounters.order(encountered_on: :desc).pluck(:encountered_on)
-      ].flatten,
+      [admin_resident_enconters, resident_encounters].flatten,
       # ... to the actual assigned encounters' encountered_on timestamps.
       assigns(:encounters).map(&:encountered_on)
     )
@@ -124,6 +131,7 @@ class EncountersControllerTest < ActionController::TestCase
     @admin.invitations.each do |invitation|
       expected_encounters += invitation.encounters
     end
+    assert_equal assigns(:encounters).length, expected_encounters.length
     assert_equal assigns(:encounters).pluck(:id).sort, expected_encounters.map(&:id).sort
     assert_template :index
   end
