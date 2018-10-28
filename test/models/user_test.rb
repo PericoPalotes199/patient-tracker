@@ -4,6 +4,22 @@ class UserTest < ActiveSupport::TestCase
 
   setup do
     @admin = users(:admin)
+    @minimum_valid_resident_attributes = {
+      role: 'resident',
+      email: 'test@example.com',
+      password: 'password',
+      password_confirmation: 'password',
+      tos_accepted: true
+    }
+    @minimum_valid_admin_attributes = {
+      role: 'admin',
+      email: 'test@example.com',
+      residency_name: 'Test Residency',
+      residency: residencies(:test_residency),
+      password: 'password',
+      password_confirmation: 'password',
+      tos_accepted: true
+    }
   end
 
   test "some simple assertions to confirm configuration is valid" do
@@ -24,6 +40,15 @@ class UserTest < ActiveSupport::TestCase
     assert_equal nil, users(:admin_resident).invited_by
     assert_equal @admin, users(:resident).invited_by
     assert_equal @admin, users(:resident_1).invited_by
+  end
+
+  test "#valid?" do
+    assert_equal User.new(@minimum_valid_resident_attributes).valid?, true
+    assert_equal User.new(@minimum_valid_resident_attributes.merge(residency: nil)).valid?, true
+    assert_equal User.new(@minimum_valid_resident_attributes.merge(residency: nil, invitation_accepted_at: Time.now)).valid?, false
+
+    assert_equal User.new(@minimum_valid_admin_attributes).valid?, true
+    assert_equal User.new(@minimum_valid_admin_attributes.merge(residency: nil)).valid?, false
   end
 
   test "when a user is saved, its name is updated" do
