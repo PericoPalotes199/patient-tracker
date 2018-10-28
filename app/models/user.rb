@@ -25,8 +25,8 @@ class User < ActiveRecord::Base
   validates_format_of     :email, with: /\A[^@]+@[^@]+\z/, allow_blank: true, if: :email_changed?
   # Validating the residency prevents a bunch of admins and residents from being
   # grouped into the same nil residency
-  validates_presence_of   :residency_name, message: 'is required.', if: :admin?
-  validates_presence_of   :residency, message: 'is required.', if: :admin?
+  validates_presence_of   :residency_name, message: 'is required.', if: :residency_required?
+  validates_presence_of   :residency, message: 'is required.', if: :residency_required?
 
   validates_presence_of     :password, if: :password_required?
   validates_confirmation_of :password, if: :password_required?
@@ -106,6 +106,10 @@ class User < ActiveRecord::Base
       if invited_by_id?
         self.residency = invited_by.residency
       end
+    end
+
+    def residency_required?
+      admin? || admin_resident? || (resident? && invitation_accepted?)
     end
 
     def update_inviter_subscription_quantity
