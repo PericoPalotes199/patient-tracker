@@ -31,4 +31,17 @@ class UsersRegistrationsControllerTest < ActionController::TestCase
     assert_response :redirect
     assert_redirected_to new_user_registration_url
   end
+
+  test "Registering a new user creates an admin and a residency." do
+    assert_difference("User.where(role: 'admin').count", 1) {
+      post :create, user: { residency_name: 'Test Registration Residency', email: 'test@example.com', password: 'password', password_confirmation: 'password', tos_accepted: '1' }
+    }
+    new_admin_user = User.find_by!(
+      role: 'admin',
+      residency_name: 'Test Registration Residency',
+      residency: Residency.find_by!(name: 'Test Registration Residency')
+    )
+    assert_equal User.last, new_admin_user
+    assert_equal Residency.last, Residency.find_by!(name: 'Test Registration Residency')
+  end
 end
