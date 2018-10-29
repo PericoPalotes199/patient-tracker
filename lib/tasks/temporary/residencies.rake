@@ -2,7 +2,7 @@ namespace :residencies do
 
   desc 'Associate all users to a residency record by residency attribute'
   task create: :environment do
-    residency_names = User.all.pluck(:residency).uniq.reject(&:blank?)
+    residency_names = User.all.pluck(:residency_name).uniq.reject(&:blank?)
     puts "Adding #{residency_names.count} residencies if they do not exist ..."
     residency_names.each do |residency_name|
       puts "Find or create #{residency_name} ..."
