@@ -11,7 +11,7 @@ admin:
   residency: test_residency
   encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
   confirmed_at: now
-  active_until: <%= (Time.now + 6.99.days).to_i %>
+  active_until: <%= (Time.now + 6.95.days).to_i %>
 
 # A plain resident
 resident:
