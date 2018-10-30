@@ -7,7 +7,6 @@ admin:
   last_name: Admin
   name: Jane Admin
   role: admin
-  residency_name: Test Residency
   residency: test_residency
   encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
   confirmed_at: now
@@ -20,7 +19,6 @@ resident:
   last_name: Intern
   name: Jane Intern
   role: resident
-  residency_name: Test Residency
   residency: test_residency
   invited_by: admin
   invited_by_type: User
@@ -43,7 +41,6 @@ unconfirmed:
   last_name: User
   name: Unconfirmed User
   role: resident
-  residency_name: Test Residency
   residency: test_residency
   invited_by: admin
   invited_by_type: User
@@ -57,7 +54,6 @@ unconfirmed:
   last_name: Example
   name: <%= "Resident_#{i} Example" %>
   role: resident
-  residency_name: Test Residency
   residency: test_residency
   invited_by: admin
   invited_by_type: User
@@ -71,7 +67,6 @@ admin_resident:
   last_name: Admin_Resident
   name: Jane Admin_Resident
   role: admin_resident
-  residency_name: Test Residency
   residency: test_residency
   encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
   confirmed_at: now
@@ -83,7 +78,6 @@ resident_invited_by_admin_resident:
   last_name: Example
   name: Resident_Invited_By_Admin_Resident Example
   role: resident
-  residency_name: Test Residency
   residency: test_residency
   invited_by: admin_resident
   invited_by_type: User
@@ -96,7 +90,6 @@ resident_invited_by_admin_resident:
   last_name: Example
   name: <%= "Resident_#{i} Example" %>
   role: resident
-  residency_name: Test Residency
   residency: test_residency
   invited_by: admin_resident
   invited_by_type: User
@@ -108,7 +101,6 @@ another_residency_admin:
   last_name: Another_Admin
   name: Sally Admin
   role: admin
-  residency_name: Another Test Residency
   residency: another_test_residency
   encrypted_password: $2a$10$KtnYxMqEM1iwhOgRuima0.WCAowHBeBe2zzA3SE.jwMg8bd1/djzm
   confirmed_at: now
@@ -122,7 +114,6 @@ another_residency_admin:
   last_name: Example
   name: <%= "Resident_#{i} Example" %>
   role: resident
-  residency_name: Test Residency
   residency: test_residency
   invited_by: another_residency_admin
   invited_by_type: User

@@ -51,8 +51,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /users/registrations
   def create
     # If the user (a new admin) did not provide a residency upon login - redirect.
-    if sign_up_params[:residency_name].blank?
+    begin
+      residency = Residency.create! name: sign_up_params[:residency_name]
+    rescue StandardError => e
       flash[:error] = 'You must provide a residency.'
+      Rails.logger.error "Registration unsuccessful: #{e.message}"
+      Rollbar.warning "#{e.class} caught. Registration unsuccessful: #{e.message}"
       # NOTE: Unfortuntely, this renders a new page and the user must re-type all form values
       redirect_to new_user_registration_path and return
     end
@@ -64,7 +68,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
         # If we can successfully update the user's role (indicating the user is still valid),
         # then proceed with creatinga a customer and subscription.
-        if user.update! role: 'admin'
+        if user.update! role: 'admin', residency: residency
           customer = Stripe::Customer.create(
             email: sign_up_params[:email],
             description: "#{ENV['STRIPE_CUSTOMER_DESCRIPTION']} #{sign_up_params[:residency_name]}"

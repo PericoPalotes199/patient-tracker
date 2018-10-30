@@ -8,11 +8,10 @@ class UsersController < ApplicationController
     # the two-query implementation needs to remain until
     # residents are assigned a residency on invitation
 
-    # All residents who are not yet removed (e.g., graduated residents)
+    # All residents who are invited by a the current_user
     @users = current_user.invitations.to_a
-    # TODO: create a Residency resource and association
     # get all users of the current_user residency
-    residency_users = User.where(residency_name: current_user.residency_name).order(invitation_created_at: :desc)
+    residency_users = current_user.residency.users.order(invitation_created_at: :desc)
 
     residency_users.each do |user|
       # filtering on current_user allows adding an explicit top row for current_user in view

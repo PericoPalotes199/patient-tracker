@@ -14,7 +14,6 @@ class UserTest < ActiveSupport::TestCase
     @minimum_valid_admin_attributes = {
       role: 'admin',
       email: 'test@example.com',
-      residency_name: 'Test Residency',
       residency: residencies(:test_residency),
       password: 'password',
       password_confirmation: 'password',
@@ -119,7 +118,6 @@ class UserTest < ActiveSupport::TestCase
   test "when an admin invites a resident, the resident will have the same residency" do
     skip "Upgrade devise_invitable to use after_invitation_created callback"
     resident = User.invite!({ email: 'invited-resident@example.com' }, @admin)
-    assert_equal @admin.residency_name, resident.residency_name
     assert_equal @admin.residency.name, resident.residency.name
     assert_equal @admin.residency, resident.residency
   end
@@ -152,7 +150,6 @@ class UserTest < ActiveSupport::TestCase
       email: 'admin-to-resident@example.com',
       password: 'password',
       role: 'admin',
-      residency_name: 'Test Residency',
       residency: residencies(:test_residency),
       tos_accepted: true)
     assert_equal 'admin', admin.role
@@ -175,9 +172,7 @@ class UserTest < ActiveSupport::TestCase
       password: 'password',
       password_confirmation: 'password',
       tos_accepted: true)
-    assert_equal 'Test Residency', resident.residency_name
     assert_equal 'Test Residency', resident.residency.name
-    assert_equal users(:admin).residency_name, resident.residency_name
     assert_equal users(:admin).residency, resident.residency
   end
 

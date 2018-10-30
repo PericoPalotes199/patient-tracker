@@ -41,7 +41,8 @@ class UsersRegistrationsControllerTest < ActionController::TestCase
       residency_name: 'Test Registration Residency',
       residency: Residency.find_by!(name: 'Test Registration Residency')
     )
-    assert_equal User.last, new_admin_user
     assert_equal Residency.last, Residency.find_by!(name: 'Test Registration Residency')
+    assert_equal User.last, new_admin_user
+    assert_equal User.last.residency, Residency.last
   end
 end

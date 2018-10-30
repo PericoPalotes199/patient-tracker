@@ -10,13 +10,12 @@ class User < ActiveRecord::Base
 
   before_create :set_default_role, :set_active_until
   before_save :set_name
-  before_save :ensure_residency_exists, :ensure_belongs_to_residency, if: -> { residency_name.present? }
+  validates_presence_of :residency, if: :admin?
 
   after_invitation_accepted :update_inviter_subscription_quantity,
                             :delete_all_customer_subscriptions,
                             :change_role_to_resident,
                             :set_active_until,
-                            :set_residency_name,
                             :set_residency
 
 
@@ -25,7 +24,6 @@ class User < ActiveRecord::Base
   validates_format_of     :email, with: /\A[^@]+@[^@]+\z/, allow_blank: true, if: :email_changed?
   # Validating the residency prevents a bunch of admins and residents from being
   # grouped into the same nil residency
-  validates_presence_of   :residency_name, message: 'is required.', if: :residency_required?
   validates_presence_of   :residency, message: 'is required.', if: :residency_required?
 
   validates_presence_of     :password, if: :password_required?
@@ -74,14 +72,6 @@ class User < ActiveRecord::Base
       end
     end
 
-    def ensure_residency_exists
-      Residency.find_or_create_by! name: residency_name
-    end
-
-    def ensure_belongs_to_residency
-      self.residency = Residency.find_by! name: residency_name
-    end
-
     def set_default_role
       self.role ||= 'resident'
     end
@@ -93,12 +83,6 @@ class User < ActiveRecord::Base
     def set_active_until
       if invited_by_id?
         self.active_until = invited_by.active_until
-      end
-    end
-
-    def set_residency_name
-      if invited_by_id?
-        self.residency_name = invited_by.residency_name
       end
     end
 
