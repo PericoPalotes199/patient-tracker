@@ -52,7 +52,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     # If the user (a new admin) did not provide a residency upon login - redirect.
     begin
-      residency = Residency.create! name: sign_up_params[:residency_name]
+      residency = Residency.create! name: params[:user][:residency_name]
     rescue StandardError => e
       flash[:error] = 'You must provide a residency.'
       Rails.logger.error "Registration unsuccessful: #{e.message}"
@@ -71,7 +71,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         if user.update! role: 'admin', residency: residency
           customer = Stripe::Customer.create(
             email: sign_up_params[:email],
-            description: "#{ENV['STRIPE_CUSTOMER_DESCRIPTION']} #{sign_up_params[:residency_name]}"
+            description: "#{ENV['STRIPE_CUSTOMER_DESCRIPTION']} #{params[:user][:residency_name]}"
           )
           subscription = customer.subscriptions.create(plan: params[:plan], quantity: 1)
 

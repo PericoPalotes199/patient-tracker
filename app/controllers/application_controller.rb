@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   protected
     def configure_permitted_parameters
       #allow additional parameters through the Devise::RegistrationsController
-      devise_parameter_sanitizer.for(:sign_up) << [:residency_name, :first_name, :last_name, :tos_accepted]
+      devise_parameter_sanitizer.for(:sign_up) << [:first_name, :last_name, :tos_accepted]
 
       #allow additional parameters through the Devise::InvitationsController
       devise_parameter_sanitizer.for(:accept_invitation) << [:first_name, :last_name, :tos_accepted]

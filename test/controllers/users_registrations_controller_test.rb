@@ -38,7 +38,6 @@ class UsersRegistrationsControllerTest < ActionController::TestCase
     }
     new_admin_user = User.find_by!(
       role: 'admin',
-      residency_name: 'Test Registration Residency',
       residency: Residency.find_by!(name: 'Test Registration Residency')
     )
     assert_equal Residency.last, Residency.find_by!(name: 'Test Registration Residency')

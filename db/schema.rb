@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181028024708) do
+ActiveRecord::Schema.define(version: 20181031064254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(version: 20181028024708) do
     t.string   "invited_by_type",        limit: 255
     t.integer  "invitations_count",                  default: 0
     t.boolean  "tos_accepted"
-    t.string   "residency_name",         limit: 255
     t.boolean  "removed",                            default: false
     t.integer  "residency_id"
   end
@@ -78,7 +77,6 @@ ActiveRecord::Schema.define(version: 20181028024708) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["residency_id"], name: "index_users_on_residency_id", using: :btree
-  add_index "users", ["residency_name"], name: "index_users_on_residency_name", using: :btree
 
   add_foreign_key "users", "residencies"
 end
