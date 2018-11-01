@@ -122,7 +122,7 @@ class EncountersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def encounter_params
-      params.require(:encounter_types).permit(Encounter.encounter_types.map{|str| str.to_sym})
+      params.require(:encounter_types).permit(Encounter.default_encounter_types)
     end
 
     # Require that params[:encountered_on] is not empty and return the value
