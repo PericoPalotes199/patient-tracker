@@ -21,6 +21,22 @@
 
 en:
   hello: "Hello world"
+  encounter_types:
+    # default labels
+    adult_inpatient: "Adult Inpatient"
+    adult_ed: "Adult ED"
+    adult_icu: "Adult ICU"
+    adult_inpatient_surgery: "Adult Inpatient Surgery"
+    pediatric_inpatient: "Pediatric Inpatient"
+    pediatric_newborn: "Pediatric Newborn"
+    pediatric_ed: "Pediatric ED"
+    continuity_inpatient: "Continuity Inpatient"
+    continuity_externa: "Continuity External"
+    # non-default labels
+    obstetrics_vaginal_deliveries: "Obstetrics Vaginal Deliveries"
+    older_adults_outpatient: "Older Adults Outpatient"
+    pediatric_outpatient: "Pediatric Outpatient"
+    women's_health_outpatient: "Women’s Health Outpatient"
   activerecord:
     attributes:
       user:

@@ -20,18 +20,8 @@ class ActiveSupport::TestCase
 end
 
 module EncountersFixturesHelpers
-  def default_encounters_types
-    [
-      'adult_inpatient',
-      'adult_ed',
-      'adult_icu',
-      'adult_inpatient_surgery',
-      'pediatric_inpatient',
-      'pediatric_newborn',
-      'pediatric_ed',
-      'continuity_inpatient',
-      'continuity_external'
-    ]
+  def default_encounter_types
+    Encounter.default_encounter_types
   end
 end
 # This includes a helper module for fixtures:

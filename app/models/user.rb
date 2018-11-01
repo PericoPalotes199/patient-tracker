@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
 
   # TODO: This method always returns false, but we are anticipating
   # a boolean attribute to be added to the model.
-  def has_custom_labels?
+  def has_custom_encounter_types?
     false
   end
 

@@ -1,5 +1,4 @@
 class EncountersController < ApplicationController
-  include EncountersHelper
 
   before_action :authenticate_user!
   before_action :set_encounter, only: [:show, :edit, :update, :destroy]
@@ -123,7 +122,7 @@ class EncountersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def encounter_params
-      params.require(:encounter_types).permit(encounter_types.map{|str| str.to_sym})
+      params.require(:encounter_types).permit(Encounter.encounter_types.map{|str| str.to_sym})
     end
 
     # Require that params[:encountered_on] is not empty and return the value

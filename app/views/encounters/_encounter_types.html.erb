@@ -1,11 +1,12 @@
-<% display_labels.each_with_index do |display_label, i| %>
-  <%= content_tag :div, class: "#{i == 0 ? 'lineitem_end' : 'lineitem'}" do %>
+<% encounter_types.each_with_index do |encounter_type, i| %>
+  <% display_label = I18n.translate(encounter_type, scope: :encounter_types) %>
+  <%= content_tag :div, class: (i == 0 ? 'lineitem_end' : 'lineitem') do %>
     <div class="linelabel blockFloat">
       <strong><%= "#{display_label.split.first.titleize}:" %></strong>
       <%= display_label.split.slice(1..-1).join(' ') %>
     </div>
-    <%= link_to '#', {onclick: "incrementEncounterType('#{encounter_types[i]}')"} do %>
-      <%= content_tag :div, 0, id: encounter_types[i], class: "encounter_type_button linenumber gradient_light blockFloatRight" %>
+    <%= link_to '#', { onclick: "incrementEncounterType('#{encounter_type}')" } do %>
+      <%= content_tag :div, 0, id: encounter_type, class: "encounter_type_button linenumber gradient_light blockFloatRight" %>
     <% end %>
   <% end %>
 <% end %>

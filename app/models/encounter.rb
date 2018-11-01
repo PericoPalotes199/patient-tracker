@@ -7,6 +7,20 @@ class Encounter < ActiveRecord::Base
   after_commit :transaction_success
   after_rollback :transaction_failure
 
+  def self.default_encounter_types
+    [
+      'adult_inpatient',
+      'adult_ed',
+      'adult_icu',
+      'adult_inpatient_surgery',
+      'pediatric_inpatient',
+      'pediatric_newborn',
+      'pediatric_ed',
+      'continuity_inpatient',
+      'continuity_external'
+    ]
+  end
+
   private
     def transaction_success
       STDOUT.puts "Transaction success for Encounter #{self.inspect}" if Rails.env.development?

@@ -85,11 +85,11 @@ class UserTest < ActiveSupport::TestCase
     assert     users(:resident).resident?
   end
 
-  test "has_custom_labels?" do
+  test "has_custom_encounter_types?" do
     # NOTE: Always returns false, until custom labels feature is implemented
-    assert_not users(:admin).has_custom_labels?
-    assert_not users(:admin_resident).has_custom_labels?
-    assert_not users(:resident).has_custom_labels?
+    assert_not users(:admin).has_custom_encounter_types?
+    assert_not users(:admin_resident).has_custom_encounter_types?
+    assert_not users(:resident).has_custom_encounter_types?
   end
 
   test "subscription expired?" do
