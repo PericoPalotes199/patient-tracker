@@ -55,32 +55,14 @@ encounter_<%= encounter_type.underscore %>_<%= n %>_for_admin_resident_resident:
   encounter_type: <%= encounter_type.humanize(capitalize: false) %>
   encountered_on: <%= Time.now + n.days %>
   user: admin_resident
-  <% end %>
-<% end %>
-
-# 5 of each encounter_type for resident_invited_by_admin_resident
-<% default_encounter_types.each_with_index do |encounter_type, index| %>
-  <% (1..5).each do |n| %>
 encounter_<%= encounter_type.underscore %>_<%= n %>_for_resident_invited_by_admin_resident:
   encounter_type: <%= encounter_type.humanize(capitalize: false) %>
   encountered_on: <%= Time.now + n.days %>
   user: resident_invited_by_admin_resident
-  <% end %>
-<% end %>
-
-# 5 of each encounter_type for resident
-<% default_encounter_types.each_with_index do |encounter_type, index| %>
-  <% (1..5).each do |n| %>
 encounter_<%= encounter_type.underscore %>_<%= n %>for_resident:
   encounter_type: <%= encounter_type.humanize(capitalize: false) %>
   encountered_on: <%= Time.now + n.days %>
   user: resident
-  <% end %>
-<% end %>
-
-# 5 of each encounter_type for resident_1
-<% default_encounter_types.each_with_index do |encounter_type, index| %>
-  <% (1..5).each do |n| %>
 encounter_<%= encounter_type.underscore %>_<%= n %>_for_resident_1:
   encounter_type: <%= encounter_type.humanize(capitalize: false) %>
   encountered_on: <%= Time.now + n.days %>
