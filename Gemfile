@@ -11,7 +11,6 @@ gem 'figaro', '~> 1.1.1'
 gem 'jbuilder', '~> 2.7'
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 3.1.4'
-gem 'newrelic_rpm', '~> 3.18.1.330'
 # Use PostgreSQL database in all environments
 gem 'pg', '~> 0.17.1'
 # Use pundit for minimal authorization through OO design and pure Ruby classes
@@ -31,9 +30,10 @@ gem 'uglifier', '>= 1.3.0'
 # Use unicorn as the app server
 # gem 'unicorn'
 
-# Error tracking via Rollbar and the Heroku add-on
+# Analytics
+gem 'newrelic_rpm', '~> 3.18.1.330'
 gem 'rollbar', '2.15.5'
-
+gem 'scout_apm'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background.
