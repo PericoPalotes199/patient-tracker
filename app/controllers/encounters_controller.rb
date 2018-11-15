@@ -2,7 +2,7 @@ class EncountersController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_encounter, only: [:show, :edit, :update, :destroy]
-  after_action :log_request, only: :summary
+  before_action :log_request, only: [:summary, :index, :destroy]
 
   # GET /encounters
   # GET /encounters.json
@@ -129,9 +129,5 @@ class EncountersController < ApplicationController
     # Require that params[:encountered_on] is not empty and return the value
     def encountered_on
       params.require(:encountered_on)
-    end
-
-    def log_request
-      Rollbar.info("#{controller_name}##{action_name} was requested", user_id: current_user.id)
     end
 end

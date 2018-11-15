@@ -40,4 +40,8 @@ class ApplicationController < ActionController::Base
     def after_sign_out_path_for(resource_or_scope)
       new_user_session_path
     end
+
+    def log_request
+      Rollbar.info("#{controller_name}##{action_name} was requested", user_id: current_user.try(:id))
+    end
 end
