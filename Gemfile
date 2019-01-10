@@ -14,7 +14,7 @@ gem 'jquery-rails', '~> 3.1.4'
 # Use PostgreSQL database in all environments
 gem 'pg', '~> 0.17.1'
 # Use pundit for minimal authorization through OO design and pure Ruby classes
-gem 'puma', '~> 2.12.0'
+gem 'puma', '~> 2.16.0'
 gem 'pundit', '~> 0.2.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
