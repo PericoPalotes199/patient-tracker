@@ -4,7 +4,7 @@ ruby '2.4.5'
 gem 'rails', '4.2.10'
 
 gem 'devise', '3.5.10'
-gem 'devise_invitable', '~> 1.4.0'
+gem 'devise_invitable', '~> 1.5.0'
 # Simple, Heroku-friendly Rails app configuration using ENV and a single YAML file
 gem 'figaro', '~> 1.1.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
