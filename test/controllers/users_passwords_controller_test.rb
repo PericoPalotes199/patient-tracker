@@ -4,7 +4,10 @@ class UsersPasswordsControllerTest < ActionController::TestCase
     request.env["devise.mapping"] = Devise.mappings[:user]
     @controller = Users::PasswordsController.new
     @resident = users(:forgetful_resident)
-    @reset_token  = @resident.send_reset_password_instructions
+
+    # Reset the password with the public method and get the token for edit password form
+    # https://github.com/plataformatec/devise/blob/v3.5.10/lib/devise/models/recoverable.rb#L58
+    @reset_token = @resident.send_reset_password_instructions
   end
 
   #  If you are testing Devise internal controllers or a controller that inherits from Devise's,
@@ -16,7 +19,7 @@ class UsersPasswordsControllerTest < ActionController::TestCase
   #  get :new
 
   test "passwords can be edited" do
-    get :edit, reset_password_token: 'valid-reset-password-token'
+    get :edit, reset_password_token: 'invalid-reset-password-token'
     assert_response :success
     assert_template :edit
   end
@@ -28,7 +31,7 @@ class UsersPasswordsControllerTest < ActionController::TestCase
   end
 
   test "password can be updated if tos accepted" do
-    put :update, user: {reset_password_token: @reset_token, password: 'new-password', password_confirmation: 'new-password', tos_accepted: '1'}
+    put :update, user: { reset_password_token: @reset_token, password: 'new-password', password_confirmation: 'new-password', tos_accepted: '1' }
     assert User.find_by(email: 'forgetful@example.com').valid_password?('new-password')
     assert_not User.find_by(email: 'forgetful@example.com').valid_password?('old-password')
     assert_response :redirect
@@ -36,10 +39,12 @@ class UsersPasswordsControllerTest < ActionController::TestCase
   end
 
   test "password cannot be updated if tos not accepted" do
-    put :update, user: { reset_password_token: 'valid-reset-password-token', password: 'new-password', password_confirmation: 'new-password', tos_accepted: '0' }
+    put :update, user: { reset_password_token: @reset_token, password: 'new-password', password_confirmation: 'new-password', tos_accepted: '0' }
     @resident.reload
+    assert_equal @resident.errors.count, 0
     assert_equal users(:forgetful_resident).encrypted_password, 'old-password'
+    assert_equal 'Terms of service must be accepted.', flash[:alert]
     assert_response :redirect
-    assert_redirected_to edit_user_password_path(reset_password_token: 'valid-reset-password-token')
+    assert_redirected_to edit_user_password_path(reset_password_token: @reset_token)
   end
 end
