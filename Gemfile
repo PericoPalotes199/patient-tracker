@@ -10,7 +10,7 @@ gem 'figaro', '~> 1.1.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use jquery as the JavaScript library
-gem 'jquery-rails', '~> 3.1.4'
+gem 'jquery-rails', '~> 4.0.5'
 # Use PostgreSQL database in all environments
 gem 'pg', '~> 0.17.1'
 # Use pundit for minimal authorization through OO design and pure Ruby classes
