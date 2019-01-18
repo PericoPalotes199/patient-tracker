@@ -17,7 +17,7 @@ gem 'pg', '~> 0.17.1'
 gem 'puma', '~> 3.7.0'
 gem 'pundit', '~> 0.2.3'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 5.0.7'
 # Use Stripe for payments
 gem 'stripe', git: 'https://github.com/stripe/stripe-ruby'
 gem 'stripe_event', '~> 1.4.0'
