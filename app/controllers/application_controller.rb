@@ -9,12 +9,14 @@ class ApplicationController < ActionController::Base
   add_flash_types :error, :payment
 
   protected
+    # TEST THAT WE CAN SIGNUP AND ACCEPT INVITATION IN THE VIEWS
+    # https://github.com/plataformatec/devise/blob/4-0-stable/CHANGELOG.md#400rc1---2016-01-02
     def configure_permitted_parameters
       #allow additional parameters through the Devise::RegistrationsController
-      devise_parameter_sanitizer.for(:sign_up) << [:first_name, :last_name, :tos_accepted]
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :tos_accepted])
 
       #allow additional parameters through the Devise::InvitationsController
-      devise_parameter_sanitizer.for(:accept_invitation) << [:first_name, :last_name, :tos_accepted]
+      devise_parameter_sanitizer.permit(:accept_invitation, keys: [:first_name, :last_name, :tos_accepted])
     end
 
     def authenticate_inviter!

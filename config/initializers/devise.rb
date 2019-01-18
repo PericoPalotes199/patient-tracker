@@ -284,4 +284,10 @@ Devise.setup do |config|
   # Added per CHANGELOG
   # https://github.com/plataformatec/devise/blob/3-stable/CHANGELOG.md
   config.send_password_change_notification = true
+
+  # DEPRECATION WARNING: [Devise] config.email_regexp will have a new default on Devise 4.1
+  # To keep the current behavior please set in your config/initializers/devise.rb the following:
+    # config.email_regexp = /\A[^@\s]+@([^@\s]+\.)+[^@\W]+\z/
+  # If you want to use the new default:
+    config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
 end
