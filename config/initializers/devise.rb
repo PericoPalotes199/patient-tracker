@@ -138,6 +138,14 @@ Devise.setup do |config|
   # Default: nil
   # config.invited_by_counter_cache = :invitations_count
 
+  # https://github.com/scambra/devise_invitable/blob/master/CHANGELOG.md#160
+  # https://github.com/scambra/devise_invitable/blob/v1.6.1/README.rdoc#model-configuration
+  # require password when user accepts the invitation.
+  # Enabled by default.
+  # Disable if you don't want to ask or enforce to set password while accepting,
+  # because is set when user is invited or it will be set later
+  # config.require_password_on_accepting
+
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
   # confirming their account. For instance, if set to 2.days, the user will be
