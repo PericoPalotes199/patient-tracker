@@ -19,7 +19,7 @@ gem 'pundit', '~> 0.2.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.7'
 # Use Stripe for payments
-gem 'stripe', '1.17.2'
+gem 'stripe', '~> 1.47.0'
 gem 'stripe_event', '~> 1.4.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
